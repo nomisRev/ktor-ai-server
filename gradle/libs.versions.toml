@@ -1,0 +1,39 @@
+
+[versions]
+kotlin = "2.1.10"
+ktor = "3.1.1"
+logback = "1.4.14"
+
+[libraries]
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-server-auth = { module = "io.ktor:ktor-server-auth", version.ref = "ktor" }
+ktor-server-auth-jwt = { module = "io.ktor:ktor-server-auth-jwt", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+ktor-server-config-yaml = { module = "io.ktor:ktor-server-config-yaml", version.ref = "ktor" }
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+
+[bundles]
+ktor-core = [
+    "ktor-server-core",
+    "ktor-server-netty",
+    "ktor-server-content-negotiation",
+    "ktor-server-config-yaml"
+]
+ktor-auth = [
+    "ktor-server-auth",
+    "ktor-server-auth-jwt"
+]
+testing = [
+    "ktor-server-test-host",
+    "kotlin-test-junit"
+]
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-assert = { id = "org.jetbrains.kotlin.plugin.power-assert", version.ref="kotlin" }
