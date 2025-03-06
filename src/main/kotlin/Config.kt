@@ -9,9 +9,7 @@ data class JWTConfig(
     val secret: String
 )
 
-data class AppConfig(
-    val jwt: JWTConfig
-) {
+data class AppConfig(val jwt: JWTConfig) {
     companion object {
         fun load(environment: ApplicationEnvironment): AppConfig {
             val jwtConfig = JWTConfig(

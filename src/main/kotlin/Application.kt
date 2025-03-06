@@ -13,7 +13,6 @@ fun main(args: Array<String>) =
 
 fun Application.module() {
     val appConfig = AppConfig.load(environment)
-
     install(ContentNegotiation) {
         json()
     }

@@ -5,7 +5,6 @@ import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
-import com.example.AppConfig
 
 fun Application.configureJWT(jwtConfig: JWTConfig) {
     authentication {
