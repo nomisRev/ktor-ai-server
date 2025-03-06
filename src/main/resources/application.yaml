@@ -5,7 +5,7 @@ ktor:
     deployment:
         port: 8080
 jwt:
-    domain: "https://jwt-provider-domain/"
+    issuer: "https://jwt-provider-domain/"
     audience: "jwt-audience"
     realm: "ktor sample app"
     secret: "secret"

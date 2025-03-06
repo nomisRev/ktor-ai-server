@@ -10,7 +10,7 @@ class ConfigTest {
     fun `test loading configuration`() {
         val environment = createTestEnvironment {
             config = MapApplicationConfig(
-                "jwt.domain" to "https://test-auth-domain/",
+                "jwt.issuer" to "https://test-auth-domain/",
                 "jwt.audience" to "test-audience",
                 "jwt.realm" to "test realm",
                 "jwt.secret" to "test-secret"
@@ -19,7 +19,7 @@ class ConfigTest {
 
         assertEquals(
             JWTConfig(
-                domain = "https://test-auth-domain/",
+                issuer = "https://test-auth-domain/",
                 audience = "test-audience",
                 realm = "test realm",
                 secret = "test-secret"

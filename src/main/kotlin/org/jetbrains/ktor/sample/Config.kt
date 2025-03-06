@@ -3,7 +3,7 @@ package org.jetbrains.ktor.sample
 import io.ktor.server.application.ApplicationEnvironment
 
 data class JWTConfig(
-    val domain: String,
+    val issuer: String,
     val audience: String,
     val realm: String,
     val secret: String
@@ -11,7 +11,7 @@ data class JWTConfig(
     companion object {
         fun load(environment: ApplicationEnvironment): JWTConfig = with(environment.config) {
             JWTConfig(
-                domain = property("jwt.domain").getString(),
+                issuer = property("jwt.issuer").getString(),
                 audience = property("jwt.audience").getString(),
                 realm = property("jwt.realm").getString(),
                 secret = property("jwt.secret").getString()
