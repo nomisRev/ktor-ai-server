@@ -29,4 +29,7 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.logback.classic)
     testImplementation(libs.bundles.testing)
+    testImplementation(libs.testcontainers.core)
+    testImplementation(libs.testcontainers.junit)
+    testImplementation(libs.testcontainers.postgresql)
 }

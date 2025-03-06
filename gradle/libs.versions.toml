@@ -5,6 +5,7 @@ ktor = "3.1.1"
 logback = "1.4.14"
 exposed = "0.47.0"
 postgresql = "42.7.1"
+testcontainers = "1.19.3"
 
 [libraries]
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -23,6 +24,9 @@ exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "e
 exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
+testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
 
 [bundles]
 exposed = [
@@ -48,7 +52,10 @@ ktor-auth = [
 ]
 testing = [
     "ktor-server-test-host",
-    "kotlin-test-junit"
+    "kotlin-test-junit",
+    "testcontainers-core",
+    "testcontainers-junit",
+    "testcontainers-postgresql"
 ]
 
 [plugins]

@@ -2,7 +2,6 @@ package com.example
 
 import io.ktor.server.config.*
 import io.ktor.server.testing.*
-import io.ktor.server.application.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -18,11 +17,38 @@ class ConfigTest {
             )
         }
 
-        val jwt = AppConfig.load(environment).jwt
+        assertEquals(
+            JWTConfig(
+                domain = "https://test-auth-domain/",
+                audience = "test-audience",
+                realm = "test realm",
+                secret = "test-secret"
+            ),
+            JWTConfig.load(environment)
+        )
+    }
 
-        assertEquals("https://test-auth-domain/", jwt.domain)
-        assertEquals("test-audience", jwt.audience)
-        assertEquals("test realm", jwt.realm)
-        assertEquals("test-secret", jwt.secret)
+    @Test
+    fun `test loading database configuration`() {
+        val environment = createTestEnvironment {
+            config = MapApplicationConfig(
+                "database.jdbcUrl" to "jdbc:postgresql://localhost/testdb",
+                "database.username" to "test-user",
+                "database.password" to "test-password",
+                "database.driverClassName" to "org.driver.TestDriver",
+                "database.maxPoolSize" to "-1"
+            )
+        }
+        
+        assertEquals(
+            DatabaseConfig(
+                jdbcUrl = "jdbc:postgresql://localhost/testdb",
+                username = "test-user",
+                password = "test-password",
+                driverClassName = "org.driver.TestDriver",
+                maxPoolSize = -1
+            ),
+            DatabaseConfig.load(environment)
+        )
     }
 }

@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.transactions.TransactionManager
 
 fun Application.setupDatabase(config: DatabaseConfig): Database {
     val database = Database.connect(
-        url = config.jdbcURL,
+        url = config.jdbcUrl,
         driver = config.driverClassName,
         user = config.username,
         password = config.password

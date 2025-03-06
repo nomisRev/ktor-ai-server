@@ -11,7 +11,7 @@ jwt:
     secret: "secret"
 database:
     driverClassName: "org.postgresql.Driver"
-    jdbcURL: "jdbc:postgresql://localhost:5432/ktor_sample"
+    jdbcUrl: "jdbc:postgresql://localhost:5432/ktor_sample"
     username: "ktor_user"
     password: "ktor_password"
     maxPoolSize: 3

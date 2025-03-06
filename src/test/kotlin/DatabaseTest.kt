@@ -1,12 +1,10 @@
 package com.example
 
 import com.example.database.Users
-import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import withApp
 import kotlin.test.*
+
 
 class DatabaseTest {
     @Test
