@@ -1,4 +1,4 @@
-package com.example
+package org.jetbrains.ktor.sample
 
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation

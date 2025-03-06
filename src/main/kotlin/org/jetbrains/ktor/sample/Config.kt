@@ -1,4 +1,4 @@
-package com.example
+package org.jetbrains.ktor.sample
 
 import io.ktor.server.application.ApplicationEnvironment
 

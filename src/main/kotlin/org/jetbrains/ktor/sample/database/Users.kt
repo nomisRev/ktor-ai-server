@@ -1,4 +1,4 @@
-package com.example.database
+package org.jetbrains.ktor.sample.database
 
 import org.jetbrains.exposed.dao.id.IntIdTable
 

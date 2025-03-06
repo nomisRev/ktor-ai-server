@@ -1,6 +1,6 @@
-package com.example
+package org.jetbrains.ktor.sample
 
-import com.example.database.Users
+import org.jetbrains.ktor.sample.database.Users
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 import kotlin.test.*

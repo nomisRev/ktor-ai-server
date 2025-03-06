@@ -1,6 +1,6 @@
-package com.example.database
+package org.jetbrains.ktor.sample.database
 
-import com.example.DatabaseConfig
+import org.jetbrains.ktor.sample.DatabaseConfig
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStopped
 import org.jetbrains.exposed.sql.Database

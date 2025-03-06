@@ -1,4 +1,4 @@
-package com.example
+package org.jetbrains.ktor.sample
 
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.utility.DockerImageName

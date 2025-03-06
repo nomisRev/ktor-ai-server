@@ -1,4 +1,4 @@
-package com.example
+package org.jetbrains.ktor.sample
 
 import io.ktor.server.config.*
 import io.ktor.server.testing.*
@@ -24,7 +24,7 @@ class ConfigTest {
                 realm = "test realm",
                 secret = "test-secret"
             ),
-            JWTConfig.load(environment)
+            JWTConfig.Companion.load(environment)
         )
     }
 
@@ -48,7 +48,7 @@ class ConfigTest {
                 driverClassName = "org.driver.TestDriver",
                 maxPoolSize = -1
             ),
-            DatabaseConfig.load(environment)
+            DatabaseConfig.Companion.load(environment)
         )
     }
 }

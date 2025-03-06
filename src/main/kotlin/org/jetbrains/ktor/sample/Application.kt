@@ -1,6 +1,6 @@
-package com.example
+package org.jetbrains.ktor.sample
 
-import com.example.database.setupDatabase
+import org.jetbrains.ktor.sample.database.setupDatabase
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
 import io.ktor.server.application.install

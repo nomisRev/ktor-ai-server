@@ -1,4 +1,4 @@
-package com.example
+package org.jetbrains.ktor.sample
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
