@@ -5,7 +5,13 @@ ktor:
     deployment:
         port: 8080
 jwt:
-  domain: "https://jwt-provider-domain/"
-  audience: "jwt-audience"
-  realm: "ktor sample app"
-  secret: "secret"
+    domain: "https://jwt-provider-domain/"
+    audience: "jwt-audience"
+    realm: "ktor sample app"
+    secret: "secret"
+database:
+    driverClassName: "org.postgresql.Driver"
+    jdbcURL: "jdbc:postgresql://localhost:5432/ktor_sample"
+    username: "ktor_user"
+    password: "ktor_password"
+    maxPoolSize: 3

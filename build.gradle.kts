@@ -25,6 +25,7 @@ dependencies {
     implementation(libs.bundles.ktor.core)
     implementation(libs.bundles.ktor.auth)
     implementation(libs.bundles.ktor.client)
+    implementation(libs.bundles.exposed)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.logback.classic)
     testImplementation(libs.bundles.testing)

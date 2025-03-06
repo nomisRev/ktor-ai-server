@@ -37,5 +37,6 @@ fun withApp(test: suspend HttpClient.() -> Unit): TestResult =
                 })
             }
         }
+        startApplication()
         test(client)
     }

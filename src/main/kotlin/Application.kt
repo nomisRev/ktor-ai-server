@@ -1,5 +1,6 @@
 package com.example
 
+import com.example.database.setupDatabase
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
 import io.ktor.server.application.install
@@ -13,11 +14,12 @@ fun main(args: Array<String>) =
 
 fun Application.module() {
     val appConfig = AppConfig.load(environment)
+    val database = setupDatabase(appConfig.database)
+    configureJWT(appConfig.jwt)
     install(ContentNegotiation) {
         json()
     }
     configureRouting()
-    configureJWT(appConfig.jwt)
 }
 
 fun Application.configureRouting() {
