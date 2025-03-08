@@ -13,7 +13,7 @@ fun withApp(test: suspend HttpClient.() -> Unit): TestResult =
     testApplication {
         environment {
             config = ApplicationConfig("application.yaml")
-                .mergeWith(PostgresContainer.getDatabaseConfig())
+                .mergeWith(PostgresContainer.getMapAppConfig())
         }
         val client = createClient {
             install(ContentNegotiation) {

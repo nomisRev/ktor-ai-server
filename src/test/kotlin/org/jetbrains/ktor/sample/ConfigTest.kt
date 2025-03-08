@@ -24,7 +24,7 @@ class ConfigTest {
                 realm = "test realm",
                 secret = "test-secret"
             ),
-            JWTConfig.Companion.load(environment)
+            JWTConfig.load(environment)
         )
     }
 
@@ -48,7 +48,7 @@ class ConfigTest {
                 driverClassName = "org.driver.TestDriver",
                 maxPoolSize = -1
             ),
-            DatabaseConfig.Companion.load(environment)
+            DatabaseConfig.load(environment)
         )
     }
 }

@@ -24,12 +24,10 @@ powerAssert {
 dependencies {
     implementation(libs.bundles.ktor.core)
     implementation(libs.bundles.ktor.auth)
-    implementation(libs.bundles.ktor.client)
     implementation(libs.bundles.exposed)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.logback.classic)
+    implementation(libs.kotlinx.datetime)
+    testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)
-    testImplementation(libs.testcontainers.core)
-    testImplementation(libs.testcontainers.junit)
-    testImplementation(libs.testcontainers.postgresql)
 }

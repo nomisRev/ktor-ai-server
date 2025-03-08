@@ -25,7 +25,10 @@ data class DatabaseConfig(
     val jdbcUrl: String,
     val username: String,
     val password: String,
-    val maxPoolSize: Int
+    val maxPoolSize: Int,
+    val cachePrepStmts: Boolean,
+    val prepStmtCacheSize: Int,
+    val prepStmtCacheSqlLimit: Int,
 ) {
     companion object {
         fun load(environment: ApplicationEnvironment): DatabaseConfig = with(environment.config) {
@@ -34,7 +37,10 @@ data class DatabaseConfig(
                 jdbcUrl = property("database.jdbcUrl").getString(),
                 username = property("database.username").getString(),
                 password = property("database.password").getString(),
-                maxPoolSize = property("database.maxPoolSize").getString().toInt()
+                maxPoolSize = property("database.maxPoolSize").getString().toInt(),
+                cachePrepStmts = property("cachePrepStmts").getString().toBoolean(),
+                prepStmtCacheSize = property("prepStmtCacheSize").getString().toInt(),
+                prepStmtCacheSqlLimit = property("prepStmtCacheSqlLimit").getString().toInt(),
             )
         }
     }
@@ -43,6 +49,6 @@ data class DatabaseConfig(
 data class AppConfig(val jwt: JWTConfig, val database: DatabaseConfig) {
     companion object {
         fun load(environment: ApplicationEnvironment): AppConfig =
-            AppConfig(jwt = JWTConfig.load(environment), database = DatabaseConfig.load(environment))
+            AppConfig(JWTConfig.load(environment), DatabaseConfig.load(environment))
     }
 }

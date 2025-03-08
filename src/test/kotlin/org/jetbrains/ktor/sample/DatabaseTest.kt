@@ -3,6 +3,7 @@ package org.jetbrains.ktor.sample
 import org.jetbrains.ktor.sample.database.Users
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.ktor.sample.database.UserEntity
 import kotlin.test.*
 
 
@@ -15,12 +16,10 @@ class DatabaseTest {
                 it[email] = "test@example.com"
             }[Users.id]
 
-            val userRow = Users.select(Users.id, Users.name, Users.email)
-                .where { Users.id eq id }
-                .single()
+            val user = UserEntity.findById(id)!!.toUser()
 
-            assertEquals("Test User", userRow[Users.name], "User name should match")
-            assertEquals("test@example.com", userRow[Users.email], "User email should match")
+            assertEquals("Test User", user.name, "User name should match")
+            assertEquals("test@example.com", user.email, "User email should match")
         }
     }
 }

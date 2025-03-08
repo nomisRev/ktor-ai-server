@@ -21,7 +21,7 @@ object PostgresContainer {
             }
     }
 
-    fun getDatabaseConfig() =
+    fun getMapAppConfig() =
         MapApplicationConfig().apply {
             put("database.jdbcUrl", container.jdbcUrl)
             put("database.username", container.username)
@@ -29,4 +29,13 @@ object PostgresContainer {
             put("database.driverClassName", container.driverClassName)
             put("database.maxPoolSize", "5")
         }
+
+    fun getDatabaseConfig() =
+        DatabaseConfig(
+            driverClassName = container.driverClassName,
+            jdbcUrl = container.jdbcUrl,
+            username = container.username,
+            password = container.password,
+            maxPoolSize = 5
+        )
 }

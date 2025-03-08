@@ -131,3 +131,15 @@ class UserRepository {
     }
 }
 ```
+
+```kotlin
+// Avoid many statements
+assertNotNull(user)
+assertEquals("Test User", user.name)
+assertEquals("test@example.com", user.email)
+assertEquals("USER", user.role)
+assertNotNull(user.expiresAt)
+
+// Prefer instead
+
+```

@@ -2,6 +2,7 @@ ktor:
     application:
         modules:
             - org.jetbrains.ktor.sample.ApplicationKt.module
+#            - org.jetbrains.ktor.sample.KotlinConfKt.module2
     deployment:
         port: 8080
 jwt:
@@ -14,4 +15,7 @@ database:
     jdbcUrl: "jdbc:postgresql://localhost:5432/ktor_sample"
     username: "ktor_user"
     password: "ktor_password"
-    maxPoolSize: 3
+    maxPoolSize: 20
+    cachePrepStmts: true
+    prepStmtCacheSize: 250
+    prepStmtCacheSqlLimit: 2048
