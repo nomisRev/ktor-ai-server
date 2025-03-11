@@ -38,9 +38,9 @@ data class DatabaseConfig(
                 username = property("database.username").getString(),
                 password = property("database.password").getString(),
                 maxPoolSize = property("database.maxPoolSize").getString().toInt(),
-                cachePrepStmts = property("cachePrepStmts").getString().toBoolean(),
-                prepStmtCacheSize = property("prepStmtCacheSize").getString().toInt(),
-                prepStmtCacheSqlLimit = property("prepStmtCacheSqlLimit").getString().toInt(),
+                cachePrepStmts = property("database.cachePrepStmts").getString().toBoolean(),
+                prepStmtCacheSize = property("database.prepStmtCacheSize").getString().toInt(),
+                prepStmtCacheSqlLimit = property("database.prepStmtCacheSqlLimit").getString().toInt(),
             )
         }
     }

@@ -28,6 +28,7 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.logback.classic)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.bouncycastle)
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)
 }

@@ -36,7 +36,10 @@ class ConfigTest {
                 "database.username" to "test-user",
                 "database.password" to "test-password",
                 "database.driverClassName" to "org.driver.TestDriver",
-                "database.maxPoolSize" to "-1"
+                "database.maxPoolSize" to "-1",
+                "database.cachePrepStmts" to "true",
+                "database.prepStmtCacheSize" to "250",
+                "database.prepStmtCacheSqlLimit" to "2048",
             )
         }
         
@@ -46,7 +49,10 @@ class ConfigTest {
                 username = "test-user",
                 password = "test-password",
                 driverClassName = "org.driver.TestDriver",
-                maxPoolSize = -1
+                maxPoolSize = -1,
+                cachePrepStmts = true,
+                prepStmtCacheSize = 250,
+                prepStmtCacheSqlLimit = 2048,
             ),
             DatabaseConfig.load(environment)
         )

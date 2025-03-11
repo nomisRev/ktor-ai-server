@@ -7,6 +7,7 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.respond
+import java.util.Date
 
 fun Application.configureJWT(jwtConfig: JWTConfig) {
     authentication {
@@ -20,11 +21,20 @@ fun Application.configureJWT(jwtConfig: JWTConfig) {
                     .build()
             )
             validate { credential ->
-                if (credential.payload.getClaim("username").asString() != "") JWTPrincipal(credential.payload)
-                else null
+                // TODO: We should validate the user hasn't logged out or token was invalidated
+                //   check matching expiresAt in database?
+                when {
+                    credential.expiresAt?.before(Date()) == true ->
+                        respond(HttpStatusCode.Unauthorized, "Token has expired")
+                    else -> JWTPrincipal(credential.payload)
+                }
             }
             challenge { defaultScheme, realm ->
-                call.respond(HttpStatusCode.Unauthorized, "Token is not valid or has expired")
+                val message = when {
+                    call.request.headers["Authorization"].isNullOrBlank() -> "Missing or empty Authorization header"
+                    else -> "Token is not valid or has expired"
+                }
+                call.respond(HttpStatusCode.Unauthorized, message)
             }
         }
     }

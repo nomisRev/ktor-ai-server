@@ -36,6 +36,9 @@ object PostgresContainer {
             jdbcUrl = container.jdbcUrl,
             username = container.username,
             password = container.password,
-            maxPoolSize = 5
+            maxPoolSize = 5,
+            cachePrepStmts = true,
+            prepStmtCacheSize = 250,
+            prepStmtCacheSqlLimit = 2048,
         )
 }
