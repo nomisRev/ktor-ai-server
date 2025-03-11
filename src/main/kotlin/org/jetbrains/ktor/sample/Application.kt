@@ -4,6 +4,7 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
 import io.ktor.server.application.install
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.routing.routing
 import org.jetbrains.ktor.sample.users.UserRepository
 import org.jetbrains.ktor.sample.users.installUserRoutes
 
@@ -17,5 +18,7 @@ fun Application.module() {
     install(ContentNegotiation) {
         json()
     }
-    installUserRoutes(appConfig.jwt, UserRepository(database))
+    routing {
+        installUserRoutes(appConfig.jwt, UserRepository(database))
+    }
 }

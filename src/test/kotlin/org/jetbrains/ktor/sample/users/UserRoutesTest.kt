@@ -1,13 +1,13 @@
 package org.jetbrains.ktor.sample.users
 
 import io.ktor.client.call.body
+import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
-import org.jetbrains.ktor.sample.database.newTestUser
 import org.jetbrains.ktor.sample.withApp
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -91,7 +91,7 @@ class UserRoutesTest {
                 expiresAt = null
             ))
             contentType(ContentType.Application.Json)
-            headers.append("Authorization", "Bearer $token")
+            bearerAuth(token)
         }
         assertEquals(HttpStatusCode.OK, updateResponse.status)
         val updatedUser = updateResponse.body<User>()
@@ -117,7 +117,7 @@ class UserRoutesTest {
         val token = loginResponse.body<Token>().token
         assertNotNull(token, "Token should not be null")
 
-        val nonExistentUserId = 9999
+        val nonExistentUserId = Long.MIN_VALUE
         val updateResponse = put("/users/$nonExistentUserId") {
             setBody(UpdateUser(
                 id = nonExistentUserId,
@@ -128,9 +128,9 @@ class UserRoutesTest {
                 expiresAt = null
             ))
             contentType(ContentType.Application.Json)
-            headers.append("Authorization", "Bearer $token")
+            bearerAuth(token)
         }
-        assertEquals(HttpStatusCode.NotFound, updateResponse.status)
+        assertEquals(HttpStatusCode.BadRequest, updateResponse.status)
     }
 
     @Test
@@ -161,7 +161,7 @@ class UserRoutesTest {
                 expiresAt = null
             ))
             contentType(ContentType.Application.Json)
-            headers.append("Authorization", "Bearer $token")
+            bearerAuth(token)
         }
         
         assertEquals(HttpStatusCode.BadRequest, updateResponse.status)

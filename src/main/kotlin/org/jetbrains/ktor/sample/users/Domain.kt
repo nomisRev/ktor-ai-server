@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class User(
-    val id: Int,
+    val id: Long,
     val name: String,
     val email: String,
     val role: String,
@@ -26,7 +26,7 @@ data class NewUser(
 
 @Serializable
 data class UpdateUser(
-    val id: Int,
+    val id: Long,
     val name: String? = null,
     val password: String? = null,
     val email: String? = null,

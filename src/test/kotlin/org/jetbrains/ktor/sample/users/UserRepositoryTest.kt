@@ -1,10 +1,9 @@
-package org.jetbrains.ktor.sample.database
+package org.jetbrains.ktor.sample.users
 
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import org.jetbrains.ktor.sample.DatabaseSpec
-import org.jetbrains.ktor.sample.users.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -38,7 +37,7 @@ class UserRepositoryTest : DatabaseSpec() {
         try {
             userRepository.verifyPassword("nonexistentuser", "password")
             assertFalse(true, "verifyPassword should throw an exception for non-existent user")
-        } catch (e: NoSuchElementException) {
+        } catch (_: NoSuchElementException) {
             assertTrue(true, "verifyPassword correctly throws exception for non-existent user")
         }
     }
@@ -143,7 +142,7 @@ class UserRepositoryTest : DatabaseSpec() {
 
     @Test
     fun `test deleteUser returns false for non-existent user`() = runBlocking {
-        val result = userRepository.deleteUser(Int.MIN_VALUE)
+        val result = userRepository.deleteUser(Long.MIN_VALUE)
         assertFalse(result, "Deleting a non-existent user should return false")
     }
 
