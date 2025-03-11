@@ -143,8 +143,7 @@ class UserRepositoryTest : DatabaseSpec() {
 
     @Test
     fun `test deleteUser returns false for non-existent user`() = runBlocking {
-        val nonExistentUserId = 999999 // Using a very large ID that is unlikely to exist
-        val result = userRepository.deleteUser(nonExistentUserId)
+        val result = userRepository.deleteUser(Int.MIN_VALUE)
         assertFalse(result, "Deleting a non-existent user should return false")
     }
 

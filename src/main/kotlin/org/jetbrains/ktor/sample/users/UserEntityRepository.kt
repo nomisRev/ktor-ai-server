@@ -58,14 +58,12 @@ class UserEntityRepository(private val database: Database, private val encryptio
         UserEntity.find { Users.email eq email }.firstOrNull()?.toUser()
     }
 
-    // TODO: Should this use the new upsert operation if user doesn't exist?
     suspend fun updateUser(updateUser: UpdateUser): User? = newSuspendedTransaction(Dispatchers.IO, database) {
         val entity = UserEntity.findById(updateUser.id)
         if (updateUser.name != null) entity?.name = updateUser.name
         if (updateUser.email != null) entity?.email = updateUser.email
         if (updateUser.role != null) entity?.role = updateUser.role
         if (updateUser.expiresAt != null) entity?.expiresAt = updateUser.expiresAt
-        // Handle password update if provided
         if (updateUser.password != null) {
             val (salt, hash) = encryption.encrypt(updateUser.password)
             entity?.salt = salt

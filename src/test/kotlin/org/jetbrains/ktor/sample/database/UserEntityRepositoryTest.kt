@@ -26,7 +26,6 @@ class UserEntityRepositoryTest : DatabaseSpec() {
 
     @Test
     fun `test verifyPassword with correct password`() = runBlocking {
-        // Create a test user
         val username = "testuser"
         val password = "correctpassword"
         val email = "test@example.com"
@@ -35,16 +34,13 @@ class UserEntityRepositoryTest : DatabaseSpec() {
 
         userRepository.createUser(NewUser(username, password, email, role, expiresAt))
 
-        // Verify password with correct credentials
         val result = userRepository.verifyPassword(username, password)
         
-        // Assert that verification succeeds
         assertTrue(result, "Password verification should succeed with correct password")
     }
 
     @Test
     fun `test verifyPassword with incorrect password`() = runBlocking {
-        // Create a test user
         val username = "testuser2"
         val password = "correctpassword"
         val email = "test2@example.com"
@@ -53,22 +49,17 @@ class UserEntityRepositoryTest : DatabaseSpec() {
 
         userRepository.createUser(NewUser(username, password, email, role, expiresAt))
 
-        // Verify password with incorrect credentials
         val result = userRepository.verifyPassword(username, "wrongpassword")
         
-        // Assert that verification fails
         assertFalse(result, "Password verification should fail with incorrect password")
     }
 
     @Test
     fun `test verifyPassword with non-existent user`() = runBlocking {
-        // Attempt to verify password for a non-existent user
         try {
             userRepository.verifyPassword("nonexistentuser", "anypassword")
-            // If we reach here, the test should fail because an exception should have been thrown
             assertFalse(true, "verifyPassword should throw an exception for non-existent user")
         } catch (e: NoSuchElementException) {
-            // Expected behavior - the function should throw NoSuchElementException
             assertTrue(true, "verifyPassword correctly throws exception for non-existent user")
         }
     }

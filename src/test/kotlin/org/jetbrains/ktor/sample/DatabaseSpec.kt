@@ -19,7 +19,6 @@ abstract class DatabaseSpec {
             user = dbConfig.username,
             password = dbConfig.password
         )
-        // Create tables
         transaction(database) {
             SchemaUtils.create(Users)
         }
