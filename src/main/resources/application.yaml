@@ -2,7 +2,6 @@ ktor:
     application:
         modules:
             - org.jetbrains.ktor.sample.ApplicationKt.module
-#            - org.jetbrains.ktor.sample.KotlinConfKt.module2
     deployment:
         port: 8080
 jwt:

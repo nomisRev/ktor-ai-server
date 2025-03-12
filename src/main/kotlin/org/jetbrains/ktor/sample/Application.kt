@@ -14,11 +14,12 @@ fun main(args: Array<String>) =
 fun Application.module() {
     val appConfig = AppConfig.load(environment)
     val database = setupDatabase(appConfig.database)
-    configureJWT(appConfig.jwt)
+    val users = UserRepository(database)
+    configureJWT(appConfig.jwt, users)
     install(ContentNegotiation) {
         json()
     }
     routing {
-        installUserRoutes(appConfig.jwt, UserRepository(database))
+        installUserRoutes(appConfig.jwt, users)
     }
 }

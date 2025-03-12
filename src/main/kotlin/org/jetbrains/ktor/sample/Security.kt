@@ -7,9 +7,15 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.respond
+import kotlinx.datetime.Clock
+import kotlinx.datetime.toKotlinInstant
+import org.jetbrains.ktor.sample.users.User
+import org.jetbrains.ktor.sample.users.UserRepository
 import java.util.Date
 
-fun Application.configureJWT(jwtConfig: JWTConfig) {
+data class UserNameJWT(val user: User)
+
+fun Application.configureJWT(jwtConfig: JWTConfig, users: UserRepository) {
     authentication {
         jwt {
             realm = jwtConfig.realm
@@ -21,12 +27,23 @@ fun Application.configureJWT(jwtConfig: JWTConfig) {
                     .build()
             )
             validate { credential ->
-                // TODO: We should validate the user hasn't logged out or token was invalidated
-                //   check matching expiresAt in database?
+                // TODO clean-up code
+                val userId = credential.getClaim("user_id", Long::class)
+                val now = Date()
                 when {
-                    credential.expiresAt?.before(Date()) == true ->
+                    userId == null ->
+                        respond(HttpStatusCode.Unauthorized, "Invalid token")
+
+                    credential.expiresAt?.before(now) == true ->
                         respond(HttpStatusCode.Unauthorized, "Token has expired")
-                    else -> JWTPrincipal(credential.payload)
+
+                    else -> when (val user = users.getUserById(userId)) {
+                        null -> respond(HttpStatusCode.Unauthorized)
+                        else ->
+                            if (Date(user.expiresAt.toEpochMilliseconds()).before(now)) {
+                                respond(HttpStatusCode.Unauthorized, "Token has expired")
+                            } else UserNameJWT(user)
+                    }
                 }
             }
             challenge { defaultScheme, realm ->

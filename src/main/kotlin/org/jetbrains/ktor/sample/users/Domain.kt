@@ -11,7 +11,7 @@ data class User(
     val email: String,
     val role: String,
     @SerialName("expires_at")
-    val expiresAt: Instant?
+    val expiresAt: Instant
 )
 
 @Serializable
@@ -19,20 +19,15 @@ data class NewUser(
     val name: String,
     val password: String,
     val email: String,
-    val role: String,
-    @SerialName("expires_at")
-    val expiresAt: Instant
+    val role: String
 )
 
 @Serializable
 data class UpdateUser(
-    val id: Long,
     val name: String? = null,
     val password: String? = null,
     val email: String? = null,
-    val role: String? = null,
-    @SerialName("expires_at")
-    val expiresAt: Instant? = null
+    val role: String? = null
 )
 
 
@@ -41,4 +36,4 @@ data class Login(val username: String, val password: String)
 
 @Serializable
 @JvmInline
-value class Token(val token: String)
+value class Token(val value: String)

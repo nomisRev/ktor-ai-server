@@ -3,7 +3,6 @@ package org.jetbrains.ktor.sample
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.ktor.sample.users.UserRepository
 import org.jetbrains.ktor.sample.users.Users
 import kotlin.test.BeforeTest
 
