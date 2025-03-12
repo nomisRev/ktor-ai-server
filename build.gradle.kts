@@ -1,9 +1,9 @@
-
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.assert)
     alias(libs.plugins.ktor)
     alias(libs.plugins.kotlin.plugin.serialization)
+//    id("io.github.nomisrev.openapi-kt-plugin") version "0.0.6"
 }
 
 group = "com.example"
@@ -32,3 +32,7 @@ dependencies {
     implementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)
 }
+
+//openApiConfig {
+//    spec("OpenAI", file("openai.yaml"))
+//}

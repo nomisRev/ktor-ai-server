@@ -6,7 +6,9 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
+import java.io.File
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.minutes
@@ -98,5 +100,50 @@ class AIRepositoryTest {
         assertTrue(response.isNotEmpty())
         assertTrue(response.length > 20, "Response should be a substantial poem")
         println("[DEBUG_LOG] Creative prompt response: $response")
+    }
+
+    /**
+     * Test for creating an assistant with a file and running it.
+     * Note: This test requires a valid OpenAI API key and will create actual resources on your OpenAI account.
+     * It's commented out by default to prevent unintended API calls.
+     */
+     @Test
+    fun `test create assistant with file and run`() = runBlocking {
+        // Create a temporary test file
+        val tempFile = File.createTempFile("test-assistant-", ".txt")
+        tempFile.writeText("This is a test file for the OpenAI assistant.")
+
+        try {
+            // Create an assistant with the file and run it
+            val result = aiRepository.createAssistantWithFileAndRun(
+                assistantName = "Test Assistant",
+                assistantInstructions = "You are a helpful assistant that answers questions based on the provided files.",
+                filePath = tempFile.absolutePath,
+                prompt = "What does the uploaded file contain?",
+                runInstructions = "Please be concise in your response."
+            )
+
+            // Verify the response
+            assertNotNull(result)
+            assertNotNull(result.assistant)
+            assertEquals("Test Assistant", result.assistant.name)
+            assertNotNull(result.file)
+            assertTrue(result.file.id.isNotEmpty())
+            assertNotNull(result.thread)
+            assertTrue(result.thread.id.isNotEmpty())
+            assertNotNull(result.run)
+            assertTrue(result.run.id.isNotEmpty())
+            assertEquals(result.assistant.id, result.run.assistantId)
+            assertEquals(result.thread.id, result.run.threadId)
+
+            println("[DEBUG_LOG] Assistant ID: ${result.assistant.id}")
+            println("[DEBUG_LOG] File ID: ${result.file.id}")
+            println("[DEBUG_LOG] Thread ID: ${result.thread.id}")
+            println("[DEBUG_LOG] Run ID: ${result.run.id}")
+            println("[DEBUG_LOG] Run status: ${result.run.status}")
+        } finally {
+            // Clean up the temporary file
+            tempFile.delete()
+        }
     }
 }
