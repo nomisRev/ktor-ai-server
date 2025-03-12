@@ -1,6 +1,7 @@
 package org.jetbrains.ktor.sample
 
 import io.ktor.server.application.ApplicationEnvironment
+import org.jetbrains.ktor.sample.ai.AIConfig
 
 data class JWTConfig(
     val issuer: String,
@@ -46,9 +47,13 @@ data class DatabaseConfig(
     }
 }
 
-data class AppConfig(val jwt: JWTConfig, val database: DatabaseConfig) {
+data class AppConfig(val jwt: JWTConfig, val database: DatabaseConfig, val ai: AIConfig) {
     companion object {
         fun load(environment: ApplicationEnvironment): AppConfig =
-            AppConfig(JWTConfig.load(environment), DatabaseConfig.load(environment))
+            AppConfig(
+                jwt = JWTConfig.load(environment), 
+                database = DatabaseConfig.load(environment),
+                ai = AIConfig.load(environment)
+            )
     }
 }

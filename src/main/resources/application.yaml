@@ -18,3 +18,7 @@ database:
     cachePrepStmts: true
     prepStmtCacheSize: 250
     prepStmtCacheSqlLimit: 2048
+ai:
+    baseUrl: "http://localhost:8080"
+    apiKey: "not-needed-for-local-llama"
+    model: "Qwen_QwQ-32B-Q4_K_M.gguf"

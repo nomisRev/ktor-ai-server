@@ -29,6 +29,6 @@ dependencies {
     implementation(libs.logback.classic)
     implementation(libs.kotlinx.datetime)
     implementation(libs.bouncycastle)
-    testImplementation(libs.bundles.ktor.client)
+    implementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)
 }
