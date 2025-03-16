@@ -7,13 +7,11 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.respond
-import kotlinx.datetime.Clock
-import kotlinx.datetime.toKotlinInstant
 import org.jetbrains.ktor.sample.users.User
 import org.jetbrains.ktor.sample.users.UserRepository
 import java.util.Date
 
-data class UserNameJWT(val user: User)
+data class UserJWT(val user: User)
 
 fun Application.configureJWT(jwtConfig: JWTConfig, users: UserRepository) {
     authentication {
@@ -42,7 +40,7 @@ fun Application.configureJWT(jwtConfig: JWTConfig, users: UserRepository) {
                         else ->
                             if (Date(user.expiresAt.toEpochMilliseconds()).before(now)) {
                                 respond(HttpStatusCode.Unauthorized, "Token has expired")
-                            } else UserNameJWT(user)
+                            } else UserJWT(user)
                     }
                 }
             }

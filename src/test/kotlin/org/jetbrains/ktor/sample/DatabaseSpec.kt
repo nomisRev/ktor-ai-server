@@ -1,5 +1,7 @@
 package org.jetbrains.ktor.sample
 
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -11,13 +13,18 @@ abstract class DatabaseSpec {
 
     @BeforeTest
     fun setup() {
-        val dbConfig = PostgresContainer.getDatabaseConfig()
-        database = Database.connect(
-            url = dbConfig.jdbcUrl,
-            driver = dbConfig.driverClassName,
-            user = dbConfig.username,
-            password = dbConfig.password
-        )
+        val config = PostgresContainer.getDatabaseConfig()
+        val dataSource = HikariDataSource(HikariConfig().apply {
+            jdbcUrl = "jdbc:postgresql://${config.host}:${config.port}/${config.name}"
+            username = config.username
+            password = config.password
+            driverClassName = config.driverClassName
+            maximumPoolSize = config.maxPoolSize
+            addDataSourceProperty("cachePrepStmts", config.cachePrepStmts.toString())
+            addDataSourceProperty("prepStmtCacheSize", config.prepStmtCacheSize.toString())
+            addDataSourceProperty("prepStmtCacheSqlLimit", config.prepStmtCacheSqlLimit.toString())
+        })
+        database = Database.connect(dataSource)
         transaction(database) {
             SchemaUtils.create(Users)
         }

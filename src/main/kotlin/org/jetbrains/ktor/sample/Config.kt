@@ -23,7 +23,9 @@ data class JWTConfig(
 
 data class DatabaseConfig(
     val driverClassName: String,
-    val jdbcUrl: String,
+    val host: String,
+    val port: Int,
+    val name: String,
     val username: String,
     val password: String,
     val maxPoolSize: Int,
@@ -35,7 +37,9 @@ data class DatabaseConfig(
         fun load(environment: ApplicationEnvironment): DatabaseConfig = with(environment.config) {
             DatabaseConfig(
                 driverClassName = property("database.driverClassName").getString(),
-                jdbcUrl = property("database.jdbcUrl").getString(),
+                host = property("database.host").getString(),
+                port = property("database.port").getString().toInt(),
+                name = property("database.name").getString(),
                 username = property("database.username").getString(),
                 password = property("database.password").getString(),
                 maxPoolSize = property("database.maxPoolSize").getString().toInt(),
@@ -47,13 +51,28 @@ data class DatabaseConfig(
     }
 }
 
-data class AppConfig(val jwt: JWTConfig, val database: DatabaseConfig, val ai: AIConfig) {
+data class FlywayConfig(
+    val locations: String,
+    val baselineOnMigrate: Boolean
+) {
+    companion object {
+        fun load(environment: ApplicationEnvironment): FlywayConfig = with(environment.config) {
+            FlywayConfig(
+                locations = property("flyway.locations").getString(),
+                baselineOnMigrate = property("flyway.baselineOnMigrate").getString().toBoolean()
+            )
+        }
+    }
+}
+
+data class AppConfig(val jwt: JWTConfig, val database: DatabaseConfig, val ai: AIConfig, val flyway: FlywayConfig) {
     companion object {
         fun load(environment: ApplicationEnvironment): AppConfig =
             AppConfig(
                 jwt = JWTConfig.load(environment), 
                 database = DatabaseConfig.load(environment),
-                ai = AIConfig.load(environment)
+                ai = AIConfig.load(environment),
+                flyway = FlywayConfig.load(environment)
             )
     }
 }

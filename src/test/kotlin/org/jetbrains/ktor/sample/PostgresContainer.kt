@@ -17,23 +17,40 @@ object PostgresContainer {
                 withUsername("ktor_user")
                 withPassword("<PASSWORD>")
                 waitingFor(Wait.forListeningPort())
+//                withCommand("postgres -c shared_preload_libraries=vector")
                 start()
             }
     }
 
     fun getMapAppConfig() =
         MapApplicationConfig().apply {
-            put("database.jdbcUrl", container.jdbcUrl)
+            put("database.host", container.host)
+            put("database.port", container.firstMappedPort.toString())
+            put("database.name", container.databaseName)
             put("database.username", container.username)
             put("database.password", container.password)
             put("database.driverClassName", container.driverClassName)
             put("database.maxPoolSize", "5")
+            put("database.cachePrepStmts", "true")
+            put("database.prepStmtCacheSize", "250")
+            put("database.prepStmtCacheSqlLimit", "2048")
+            put("flyway.enabled", "true")
+            put("flyway.locations", "classpath:db/migration")
+            put("flyway.baselineOnMigrate", "true")
         }
+
+    fun getFlywayConfig() =
+        FlywayConfig(
+            locations = "classpath:db/migration",
+            baselineOnMigrate = true
+        )
 
     fun getDatabaseConfig() =
         DatabaseConfig(
             driverClassName = container.driverClassName,
-            jdbcUrl = container.jdbcUrl,
+            host = container.host,
+            port = container.firstMappedPort,
+            name = container.databaseName,
             username = container.username,
             password = container.password,
             maxPoolSize = 5,

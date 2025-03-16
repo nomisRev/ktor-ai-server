@@ -35,3 +35,16 @@ Tech Stack: Ktor, Exposed, BouncyCastle Argon2
 - Avoid hardcoding secrets (use environment variables).
 - Leverage higher-order functions (e.g., map, filter) and avoid imperative loops where possible.
 - Don't write meaningless comments that express in natural text what is already clear from the function names or code
+- Do not write this kind-of comments:
+- ```
+  /**
+   * Represents a document embedding with its metadata.
+   *
+   * @property id The unique identifier of the embedding
+   * @property documentId The identifier of the document this embedding belongs to
+   * @property content The text content that was embedded
+   * @property embedding The vector representation of the content
+   * @property metadata Additional metadata about the document (optional)
+   * @property createdAt The timestamp when the embedding was created
+  */
+  ```

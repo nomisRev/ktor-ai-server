@@ -32,7 +32,9 @@ class ConfigTest {
     fun `test loading database configuration`() {
         val environment = createTestEnvironment {
             config = MapApplicationConfig(
-                "database.jdbcUrl" to "jdbc:postgresql://localhost/testdb",
+                "database.host" to "localhost",
+                "database.port" to "5432",
+                "database.name" to "testdb",
                 "database.username" to "test-user",
                 "database.password" to "test-password",
                 "database.driverClassName" to "org.driver.TestDriver",
@@ -45,7 +47,9 @@ class ConfigTest {
         
         assertEquals(
             DatabaseConfig(
-                jdbcUrl = "jdbc:postgresql://localhost/testdb",
+                host = "localhost",
+                port = 5432,
+                name = "testdb",
                 username = "test-user",
                 password = "test-password",
                 driverClassName = "org.driver.TestDriver",

@@ -13,7 +13,7 @@ import io.ktor.server.routing.put
 import io.ktor.server.routing.route
 import kotlinx.datetime.Instant
 import org.jetbrains.ktor.sample.JWTConfig
-import org.jetbrains.ktor.sample.UserNameJWT
+import org.jetbrains.ktor.sample.UserJWT
 import java.time.Duration
 import java.util.Date
 
@@ -43,7 +43,7 @@ fun Routing.installUserRoutes(config: JWTConfig, repository: UserRepository) {
                     .withExpiresAt(Date(expiresAt))
                     .withIssuedAt(Date(issuedAt))
                     .sign(Algorithm.HMAC256(config.secret))
-                call.respond(Token(token))
+                call.respond(HttpStatusCode.OK, Token(token))
             } else {
                 call.respond(status = HttpStatusCode.Unauthorized, message = "Invalid username or password")
             }
@@ -53,7 +53,7 @@ fun Routing.installUserRoutes(config: JWTConfig, repository: UserRepository) {
             // TODO rely on userId from JWT to eliminate ability to update not-yourself
             //  that is only allowed for ADMIN role
             put {
-                val jwt = call.principal<UserNameJWT>()!!
+                val jwt = call.principal<UserJWT>()!!
                 val updatedUser = call.receive<UpdateUser>()
                 val updated = repository.updateUser(jwt.user.id, updatedUser)
                 if (updated != null) call.respond(HttpStatusCode.OK, updated)
@@ -61,7 +61,7 @@ fun Routing.installUserRoutes(config: JWTConfig, repository: UserRepository) {
             }
 
             post("/logout") {
-                val jwt = call.principal<UserNameJWT>()!!
+                val jwt = call.principal<UserJWT>()!!
                 val success = repository.invalidateUserToken(jwt.user)
                 if (success) call.respond(HttpStatusCode.OK, "Logged out successfully")
                 else call.respond(HttpStatusCode.NotFound, "User not found")

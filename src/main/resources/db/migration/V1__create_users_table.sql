@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS users (
+    user_id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    role VARCHAR(50) NOT NULL,
+    salt BYTEA NOT NULL,
+    password_hash BYTEA NOT NULL,
+    expires_at TIMESTAMP WITH TIME ZONE NOT NULL
+);

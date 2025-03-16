@@ -11,13 +11,18 @@ jwt:
     secret: "secret"
 database:
     driverClassName: "org.postgresql.Driver"
-    jdbcUrl: "jdbc:postgresql://localhost:5432/ktor_sample"
+    host: "localhost"
+    port: 5432
+    name: "ktor_sample"
     username: "ktor_user"
     password: "ktor_password"
     maxPoolSize: 20
     cachePrepStmts: true
     prepStmtCacheSize: 250
     prepStmtCacheSqlLimit: 2048
+flyway:
+    locations: "classpath:db/migration"
+    baselineOnMigrate: true
 ai:
     baseUrl: "http://localhost:8080"
     apiKey: "not-needed-for-local-llama"

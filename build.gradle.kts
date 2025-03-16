@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.kotlin.assert)
     alias(libs.plugins.ktor)
     alias(libs.plugins.kotlin.plugin.serialization)
-//    id("io.github.nomisrev.openapi-kt-plugin") version "0.0.6"
 }
 
 group = "com.example"
@@ -22,17 +21,14 @@ powerAssert {
 }
 
 dependencies {
-    implementation(libs.bundles.ktor.core)
-    implementation(libs.bundles.ktor.auth)
+    implementation(libs.bundles.ktor.server)
     implementation(libs.bundles.exposed)
-    implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.logback.classic)
     implementation(libs.kotlinx.datetime)
     implementation(libs.bouncycastle)
-    implementation(libs.bundles.ktor.client)
+    implementation(libs.bundles.flyway)
+    implementation(libs.bundles.langchain4j)
+
+    testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)
 }
-
-//openApiConfig {
-//    spec("OpenAI", file("openai.yaml"))
-//}
