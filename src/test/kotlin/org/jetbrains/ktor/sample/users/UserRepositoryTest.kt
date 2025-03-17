@@ -21,14 +21,14 @@ class UserRepositoryTest : DatabaseSpec() {
     fun `test verifyPassword with correct password`() = runBlocking<Unit> {
         val user = insertUser()
         val result = userRepository.verifyPassword(user.name, "password")
-        assertEquals(VerifyResult(true, user.id), result)
+        assert(VerifyResult(true, user.id) == result)
     }
 
     @Test
     fun `test verifyPassword with incorrect password`() = runBlocking {
         val user = insertUser()
         val result = userRepository.verifyPassword(user.name, "wrongpassword")
-        assertEquals(VerifyResult(false, user.id), result)
+        assert(VerifyResult(false, user.id) == result)
     }
 
     @Test
@@ -49,9 +49,9 @@ class UserRepositoryTest : DatabaseSpec() {
             )
         )
         assertAll(
-            { assertEquals("Create User", user.name) },
-            { assertEquals("CreateUser@example.com", user.email) },
-            { assertEquals("CreateRole", user.role) }
+            { assert("Create User" == user.name) },
+            { assert("CreateUser@example.com" == user.email) },
+            { assert("CreateRole" == user.role) }
         )
     }
 
@@ -68,9 +68,9 @@ class UserRepositoryTest : DatabaseSpec() {
 
         val retrievedUser = userRepository.getUserById(user.id)
         assertAll(
-            { assertEquals(retrievedUser?.name, user.name) },
-            { assertEquals(retrievedUser?.email, user.email) },
-            { assertEquals(retrievedUser?.role, user.role) }
+            { assert(retrievedUser?.name == user.name) },
+            { assert(retrievedUser?.email == user.email) },
+            { assert(retrievedUser?.role == user.role) }
         )
     }
 
@@ -87,7 +87,7 @@ class UserRepositoryTest : DatabaseSpec() {
         )
 
         val actualUser = User(user.id, "testUpdateUser User", "testUpdateUser@example.com", "ADMIN", user.expiresAt)
-        assertEquals(actualUser, updatedUser)
+        assert(actualUser == updatedUser)
     }
 
     @Test
@@ -100,9 +100,9 @@ class UserRepositoryTest : DatabaseSpec() {
         val failed = userRepository.verifyPassword(user.name, "password")
         val success = userRepository.verifyPassword(user.name, "newpassword")
         assertAll(
-            { assertEquals(VerifyResult(true, user.id), initial, "Initial password should still be valid") },
-            { assertEquals(VerifyResult(false, user.id), failed, "Old password should not be valid anymore") },
-            { assertEquals(VerifyResult(true, user.id), success, "New password should be valid") }
+            { assert(VerifyResult(true, user.id) == initial) { "Initial password should still be valid" } },
+            { assert(VerifyResult(false, user.id) == failed) { "Old password should not be valid anymore" } },
+            { assert(VerifyResult(true, user.id) == success) { "New password should be valid" } }
         )
     }
 
@@ -114,11 +114,11 @@ class UserRepositoryTest : DatabaseSpec() {
 
         assertNotNull(updatedUser, "Updated user should not be null")
         assertAll(
-            { assertEquals("Updated Name", updatedUser.name, "Name should be updated") },
-            { assertEquals(user.email, updatedUser.email, "Email should remain unchanged") },
-            { assertEquals(user.role, updatedUser.role, "Role should remain unchanged") },
-            { assertEquals(user.expiresAt, updatedUser.expiresAt, "ExpiresAt should remain unchanged") },
-            { assertEquals(VerifyResult(true, user.id), verify, "Password should remain unchanged") },
+            { assert("Updated Name" == updatedUser.name) { "Name should be updated" } },
+            { assert(user.email == updatedUser.email) { "Email should remain unchanged" } },
+            { assert(user.role == updatedUser.role) { "Role should remain unchanged" } },
+            { assert(user.expiresAt == updatedUser.expiresAt) { "ExpiresAt should remain unchanged" } },
+            { assert(VerifyResult(true, user.id) == verify) { "Password should remain unchanged" } },
         )
     }
 

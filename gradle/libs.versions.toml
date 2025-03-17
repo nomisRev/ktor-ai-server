@@ -10,11 +10,13 @@ kotlinx-datetime = "0.5.0"
 bouncycastle = "1.80"
 langchain4j = "1.0.0-beta2"
 flyway = "10.10.0"
+jakarta-validation = "3.0.2"
+hibernate-validator = "8.0.1.Final"
+
 
 [libraries]
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 bouncycastle = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncycastle" }
-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 
 langchain4j = { module = "dev.langchain4j:langchain4j", version.ref = "langchain4j" }
 langchain4j-embeddings = { module = "dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2-q", version.ref = "langchain4j" }
@@ -45,6 +47,9 @@ testcontainers-core = { module = "org.testcontainers:testcontainers", version.re
 testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
 testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
 
+jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation" }
+hibernate-validator = { module = "org.hibernate.validator:hibernate-validator", version.ref = "hibernate-validator" }
+
 [bundles]
 exposed = [
     "exposed-jdbc",
@@ -54,7 +59,6 @@ exposed = [
 ]
 flyway = ["flyway-core", "flyway-postgresql"]
 ktor-client = [
-    "ktor-client-core",
     "ktor-client-content-negotiation",
     "ktor-client-cio",
     "ktor-kotlinx-json"
@@ -78,6 +82,11 @@ testing = [
     "testcontainers-core",
     "testcontainers-junit",
     "testcontainers-postgresql"
+]
+
+jakarta-validation = [
+    "jakarta-validation-api",
+    "hibernate-validator"
 ]
 
 [plugins]

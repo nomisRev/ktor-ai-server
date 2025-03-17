@@ -8,9 +8,12 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import org.jetbrains.ktor.sample.withApp
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
+import java.time.OffsetDateTime
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
@@ -30,8 +33,8 @@ class UserRoutesTest {
             role = newUser.role,
             expiresAt = user.expiresAt
         )
-        assertEquals(HttpStatusCode.Created, response.status)
-        assertEquals(expected, user)
+        assert(HttpStatusCode.Created == response.status)
+        assert(expected == user)
     }
 
     @Test
@@ -45,7 +48,7 @@ class UserRoutesTest {
         }
 
         val token = loginResponse.body<Token>().value
-        assertEquals(HttpStatusCode.OK, loginResponse.status)
+        assert(HttpStatusCode.OK == loginResponse.status)
         assertNotNull(token, "Token should not be null")
     }
 
@@ -58,7 +61,7 @@ class UserRoutesTest {
             contentType(ContentType.Application.Json)
         }
 
-        assertEquals(HttpStatusCode.Unauthorized, loginResponse.status)
+        assert(HttpStatusCode.Unauthorized == loginResponse.status)
     }
 
     @Test
@@ -76,12 +79,12 @@ class UserRoutesTest {
             )
         }
 
-        assertEquals(HttpStatusCode.OK, updateResponse.status)
+        assert(HttpStatusCode.OK == updateResponse.status)
         val updated = updateResponse.body<User>()
         assertAll(
-            { assertEquals(updatedName, updated.name, "Name should be updated") },
-            { assertEquals(user.email, updated.email, "Email should remain unchanged") },
-            { assertEquals(user.role, updated.role, "Role should remain unchanged") }
+            { assert(updatedName == updated.name) { "Name should be updated" } },
+            { assert(user.email == updated.email) { "Email should remain unchanged" } },
+            { assert(user.role == updated.role) { "Role should remain unchanged" } }
         )
     }
 
@@ -94,7 +97,7 @@ class UserRoutesTest {
             contentType(ContentType.Application.Json)
         }
 
-        assertEquals(HttpStatusCode.OK, logoutResponse.status)
+        assert(HttpStatusCode.OK == logoutResponse.status)
 
         val updateResponse = put("/users") {
             bearerAuth(token.value)
@@ -102,6 +105,6 @@ class UserRoutesTest {
             setBody(UpdateUser(name = "Updated after logout"))
         }
 
-        assertEquals(HttpStatusCode.Unauthorized, updateResponse.status)
+        assert(HttpStatusCode.Unauthorized == updateResponse.status)
     }
 }

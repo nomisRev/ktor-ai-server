@@ -4,9 +4,12 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
 import io.ktor.server.application.install
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
+import kotlinx.coroutines.CoroutineScope
 import org.jetbrains.ktor.sample.users.UserRepository
 import org.jetbrains.ktor.sample.users.installUserRoutes
+import org.jetbrains.ktor.sample.validation.JakartaValidation
 
 fun main(args: Array<String>) =
     io.ktor.server.netty.EngineMain.main(args)
@@ -19,6 +22,7 @@ fun Application.module() {
     configureJWT(appConfig.jwt, users)
 
     install(ContentNegotiation) { json() }
+    install(JakartaValidation)
 
     routing {
         installUserRoutes(appConfig.jwt, users)

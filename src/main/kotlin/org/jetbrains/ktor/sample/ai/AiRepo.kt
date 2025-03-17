@@ -80,11 +80,14 @@ class AiRepo(config: AIConfig) : Chat {
 
 class AllMiniLmL6V2Tokenizer : Tokenizer {
     private val tokenizer: HuggingFaceTokenizer
+    private val json = Json { isLenient = true }
 
     init {
-        val tokenizerConfig = Json {
-            isLenient
-        }.decodeFromStream<JsonElement>(AiRepo::class.java.classLoader.getResourceAsStream("all-minilm-l6-v2-q-tokenizer-config.json"))
+        @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+        @OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
+        val tokenizerConfig = json.decodeFromStream<JsonElement>(
+            AiRepo::class.java.classLoader.getResourceAsStream("all-minilm-l6-v2-q-tokenizer-config.json")
+        )
         val config = buildMap {
             put("padding", "false")
             put("truncation", "false")
