@@ -25,7 +25,6 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.ktor.sample.validation.JakartaValidationPluginTest.User
 import kotlin.test.Test
 import kotlin.test.assertContains
-import kotlin.test.assertEquals
 
 class JakartaValidationPluginTest {
 

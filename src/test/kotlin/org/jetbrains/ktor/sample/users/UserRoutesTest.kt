@@ -14,7 +14,6 @@ import org.jetbrains.ktor.sample.withApp
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
 import java.time.OffsetDateTime
-import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class UserRoutesTest {

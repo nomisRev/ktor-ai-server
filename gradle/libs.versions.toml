@@ -11,7 +11,7 @@ bouncycastle = "1.80"
 langchain4j = "1.0.0-beta2"
 flyway = "10.10.0"
 jakarta-validation = "3.0.2"
-hibernate-validator = "8.0.1.Final"
+#hibernate-validator = "8.0.1.Final"
 
 
 [libraries]
@@ -48,7 +48,7 @@ testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.re
 testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
 
 jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation" }
-hibernate-validator = { module = "org.hibernate.validator:hibernate-validator", version.ref = "hibernate-validator" }
+#hibernate-validator = { module = "org.hibernate.validator:hibernate-validator", version.ref = "hibernate-validator" }
 
 [bundles]
 exposed = [
@@ -84,10 +84,7 @@ testing = [
     "testcontainers-postgresql"
 ]
 
-jakarta-validation = [
-    "jakarta-validation-api",
-    "hibernate-validator"
-]
+jakarta-validation = ["jakarta-validation-api"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

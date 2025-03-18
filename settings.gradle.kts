@@ -1,6 +1,6 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-rootProject.name = "ktor-sample"
+rootProject.name = "KtorProject"
 include("jakarta-validation")
 
 dependencyResolutionManagement {

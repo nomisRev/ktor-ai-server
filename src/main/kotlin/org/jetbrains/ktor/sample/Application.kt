@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import org.jetbrains.ktor.sample.users.UserRepository
 import org.jetbrains.ktor.sample.users.installUserRoutes
 import org.jetbrains.ktor.sample.validation.JakartaValidation
+import java.io.File
 
 fun main(args: Array<String>) =
     io.ktor.server.netty.EngineMain.main(args)
@@ -20,7 +21,6 @@ fun Application.module() {
     val users = UserRepository(database)
 
     configureJWT(appConfig.jwt, users)
-
     install(ContentNegotiation) { json() }
     install(JakartaValidation)
 

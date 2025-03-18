@@ -26,11 +26,6 @@ version = "0.0.1"
 
 application.mainClass = "io.ktor.server.netty.EngineMain"
 
-@Suppress("OPT_IN_USAGE")
-powerAssert {
-    functions = listOf("kotlin.assert")
-}
-
 dependencies {
     implementation(libs.bundles.ktor.server)
     implementation(libs.bundles.exposed)

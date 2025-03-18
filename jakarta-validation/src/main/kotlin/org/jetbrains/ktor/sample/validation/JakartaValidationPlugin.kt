@@ -1,27 +1,15 @@
 package org.jetbrains.ktor.sample.validation
 
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.Parameters
-import io.ktor.server.application.ApplicationCall
-import io.ktor.server.application.ApplicationCallPipeline
-import io.ktor.server.application.Hook
-import io.ktor.server.application.PipelineCall
-import io.ktor.server.application.RouteScopedPlugin
-import io.ktor.server.application.call
-import io.ktor.server.application.createRouteScopedPlugin
-import io.ktor.server.application.hooks.ReceiveRequestBytes
-import io.ktor.server.request.ApplicationReceivePipeline
-import io.ktor.server.request.contentLength
-import io.ktor.server.response.ApplicationSendPipeline
-import io.ktor.server.response.respond
-import io.ktor.util.pipeline.PipelineContext
-import io.ktor.utils.io.CancellationException
-import io.ktor.utils.io.copyTo
-import io.ktor.utils.io.writer
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.application.hooks.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.util.pipeline.*
+import io.ktor.utils.io.*
 import jakarta.validation.ConstraintViolation
 import jakarta.validation.Validation
 import jakarta.validation.ValidatorFactory
-import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator
 import java.io.IOException
 
 val JakartaValidation: RouteScopedPlugin<JakartaValidationConfig> =
@@ -37,6 +25,7 @@ val JakartaValidation: RouteScopedPlugin<JakartaValidationConfig> =
             }
         }
 
+        // TODO: Verify this is correct
         on(RenderResponse) { pipeline, content ->
             if (content is String || content is Number || content is Boolean || content is HttpStatusCode) return@on
             val failures = validator.validate(content)
@@ -86,7 +75,6 @@ class JakartaValidationConfig {
     internal var validatorFactory: ValidatorFactory =
         Validation.byDefaultProvider()
             .configure()
-            .messageInterpolator(ParameterMessageInterpolator())
             .buildValidatorFactory()
 
     internal var errorHandler: suspend ApplicationCall.(Set<ConstraintViolation<*>>) -> Unit = { violations ->
