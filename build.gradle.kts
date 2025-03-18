@@ -1,5 +1,19 @@
 import io.ktor.plugin.features.DockerImageRegistry.Companion.dockerHub
 
+ktor {
+    docker {
+        localImageName = project.name
+        imageTag = project.version.toString()
+        externalRegistry = dockerHub(
+            appName = provider { project.name },
+            username = providers.environmentVariable("DOCKER_HUB_USERNAME"),
+            password = providers.environmentVariable("DOCKER_HUB_PASSWORD")
+        )
+    }
+}
+
+//import io.ktor.plugin.features.DockerImageRegistry.Companion.dockerHub
+
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.assert)
