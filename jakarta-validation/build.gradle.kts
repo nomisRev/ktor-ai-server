@@ -7,7 +7,7 @@ plugins {
 dependencies {
     api(libs.bundles.jakarta.validation)
     implementation(libs.bundles.ktor.server)
-    implementation("org.apache.bval:bval-jsr:3.0.2")
+    implementation(libs.apache.bval)
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)
 }

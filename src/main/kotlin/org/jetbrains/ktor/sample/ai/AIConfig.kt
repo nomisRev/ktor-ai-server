@@ -18,7 +18,7 @@ data class AIConfig(
                 model = property("ai.model").getString(),
                 tokenizer = property("ai.tokenizer").getString(),
                 maxSegmentSizeInTokens = property("ai.maxSegmentSizeInTokens").getString().toInt(),
-                maxOverlapSizeInTokens = property("ai.maxOverlapSizeInTokens").getString().toInt(),
+                maxOverlapSizeInTokens = property("ai.maxOverlapSizeInTokens").getString().toInt()
             )
         }
     }

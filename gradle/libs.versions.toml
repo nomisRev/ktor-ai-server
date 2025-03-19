@@ -3,7 +3,7 @@ kotlin = "2.1.10"
 ktor = "3.1.1"
 logback = "1.4.14"
 exposed = "0.60.0"
-hikari="6.2.1"
+hikari = "6.2.1"
 postgresql = "42.7.1"
 testcontainers = "1.19.3"
 kotlinx-datetime = "0.5.0"
@@ -11,8 +11,7 @@ bouncycastle = "1.80"
 langchain4j = "1.0.0-beta2"
 flyway = "10.10.0"
 jakarta-validation = "3.0.2"
-#hibernate-validator = "8.0.1.Final"
-
+apache-bval = "3.0.2"
 
 [libraries]
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
@@ -21,6 +20,7 @@ bouncycastle = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "boun
 langchain4j = { module = "dev.langchain4j:langchain4j", version.ref = "langchain4j" }
 langchain4j-embeddings = { module = "dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2-q", version.ref = "langchain4j" }
 langchain4j-openai = { module = "dev.langchain4j:langchain4j-open-ai", version.ref = "langchain4j" }
+langchain4j-milvus = { module = "dev.langchain4j:langchain4j-milvus", version.ref = "langchain4j" }
 
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
@@ -48,7 +48,7 @@ testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.re
 testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
 
 jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation" }
-#hibernate-validator = { module = "org.hibernate.validator:hibernate-validator", version.ref = "hibernate-validator" }
+apache-bval = { module = "org.apache.bval:bval-jsr", version.ref = "apache-bval" }
 
 [bundles]
 exposed = [
@@ -66,7 +66,8 @@ ktor-client = [
 langchain4j = [
     "langchain4j",
     "langchain4j-embeddings",
-    "langchain4j-openai"
+    "langchain4j-openai",
+    "langchain4j-milvus"
 ]
 
 ktor-server = [
@@ -84,10 +85,10 @@ testing = [
     "testcontainers-postgresql"
 ]
 
-jakarta-validation = ["jakarta-validation-api"]
+jakarta-validation = ["jakarta-validation-api", "apache-bval"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-kotlin-assert = { id = "org.jetbrains.kotlin.plugin.power-assert", version.ref="kotlin" }
+kotlin-assert = { id = "org.jetbrains.kotlin.plugin.power-assert", version.ref = "kotlin" }

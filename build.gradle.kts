@@ -1,18 +1,5 @@
 import io.ktor.plugin.features.DockerImageRegistry.Companion.dockerHub
-
-ktor {
-    docker {
-        localImageName = project.name
-        imageTag = project.version.toString()
-        externalRegistry = dockerHub(
-            appName = provider { project.name },
-            username = providers.environmentVariable("DOCKER_HUB_USERNAME"),
-            password = providers.environmentVariable("DOCKER_HUB_PASSWORD")
-        )
-    }
-}
-
-//import io.ktor.plugin.features.DockerImageRegistry.Companion.dockerHub
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -40,7 +27,14 @@ dependencies {
     testImplementation(libs.bundles.testing)
 }
 
+tasks.withType<KotlinCompile> {
+    compilerOptions {
+        javaParameters = true
+    }
+}
+
 ktor {
+    development = System.getenv("CI") != null
     docker {
         localImageName = project.name
         imageTag = project.version.toString()
@@ -50,7 +44,6 @@ ktor {
             password = providers.environmentVariable("DOCKER_HUB_PASSWORD")
         )
     }
-    development = System.getenv("CI") != null
     fatJar {
         allowZip64 = true
         archiveFileName.set(project.name)
