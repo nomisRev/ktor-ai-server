@@ -21,7 +21,6 @@ dependencies {
     implementation(libs.bouncycastle)
     implementation(libs.bundles.flyway)
     implementation(libs.bundles.langchain4j)
-    implementation(projects.jakartaValidation)
 
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)

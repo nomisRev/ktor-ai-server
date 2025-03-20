@@ -10,8 +10,6 @@ kotlinx-datetime = "0.5.0"
 bouncycastle = "1.80"
 langchain4j = "1.0.0-beta2"
 flyway = "10.10.0"
-jakarta-validation = "3.0.2"
-apache-bval = "3.0.2"
 
 [libraries]
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
@@ -46,9 +44,6 @@ kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version
 testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
 testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
-
-jakarta-validation-api = { module = "jakarta.validation:jakarta.validation-api", version.ref = "jakarta-validation" }
-apache-bval = { module = "org.apache.bval:bval-jsr", version.ref = "apache-bval" }
 
 [bundles]
 exposed = [
@@ -85,7 +80,6 @@ testing = [
     "testcontainers-postgresql"
 ]
 
-jakarta-validation = ["jakarta-validation-api", "apache-bval"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
