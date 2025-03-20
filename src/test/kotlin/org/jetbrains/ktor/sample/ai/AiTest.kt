@@ -1,10 +1,12 @@
 package org.jetbrains.ktor.sample.ai
 
+import io.micrometer.prometheus.PrometheusConfig
+import io.micrometer.prometheus.PrometheusMeterRegistry
 import org.jetbrains.ktor.sample.DatabaseSpec
 
 class AiTest : DatabaseSpec() {
     private val memory by lazy { ExposedChatMemoryStore(database) }
-    private val ai by lazy { AiRepo(config, memory) }
+    private val ai by lazy { AiRepo(config, memory, AiMetrics(PrometheusMeterRegistry((PrometheusConfig.DEFAULT)))) }
 
     private val config = AIConfig(
         "http://localhost:8080",

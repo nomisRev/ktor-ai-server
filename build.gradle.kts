@@ -21,6 +21,7 @@ dependencies {
     implementation(libs.bouncycastle)
     implementation(libs.bundles.flyway)
     implementation(libs.bundles.langchain4j)
+    implementation(libs.micrometer.registry.prometheus)
 
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)

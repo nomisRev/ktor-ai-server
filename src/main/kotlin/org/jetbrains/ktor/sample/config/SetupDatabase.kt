@@ -1,4 +1,4 @@
-package org.jetbrains.ktor.sample
+package org.jetbrains.ktor.sample.config
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -13,7 +13,9 @@ import org.jetbrains.exposed.sql.transactions.TransactionManager
 fun Application.setupDatabase(config: DatabaseConfig, flywayConfig: FlywayConfig): Database {
     val dataSource = dataSource(config)
     flyway(dataSource, flywayConfig)
-    val database = Database.connect(dataSource)
+    val database = Database.connect(dataSource, databaseConfig = org.jetbrains.exposed.sql.DatabaseConfig {
+        warnLongQueriesDuration = 1000
+    })
 
     monitor.subscribe(ApplicationStopped) {
         TransactionManager.closeAndUnregister(database)

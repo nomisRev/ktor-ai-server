@@ -2,6 +2,8 @@ package org.jetbrains.ktor.sample
 
 import org.jetbrains.ktor.sample.ai.AIConfig
 import org.jetbrains.ktor.sample.auth.JWTConfig
+import org.jetbrains.ktor.sample.config.AppConfig
+import org.jetbrains.ktor.sample.config.FlywayConfig
 import org.jetbrains.ktor.sample.users.Argon2HasherConfig
 
 val AppTestConfig by lazy {

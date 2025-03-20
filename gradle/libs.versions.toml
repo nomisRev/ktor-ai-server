@@ -10,6 +10,7 @@ kotlinx-datetime = "0.5.0"
 bouncycastle = "1.80"
 langchain4j = "1.0.0-beta2"
 flyway = "10.10.0"
+micrometer = "1.12.2"
 
 [libraries]
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
@@ -29,6 +30,8 @@ ktor-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", versio
 ktor-server-auth-jwt = { module = "io.ktor:ktor-server-auth-jwt", version.ref = "ktor" }
 ktor-server-config-yaml = { module = "io.ktor:ktor-server-config-yaml", version.ref = "ktor" }
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+ktor-server-metrics-micrometer = { module = "io.ktor:ktor-server-metrics-micrometer", version.ref = "ktor" }
+micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus", version.ref = "micrometer" }
 
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
@@ -70,7 +73,8 @@ ktor-server = [
     "ktor-server-content-negotiation",
     "ktor-server-config-yaml",
     "ktor-server-auth-jwt",
-    "ktor-kotlinx-json"
+    "ktor-kotlinx-json",
+    "ktor-server-metrics-micrometer"
 ]
 testing = [
     "ktor-server-test-host",
@@ -79,7 +83,6 @@ testing = [
     "testcontainers-junit",
     "testcontainers-postgresql"
 ]
-
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

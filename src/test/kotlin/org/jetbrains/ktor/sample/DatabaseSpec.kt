@@ -1,6 +1,8 @@
 package org.jetbrains.ktor.sample
 
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.ktor.sample.config.dataSource
+import org.jetbrains.ktor.sample.config.flyway
 import org.junit.ClassRule
 import org.junit.rules.ExternalResource
 import kotlin.test.BeforeTest

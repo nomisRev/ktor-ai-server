@@ -47,6 +47,7 @@ interface Chat {
 class AiRepo(
     config: AIConfig,
     memoryStore: ChatMemoryStore,
+    private val metrics: AiMetrics,
     private val embeddingStore: EmbeddingStore<TextSegment> = InMemoryEmbeddingStore<TextSegment>(),
     private val embeddingModel: EmbeddingModel = AllMiniLmL6V2QuantizedEmbeddingModel(),
     private val tokenizer: Tokenizer = HuggingFaceTokenizer(config.tokenizer),
@@ -85,12 +86,18 @@ class AiRepo(
         .build()
 ) : Chat {
     fun loadDocuments() {
-        val text = AiRepo::class.java.classLoader.getResourceAsStream("test_content.txt").bufferedReader()
-            .use { it.readText() }
-        val doc = Document.document(text)
-        ingestor.ingest(doc)
+        metrics.measureDocumentLoadTime {
+            metrics?.measureDocumentLoadTime {
+                val text = AiRepo::class.java.classLoader.getResourceAsStream("test_content.txt").bufferedReader()
+                    .use { it.readText() }
+                val doc = Document.document(text)
+                ingestor.ingest(doc)
+            }
+        }
     }
 
     override fun answer(userId: Long, question: String): String =
-        chat.answer(userId, question)
+        metrics.measureQuestionAnswerTime {
+            chat.answer(userId, question)
+        }
 }

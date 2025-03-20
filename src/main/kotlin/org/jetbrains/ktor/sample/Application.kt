@@ -6,8 +6,9 @@ import io.ktor.server.application.install
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.routing.routing
 import org.jetbrains.ktor.sample.auth.configureJWT
+import org.jetbrains.ktor.sample.config.AppConfig
+import org.jetbrains.ktor.sample.config.dependencies
 import org.jetbrains.ktor.sample.users.installUserRoutes
-import org.jetbrains.ktor.sample.validation.JakartaValidation
 
 fun main(args: Array<String>) =
     io.ktor.server.netty.EngineMain.main(args)
@@ -18,7 +19,6 @@ fun Application.module() {
 
     configureJWT(config.jwt, module.jwtService)
     install(ContentNegotiation) { json() }
-    install(JakartaValidation)
 
     routing {
         installUserRoutes(module.users, module.jwtService)

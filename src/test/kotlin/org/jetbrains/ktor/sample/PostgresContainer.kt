@@ -3,8 +3,8 @@ package org.jetbrains.ktor.sample
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.utility.DockerImageName
 import io.ktor.server.config.MapApplicationConfig
+import org.jetbrains.ktor.sample.config.DatabaseConfig
 import org.testcontainers.containers.wait.strategy.Wait
-import javax.sql.DataSource
 
 object PostgresContainer {
     /**

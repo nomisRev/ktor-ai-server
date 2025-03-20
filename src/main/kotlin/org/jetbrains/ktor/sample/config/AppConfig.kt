@@ -1,4 +1,4 @@
-package org.jetbrains.ktor.sample
+package org.jetbrains.ktor.sample.config
 
 import io.ktor.server.application.ApplicationEnvironment
 import org.jetbrains.ktor.sample.ai.AIConfig
