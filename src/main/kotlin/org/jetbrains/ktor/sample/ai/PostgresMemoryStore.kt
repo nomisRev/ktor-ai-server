@@ -1,4 +1,4 @@
-package org.jetbrains.ktor.sample.ai.memory
+package org.jetbrains.ktor.sample.ai
 
 import dev.langchain4j.data.message.ChatMessage
 import dev.langchain4j.data.message.ChatMessageDeserializer

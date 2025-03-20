@@ -11,7 +11,18 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class UserRepositoryTest : DatabaseSpec() {
-    private val userRepository by lazy { UserRepository(database) }
+    private val userRepository by lazy {
+        val hasher = Argon2Hasher(
+            Argon2HasherConfig(
+                memory = 65536,
+                iterations = 3,
+                parallelism = 4,
+                outputLength = 32,
+                limitedParallelism = 4
+            )
+        )
+        UserRepository(database, hasher)
+    }
 
     private suspend fun insertUser(): User =
         userRepository.createUser(newTestUser())
@@ -65,7 +76,7 @@ class UserRepositoryTest : DatabaseSpec() {
             )
         )
 
-        val retrievedUser = userRepository.getUserById(user.id)
+        val retrievedUser = userRepository.getUserByIdOrNull(user.id)
         assertAll(
             { assert(retrievedUser?.name == user.name) },
             { assert(retrievedUser?.email == user.email) },
@@ -76,7 +87,7 @@ class UserRepositoryTest : DatabaseSpec() {
     @Test
     fun testUpdateUser() = runBlocking {
         val user = insertUser()
-        val updatedUser = userRepository.updateUser(
+        val updatedUser = userRepository.updateUserOrNull(
             user.id,
             UpdateUser(
                 name = "testUpdateUser User",
@@ -94,7 +105,7 @@ class UserRepositoryTest : DatabaseSpec() {
         val user = insertUser()
         val initial = userRepository.verifyPassword(user.name, "password")
 
-        userRepository.updateUser(user.id, UpdateUser(password = "newpassword"))
+        userRepository.updateUserOrNull(user.id, UpdateUser(password = "newpassword"))
 
         val failed = userRepository.verifyPassword(user.name, "password")
         val success = userRepository.verifyPassword(user.name, "newpassword")
@@ -108,7 +119,7 @@ class UserRepositoryTest : DatabaseSpec() {
     @Test
     fun `test update user with null values`() = runBlocking {
         val user = insertUser()
-        val updatedUser = userRepository.updateUser(user.id, UpdateUser(name = "Updated Name"))
+        val updatedUser = userRepository.updateUserOrNull(user.id, UpdateUser(name = "Updated Name"))
         val verify = userRepository.verifyPassword("Updated Name", "password")
 
         assertNotNull(updatedUser, "Updated user should not be null")
@@ -125,7 +136,7 @@ class UserRepositoryTest : DatabaseSpec() {
     fun testDeleteUser() = runBlocking {
         val user = insertUser()
         val deleted = userRepository.deleteUser(user.id)
-        val retrievedUser = userRepository.getUserById(user.id)
+        val retrievedUser = userRepository.getUserByIdOrNull(user.id)
         assertAll(
             { assertTrue(deleted, "User should be deleted") },
             { assertNull(retrievedUser, "User should not be retrievable anymore") }

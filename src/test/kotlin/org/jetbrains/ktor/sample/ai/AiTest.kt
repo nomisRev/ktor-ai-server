@@ -1,7 +1,6 @@
 package org.jetbrains.ktor.sample.ai
 
 import org.jetbrains.ktor.sample.DatabaseSpec
-import org.jetbrains.ktor.sample.ai.memory.ExposedChatMemoryStore
 
 class AiTest : DatabaseSpec() {
     private val memory by lazy { ExposedChatMemoryStore(database) }
@@ -16,7 +15,7 @@ class AiTest : DatabaseSpec() {
         50
     )
 
-    //    @Test
+    // @Test // Requires local llama.cpp to be running. TODO: test with Ollama/LMStudios
     fun test() {
         ai.loadDocuments()
         val answer = ai.answer(1L, "Tell me about **Alan Turing**")

@@ -1,7 +1,5 @@
 package org.jetbrains.ktor.sample.users
 
-import com.auth0.jwt.JWT
-import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.auth.authenticate
 import io.ktor.server.request.receive
@@ -11,17 +9,10 @@ import io.ktor.server.routing.Routing
 import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
-import kotlinx.datetime.Instant
-import org.jetbrains.ktor.sample.JWTConfig
-import org.jetbrains.ktor.sample.UserJWT
-import java.time.Duration
-import java.util.Date
+import org.jetbrains.ktor.sample.auth.JWTService
+import org.jetbrains.ktor.sample.auth.UserJWT
 
-
-private val ONE_HOUR =
-    Duration.ofHours(1).toMillis()
-
-fun Routing.installUserRoutes(config: JWTConfig, repository: UserRepository) {
+fun Routing.installUserRoutes(repository: UserRepository, jwtService: JWTService) {
     route("/users") {
         post {
             val new = call.receive<NewUser>()
@@ -30,19 +21,9 @@ fun Routing.installUserRoutes(config: JWTConfig, repository: UserRepository) {
         }
         post("/login") {
             val login = call.receive<Login>()
-            // TODO move to service
             val result = repository.verifyPassword(login.username, login.password)
             if (result.success) {
-                val issuedAt = System.currentTimeMillis()
-                val expiresAt = issuedAt + ONE_HOUR
-                repository.updateExpiresAt(result.userId, Instant.fromEpochMilliseconds(expiresAt))
-                val token = JWT.create()
-                    .withAudience(config.audience)
-                    .withIssuer(config.issuer)
-                    .withClaim("user_id", result.userId)
-                    .withExpiresAt(Date(expiresAt))
-                    .withIssuedAt(Date(issuedAt))
-                    .sign(Algorithm.HMAC256(config.secret))
+                val token = jwtService.generateToken(result.userId)
                 call.respond(HttpStatusCode.OK, Token(token))
             } else {
                 call.respond(status = HttpStatusCode.Unauthorized, message = "Invalid username or password")
@@ -50,12 +31,10 @@ fun Routing.installUserRoutes(config: JWTConfig, repository: UserRepository) {
         }
 
         authenticate {
-            // TODO rely on userId from JWT to eliminate ability to update not-yourself
-            //  that is only allowed for ADMIN role
             put {
                 val jwt = call.principal<UserJWT>()!!
                 val updatedUser = call.receive<UpdateUser>()
-                val updated = repository.updateUser(jwt.user.id, updatedUser)
+                val updated = repository.updateUserOrNull(jwt.user.id, updatedUser)
                 if (updated != null) call.respond(HttpStatusCode.OK, updated)
                 else call.respond(HttpStatusCode.NotFound, "User not found")
             }

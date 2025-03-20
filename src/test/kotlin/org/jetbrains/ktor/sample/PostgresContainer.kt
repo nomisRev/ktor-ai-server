@@ -40,12 +40,6 @@ object PostgresContainer {
             put("flyway.baselineOnMigrate", "true")
         }
 
-    fun getFlywayConfig() =
-        FlywayConfig(
-            locations = "classpath:db/migration",
-            baselineOnMigrate = true
-        )
-
     fun getDatabaseConfig() =
         DatabaseConfig(
             driverClassName = container.driverClassName,

@@ -42,6 +42,8 @@ interface Chat {
     fun answer(@MemoryId userId: Long, question: String): String
 }
 
+// TODO: proper DI, we don't need AIRepo.
+//   Split document loading from `Chat`, and only expose `Chat` + fun interface DocumentLoader to Application.
 class AiRepo(
     config: AIConfig,
     memoryStore: ChatMemoryStore,
@@ -91,5 +93,4 @@ class AiRepo(
 
     override fun answer(userId: Long, question: String): String =
         chat.answer(userId, question)
-
 }

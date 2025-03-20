@@ -1,7 +1,5 @@
 package org.jetbrains.ktor.sample.users
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import org.jetbrains.exposed.dao.id.LongIdTable
@@ -12,7 +10,7 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import org.jetbrains.exposed.sql.updateReturning
 
@@ -27,13 +25,14 @@ object Users : LongIdTable("users", "user_id") {
 
 data class VerifyResult(val success: Boolean, val userId: Long)
 
-/** This class is build _without_ Exposed DAO module, it relies on the SQL DSL only. */
-class UserRepository(val database: Database, private val argon2Hasher: Argon2Hasher = Argon2Hasher()) {
+// TODO: Question, should we use OAuth instead of manual user management for authentication with JWT?
+class UserRepository(val database: Database, private val argon2Hasher: Argon2Hasher) {
 
-    suspend fun createUser(new: NewUser): User = withContext(Dispatchers.IO) {
+    // TODO: Fix conflict
+    suspend fun createUser(new: NewUser): User {
         val encrypted = argon2Hasher.encrypt(new.password)
         val now = Clock.System.now()
-        newSuspendedTransaction(Dispatchers.IO, database) {
+        return transaction(database) {
             val id = Users.insertAndGetId {
                 it[name] = new.name
                 it[email] = new.email
@@ -46,33 +45,33 @@ class UserRepository(val database: Database, private val argon2Hasher: Argon2Has
         }
     }
 
-    // TODO: user not found. Nullable result?
+    // TODO: Fix user not found
     suspend fun verifyPassword(
         username: String,
         password: String
-    ): VerifyResult = withContext(Dispatchers.IO) {
-        val (id, salt, hash) = newSuspendedTransaction(Dispatchers.IO, database) {
+    ): VerifyResult {
+        val (id, salt, hash) = transaction(database) {
             val row = Users.select(Users.id, Users.salt, Users.passwordHash)
                 .where { Users.name eq username }
                 .single()
             Triple(row[Users.id].value, row[Users.salt], row[Users.passwordHash])
         }
-        VerifyResult(argon2Hasher.verify(password, salt, hash), id)
+        return VerifyResult(argon2Hasher.verify(password, salt, hash), id)
     }
 
     private fun selectAll(): Query =
         Users.select(Users.id, Users.name, Users.email, Users.role, Users.expiresAt)
 
-    suspend fun getUserById(userId: Long): User? = newSuspendedTransaction(Dispatchers.IO, database) {
+    fun getUserByIdOrNull(userId: Long): User? = transaction(database) {
         selectAll()
             .where { Users.id eq userId }
             .singleOrNull()
             ?.toUser()
     }
 
-    suspend fun updateUser(userId: Long, update: UpdateUser): User? = withContext(Dispatchers.IO) {
+    suspend fun updateUserOrNull(userId: Long, update: UpdateUser): User? {
         val encrypted = update.password?.let { argon2Hasher.encrypt(it) }
-        newSuspendedTransaction(Dispatchers.IO, database) {
+        return transaction(database) {
             Users.updateReturning(where = { Users.id eq userId }) {
                 if (update.name != null) it[name] = update.name
                 if (update.email != null) it[email] = update.email
@@ -85,17 +84,17 @@ class UserRepository(val database: Database, private val argon2Hasher: Argon2Has
         }
     }
 
-    suspend fun updateExpiresAt(userId: Long, expiresAt: Instant): Boolean =
-        newSuspendedTransaction(Dispatchers.IO, database) {
+    fun updateExpiresAt(userId: Long, expiresAt: Instant): Boolean =
+        transaction(database) {
             Users.update({ Users.id eq userId }) {
                 it[Users.expiresAt] = expiresAt
             } > 0
         }
 
-    suspend fun invalidateUserToken(user: User): Boolean  =
+    fun invalidateUserToken(user: User): Boolean =
         updateExpiresAt(user.id, Instant.fromEpochMilliseconds(0))
 
-    suspend fun deleteUser(userId: Long): Boolean = newSuspendedTransaction(Dispatchers.IO, database) {
+    fun deleteUser(userId: Long): Boolean = transaction(database) {
         Users.deleteWhere { id eq userId } > 0
     }
 

@@ -1,9 +1,9 @@
-package org.jetbrains.ktor.sample.ai.memory
+package org.jetbrains.ktor.sample.ai
 
 import dev.langchain4j.data.message.AiMessage
 import dev.langchain4j.data.message.UserMessage
 import org.jetbrains.ktor.sample.DatabaseSpec
-import kotlin.test.Test
+import org.junit.Test
 import kotlin.test.assertEquals
 
 class PersistentChatMemoryStoreTest : DatabaseSpec() {
