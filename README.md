@@ -22,6 +22,7 @@ A modern Kotlin backend application built with Ktor, showcasing best practices f
 | Database Integration      | PostgreSQL with connection pooling via HikariCP and Flyway migrations              |
 | Input Validation          | Request validation using Jakarta Validation                                        |
 | AI Capabilities           | Integration with LangChain4j for AI-powered features                               |
+| Metrics & Monitoring      | Prometheus metrics collection and Grafana dashboards for performance monitoring    |
 | Serialization             | JSON serialization using kotlinx.serialization                                     |
 | Docker Support            | Containerization for easy deployment and testing                                   |
 
@@ -62,6 +63,47 @@ The application follows a clean architecture approach with separation of concern
 - **Repositories**: Handle data access and storage
 - **Domain Models**: Define the core business entities
 - **Configuration**: Manage application settings and dependencies
+
+## Metrics and Monitoring
+
+The application includes comprehensive metrics collection and visualization:
+
+### Available Metrics
+
+- **HTTP Metrics**: Request counts, durations, and status codes
+- **AI Metrics**: Question answering time and document loading time
+- **Test Metrics**: Silly counter and random gauge for verifying Grafana functionality
+
+### Monitoring Setup
+
+The monitoring stack includes:
+
+- **Prometheus**: Collects and stores metrics from the application
+- **Grafana**: Visualizes metrics with pre-configured dashboards
+
+### Accessing Dashboards
+
+When running with Docker Compose:
+
+1. Start the application and monitoring stack: `cd docker && docker-compose up -d`
+2. Access Grafana at http://localhost:3000 (default credentials: admin/admin)
+3. Access Prometheus at http://localhost:9090
+4. View raw metrics at http://localhost:8080/metrics
+
+The Grafana dashboard includes the following panels:
+- AI Questions In Flight: Shows the number of AI questions currently being processed
+- AI Question Answer Time: Shows the average time taken to answer questions
+- Silly Counter: Shows the test counter that increments every second
+- Silly Gauge: Shows the test gauge with random values
+
+### Testing Grafana Functionality
+
+The application includes built-in test metrics that generate data automatically:
+
+- **Silly Counter**: Increments every second, providing a continuous stream of data
+- **Random Gauge**: Updates with random values between 0-100 every second
+
+These metrics should appear in the Grafana dashboard immediately after starting the application, allowing you to verify that the metrics collection and visualization pipeline is working correctly without needing to generate application traffic.
 
 ## Development Guidelines
 
@@ -116,3 +158,5 @@ The application follows a clean architecture approach with separation of concern
 - [Exposed Documentation](https://github.com/JetBrains/Exposed/wiki)
 - [Jakarta Validation](https://jakarta.ee/specifications/bean-validation/3.0/jakarta-bean-validation-spec-3.0.html)
 - [LangChain4j Documentation](https://github.com/langchain4j/langchain4j)
+- [Prometheus Documentation](https://prometheus.io/docs/introduction/overview/)
+- [Grafana Documentation](https://grafana.com/docs/)

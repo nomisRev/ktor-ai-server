@@ -24,7 +24,7 @@ flyway:
   locations: "$FLYWAY_LOCATIONS:classpath:db/migration"
   baselineOnMigrate: "$FLYWAY_BASELINE_ON_MIGRATE:true"
 ai:
-  baseUrl: "$AI_BASE_URL:http://localhost:8080"
+  baseUrl: "$AI_BASE_URL:http://localhost:8000"
   apiKey: "$AI_API_KEY:not-needed-for-local-llama"
   model: "$AI_MODEL:Qwen_QwQ-32B-Q4_K_M.gguf"
   tokenizer: "$AI_TOKENIZER:all-minilm-l6-v2-q-tokenizer.json"

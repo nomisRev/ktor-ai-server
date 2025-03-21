@@ -1,9 +1,12 @@
 package org.jetbrains.ktor.sample
 
+import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
 import io.ktor.server.application.install
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.server.response.respond
+import io.ktor.server.routing.put
 import io.ktor.server.routing.routing
 import org.jetbrains.ktor.sample.auth.configureJWT
 import org.jetbrains.ktor.sample.config.AppConfig
@@ -22,5 +25,10 @@ fun Application.module() {
 
     routing {
         installUserRoutes(module.users, module.jwtService)
+        put("/ai") {
+            val question = call.queryParameters["question"]!!
+            val response = module.ai.await().answer(1, question)
+            call.respond(HttpStatusCode.OK, response)
+        }
     }
 }

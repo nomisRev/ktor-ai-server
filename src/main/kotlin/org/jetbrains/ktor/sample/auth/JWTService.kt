@@ -22,7 +22,7 @@ class JWTService(private val config: JWTConfig, private val repository: UserRepo
 
     private val ONE_HOUR = Duration.ofHours(1).toMillis()
 
-    suspend fun generateToken(userId: Long): String {
+    fun generateToken(userId: Long): String {
         val issuedAt = System.currentTimeMillis()
         val expiresAt = issuedAt + ONE_HOUR
 
@@ -37,7 +37,7 @@ class JWTService(private val config: JWTConfig, private val repository: UserRepo
             .sign(algorithm)
     }
 
-    suspend fun validateToken(credential: JWTCredential): UserJWT? {
+    fun validateToken(credential: JWTCredential): UserJWT? {
         val userId = credential.getClaim("user_id", Long::class)
         val now = Date()
 

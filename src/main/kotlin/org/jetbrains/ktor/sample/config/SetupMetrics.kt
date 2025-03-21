@@ -3,6 +3,7 @@ package org.jetbrains.ktor.sample.config
 import io.ktor.server.application.Application
 import io.ktor.server.application.ApplicationStopped
 import io.ktor.server.application.install
+import io.ktor.server.application.log
 import io.ktor.server.metrics.micrometer.MicrometerMetrics
 import io.ktor.server.response.respond
 import io.ktor.server.routing.get
@@ -17,6 +18,7 @@ fun Application.setupMetrics(): PrometheusMeterRegistry {
     }
     routing {
         get("/metrics") {
+            log.error("metrics call")
             call.respond(prometheus.scrape())
         }
     }

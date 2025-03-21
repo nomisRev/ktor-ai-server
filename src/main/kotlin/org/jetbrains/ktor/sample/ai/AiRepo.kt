@@ -17,10 +17,12 @@ import dev.langchain4j.service.AiServices
 import dev.langchain4j.service.MemoryId
 import dev.langchain4j.service.SystemMessage
 import dev.langchain4j.service.UserMessage
+import dev.langchain4j.service.V
 import dev.langchain4j.store.embedding.EmbeddingStore
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
 import dev.langchain4j.store.memory.chat.ChatMemoryStore
+import java.time.Duration
 
 
 private const val SYSTEM_MESSAGE: String =
@@ -38,27 +40,26 @@ and personalized travel information to customers. You should:
 
 interface Chat {
     @SystemMessage(SYSTEM_MESSAGE)
-    @UserMessage()
-    fun answer(@MemoryId userId: Long, question: String): String
+    @UserMessage("{{question}}")
+    fun answer(@MemoryId userId: Long, @V("question") question: String): String
 }
 
-// TODO: proper DI, we don't need AIRepo.
-//   Split document loading from `Chat`, and only expose `Chat` + fun interface DocumentLoader to Application.
 class AiRepo(
     config: AIConfig,
     memoryStore: ChatMemoryStore,
-    private val metrics: AiMetrics,
-    private val embeddingStore: EmbeddingStore<TextSegment> = InMemoryEmbeddingStore<TextSegment>(),
-    private val embeddingModel: EmbeddingModel = AllMiniLmL6V2QuantizedEmbeddingModel(),
-    private val tokenizer: Tokenizer = HuggingFaceTokenizer(config.tokenizer),
+    private val metrics: AiMetrics
+) : Chat {
+    private val embeddingStore: EmbeddingStore<TextSegment> = InMemoryEmbeddingStore<TextSegment>()
+    private val embeddingModel: EmbeddingModel = AllMiniLmL6V2QuantizedEmbeddingModel()
+    private val tokenizer: Tokenizer = HuggingFaceTokenizer(config.tokenizer)
     private val splitter: DocumentSplitter =
-        DocumentSplitters.recursive(config.maxSegmentSizeInTokens, config.maxOverlapSizeInTokens, tokenizer),
+        DocumentSplitters.recursive(config.maxSegmentSizeInTokens, config.maxOverlapSizeInTokens, tokenizer)
     private val contentRetriever: EmbeddingStoreContentRetriever = EmbeddingStoreContentRetriever.builder()
         .embeddingStore(embeddingStore)
         .embeddingModel(embeddingModel)
         .maxResults(5)
         .minScore(0.5)
-        .build(),
+        .build()
     private val chatModel: ChatLanguageModel = OpenAiChatModel.builder()
         .baseUrl(config.baseUrl)
         .apiKey(config.apiKey)
@@ -66,38 +67,37 @@ class AiRepo(
         .logResponses(true)
         .modelName(config.model)
         .temperature(0.7)
-        .build(),
+        .timeout(Duration.ofMinutes(2))
+        .build()
     private val chatMemoryProvider: ChatMemoryProvider = ChatMemoryProvider { memoryId: Any? ->
         MessageWindowChatMemory.builder()
             .id(memoryId)
             .maxMessages(10)
             .chatMemoryStore(memoryStore)
             .build()
-    },
+    }
     private val chat: Chat = AiServices.builder<Chat>(Chat::class.java)
         .chatLanguageModel(chatModel)
         .chatMemoryProvider(chatMemoryProvider)
         .contentRetriever(contentRetriever)
-        .build(),
+        .build()
     private val ingestor: EmbeddingStoreIngestor = EmbeddingStoreIngestor.builder()
         .embeddingStore(embeddingStore)
         .embeddingModel(embeddingModel)
         .documentSplitter(splitter)
         .build()
-) : Chat {
+
     fun loadDocuments() {
         metrics.measureDocumentLoadTime {
-            metrics?.measureDocumentLoadTime {
-                val text = AiRepo::class.java.classLoader.getResourceAsStream("test_content.txt").bufferedReader()
-                    .use { it.readText() }
-                val doc = Document.document(text)
-                ingestor.ingest(doc)
-            }
+            val text = AiRepo::class.java.classLoader.getResourceAsStream("test_content.txt").bufferedReader()
+                .use { it.readText() }
+            val doc = Document.document(text)
+            ingestor.ingest(doc)
         }
     }
 
     override fun answer(userId: Long, question: String): String =
-        metrics.measureQuestionAnswerTime {
+        metrics.trackAiQuestion {
             chat.answer(userId, question)
         }
 }

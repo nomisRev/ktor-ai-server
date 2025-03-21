@@ -36,7 +36,7 @@ tasks.withType<KotlinCompile> {
 ktor {
     development = System.getenv("CI") != null
     docker {
-        localImageName = project.name
+        localImageName = "ktor-ai-example"
         imageTag = project.version.toString()
         externalRegistry = dockerHub(
             appName = provider { project.name },
