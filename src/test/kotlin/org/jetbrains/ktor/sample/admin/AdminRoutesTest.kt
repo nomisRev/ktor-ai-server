@@ -8,6 +8,7 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import org.jetbrains.ktor.sample.security.Role
 import org.jetbrains.ktor.sample.users.Login
 import org.jetbrains.ktor.sample.users.NewUser
 import org.jetbrains.ktor.sample.users.Token
@@ -26,7 +27,7 @@ class AdminRoutesTest {
         return NewUser(
             name = "$random Admin",
             email = "$random@example.com",
-            role = "ADMIN",
+            role = Role.ADMIN,
             password = "password"
         )
     }
@@ -36,7 +37,7 @@ class AdminRoutesTest {
         return NewUser(
             name = "$random User",
             email = "$random@example.com",
-            role = "USER",
+            role = Role.USER,
             password = "password"
         )
     }
@@ -81,7 +82,7 @@ class AdminRoutesTest {
         }
 
         assertEquals(HttpStatusCode.Companion.Forbidden, response.status)
-        assert(response.bodyAsText() == "Role ADMIN required")
+        assertEquals("Role ADMIN required", response.bodyAsText())
     }
 
     @Test

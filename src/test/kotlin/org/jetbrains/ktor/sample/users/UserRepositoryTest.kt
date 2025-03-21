@@ -2,8 +2,8 @@ package org.jetbrains.ktor.sample.users
 
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.ktor.sample.DatabaseSpec
+import org.jetbrains.ktor.sample.security.Role
 import org.junit.jupiter.api.assertAll
-import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -53,7 +53,7 @@ class UserRepositoryTest : DatabaseSpec() {
             NewUser(
                 name = "Create User",
                 email = "CreateUser@example.com",
-                role = "CreateRole",
+                role = Role.USER,
                 password = "password"
             )
         )
@@ -61,7 +61,7 @@ class UserRepositoryTest : DatabaseSpec() {
         assertAll(
             { assert("Create User" == user.name) },
             { assert("CreateUser@example.com" == user.email) },
-            { assert("CreateRole" == user.role) }
+            { assert(Role.USER == user.role) }
         )
     }
 
@@ -71,7 +71,7 @@ class UserRepositoryTest : DatabaseSpec() {
             NewUser(
                 name = "Get User By Id",
                 email = "GetUserById@example.com",
-                role = "GetUserByIdRole",
+                role = Role.USER,
                 password = "password"
             )
         )
@@ -93,12 +93,14 @@ class UserRepositoryTest : DatabaseSpec() {
             user.id,
             UpdateUser(
                 name = "testUpdateUser User",
-                email = "testUpdateUser@example.com",
-                role = "ADMIN"
+                email = "testUpdateUser@example.com"
             )
         )
 
-        val actualUser = User(user.id, "testUpdateUser User", "testUpdateUser@example.com", "ADMIN", user.expiresAt)
+        val actualUser = user.copy(
+            name = "testUpdateUser User",
+            email = "testUpdateUser@example.com"
+        )
         assert(actualUser == updatedUser)
     }
 
@@ -157,7 +159,7 @@ class UserRepositoryTest : DatabaseSpec() {
         val newUser = NewUser(
             name = "Existing User",
             email = "existing@example.com",
-            role = "USER",
+            role = Role.USER,
             password = "password"
         )
         val user = userRepository.createUser(newUser)
@@ -172,7 +174,7 @@ class UserRepositoryTest : DatabaseSpec() {
             NewUser(
                 name = "Existing User",
                 email = "different@example.com",
-                role = "USER",
+                role = Role.USER,
                 password = "password"
             )
         )
@@ -183,7 +185,7 @@ class UserRepositoryTest : DatabaseSpec() {
             NewUser(
                 name = "Different User",
                 email = "existing@example.com",
-                role = "USER",
+                role = Role.USER,
                 password = "password"
             )
         )

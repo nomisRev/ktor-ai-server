@@ -14,12 +14,13 @@ import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import org.jetbrains.exposed.sql.updateReturning
+import org.jetbrains.ktor.sample.security.Role
 import org.postgresql.util.PSQLState
 
 object Users : LongIdTable("users", "user_id") {
     val name = varchar("name", 50).uniqueIndex()
     val email = varchar("email", 100).uniqueIndex()
-    val role = varchar("role", 50)
+    val role = varchar("role", 50).transform<String, Role>(Role::valueOf, Role::value)
     val salt = binary("salt")
     val passwordHash = binary("password_hash")
     val expiresAt = timestamp("expires_at")
@@ -84,7 +85,6 @@ class UserRepository(val database: Database, private val argon2Hasher: Argon2Has
             Users.updateReturning(where = { Users.id eq userId }) {
                 if (update.name != null) it[name] = update.name
                 if (update.email != null) it[email] = update.email
-                if (update.role != null) it[role] = update.role
                 if (encrypted != null) {
                     it[salt] = encrypted.salt
                     it[passwordHash] = encrypted.hash

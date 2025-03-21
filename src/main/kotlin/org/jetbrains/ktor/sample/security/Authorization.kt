@@ -8,15 +8,18 @@ import io.ktor.server.auth.principal
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
 
-fun Route.authorized(role: String, vararg anyRole: String, build: Route.() -> Unit) {
+enum class Role(val value: String) { ADMIN("ADMIN"), USER("USER") }
+
+fun Route.authorized(role: Role, vararg anyRole: Role, build: Route.() -> Unit) {
+    val roleSet = setOf(role, *anyRole)
     install(RoleBasedAuthorizationPlugin) {
-        roles = setOf(role, *anyRole)
+        roles = roleSet
     }
     build()
 }
 
 private class RoleBasedAuthorizationPluginConfiguration {
-    var roles: Set<String> = emptySet()
+    var roles: Set<Role> = emptySet()
 }
 
 private val RoleBasedAuthorizationPlugin = createRouteScopedPlugin(
@@ -31,7 +34,7 @@ private val RoleBasedAuthorizationPlugin = createRouteScopedPlugin(
         val authorized = roles.any { it == tokenRole }
         if (!authorized) {
             val prefix = if (roles.size == 1) "Role " else "Roles "
-            val message = roles.joinToString(prefix = prefix, postfix = " required") { it }
+            val message = roles.joinToString(prefix = prefix, postfix = " required") { it.name }
             call.respond(HttpStatusCode.Forbidden, message)
         }
     }

@@ -6,6 +6,7 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import org.jetbrains.ktor.sample.security.Role
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -15,7 +16,7 @@ fun newTestUser(): NewUser {
     return NewUser(
         name = "$random User",
         email = "$random@example.com",
-        role = "USER",
+        role = Role.USER,
         password = "password"
     )
 }
