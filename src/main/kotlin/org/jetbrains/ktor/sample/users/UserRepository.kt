@@ -3,6 +3,7 @@ package org.jetbrains.ktor.sample.users
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import org.jetbrains.exposed.dao.id.LongIdTable
+import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.Query
 import org.jetbrains.exposed.sql.ResultRow
@@ -13,10 +14,11 @@ import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 import org.jetbrains.exposed.sql.updateReturning
+import org.postgresql.util.PSQLState
 
 object Users : LongIdTable("users", "user_id") {
-    val name = varchar("name", 50)
-    val email = varchar("email", 100)
+    val name = varchar("name", 50).uniqueIndex()
+    val email = varchar("email", 100).uniqueIndex()
     val role = varchar("role", 50)
     val salt = binary("salt")
     val passwordHash = binary("password_hash")
@@ -25,38 +27,45 @@ object Users : LongIdTable("users", "user_id") {
 
 data class VerifyResult(val success: Boolean, val userId: Long)
 
-// TODO: Question, should we use OAuth instead of manual user management for authentication with JWT?
+// TODO: Question, OAuth instead of manual user management for authentication with JWT?
 class UserRepository(val database: Database, private val argon2Hasher: Argon2Hasher) {
 
-    // TODO: Fix conflict
-    suspend fun createUser(new: NewUser): User {
+    suspend fun createUser(new: NewUser): User? {
         val encrypted = argon2Hasher.encrypt(new.password)
         val now = Clock.System.now()
-        return transaction(database) {
-            val id = Users.insertAndGetId {
-                it[name] = new.name
-                it[email] = new.email
-                it[role] = new.role
-                it[salt] = encrypted.salt
-                it[passwordHash] = encrypted.hash
-                it[expiresAt] = now
-            }.value
-            User(id, new.name, new.email, new.role, now)
+        val userId = transaction(database) {
+            try {
+                Users.insertAndGetId {
+                    it[name] = new.name
+                    it[email] = new.email
+                    it[role] = new.role
+                    it[salt] = encrypted.salt
+                    it[passwordHash] = encrypted.hash
+                    it[expiresAt] = now
+                }.value
+            } catch (e: ExposedSQLException) {
+                if (e.sqlState == PSQLState.UNIQUE_VIOLATION.state) null else throw e
+            }
         }
+        return if (userId == null) null
+        else User(userId, new.name, new.email, new.role, now)
     }
 
-    // TODO: Fix user not found
+    class UserIdWithHash(val id: Long, val salt: ByteArray, val hash: ByteArray)
+
     suspend fun verifyPassword(
         username: String,
         password: String
-    ): VerifyResult {
-        val (id, salt, hash) = transaction(database) {
+    ): VerifyResult? {
+        val data = transaction(database) {
             val row = Users.select(Users.id, Users.salt, Users.passwordHash)
                 .where { Users.name eq username }
-                .single()
-            Triple(row[Users.id].value, row[Users.salt], row[Users.passwordHash])
+                .singleOrNull()
+            if (row == null) null
+            else UserIdWithHash(row[Users.id].value, row[Users.salt], row[Users.passwordHash])
         }
-        return VerifyResult(argon2Hasher.verify(password, salt, hash), id)
+        return if (data != null) VerifyResult(argon2Hasher.verify(password, data.salt, data.hash), data.id)
+        else null
     }
 
     private fun selectAll(): Query =

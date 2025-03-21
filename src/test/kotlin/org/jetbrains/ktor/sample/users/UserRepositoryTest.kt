@@ -25,7 +25,7 @@ class UserRepositoryTest : DatabaseSpec() {
     }
 
     private suspend fun insertUser(): User =
-        userRepository.createUser(newTestUser())
+        userRepository.createUser(newTestUser())!!
 
     @Test
     fun `test verifyPassword with correct password`() = runBlocking<Unit> {
@@ -42,10 +42,9 @@ class UserRepositoryTest : DatabaseSpec() {
     }
 
     @Test
-    fun `test verifyPassword with non-existent user`() = runBlocking<Unit> {
-        assertThrows<NoSuchElementException> {
-            userRepository.verifyPassword("nonexistinguser", "password")
-        }
+    fun `test verifyPassword with non-existent user`() = runBlocking {
+        val result = userRepository.verifyPassword("nonexistinguser", "password")
+        assert(null == result)
     }
 
     @Test
@@ -58,6 +57,7 @@ class UserRepositoryTest : DatabaseSpec() {
                 password = "password"
             )
         )
+        assertNotNull(user, "User should be created successfully")
         assertAll(
             { assert("Create User" == user.name) },
             { assert("CreateUser@example.com" == user.email) },
@@ -75,12 +75,14 @@ class UserRepositoryTest : DatabaseSpec() {
                 password = "password"
             )
         )
+        assertNotNull(user, "User should be created successfully")
 
         val retrievedUser = userRepository.getUserByIdOrNull(user.id)
+        assertNotNull(retrievedUser, "Retrieved user should not be null")
         assertAll(
-            { assert(retrievedUser?.name == user.name) },
-            { assert(retrievedUser?.email == user.email) },
-            { assert(retrievedUser?.role == user.role) }
+            { assert(retrievedUser.name == user.name) },
+            { assert(retrievedUser.email == user.email) },
+            { assert(retrievedUser.role == user.role) }
         )
     }
 
@@ -147,5 +149,44 @@ class UserRepositoryTest : DatabaseSpec() {
     fun `test deleteUser returns false for non-existent user`() = runBlocking {
         val result = userRepository.deleteUser(Long.MIN_VALUE)
         assertFalse(result, "Deleting a non-existent user should return false")
+    }
+
+    @Test
+    fun `test createUser returns null for existing user`() = runBlocking {
+        // Create a user
+        val newUser = NewUser(
+            name = "Existing User",
+            email = "existing@example.com",
+            role = "USER",
+            password = "password"
+        )
+        val user = userRepository.createUser(newUser)
+        assertNotNull(user, "First user creation should succeed")
+
+        // Try to create the same user again
+        val duplicateUser = userRepository.createUser(newUser)
+        assertNull(duplicateUser, "Creating a user with the same name and email should return null")
+
+        // Try to create a user with the same name but different email
+        val sameNameUser = userRepository.createUser(
+            NewUser(
+                name = "Existing User",
+                email = "different@example.com",
+                role = "USER",
+                password = "password"
+            )
+        )
+        assertNull(sameNameUser, "Creating a user with the same name should return null")
+
+        // Try to create a user with the same email but different name
+        val sameEmailUser = userRepository.createUser(
+            NewUser(
+                name = "Different User",
+                email = "existing@example.com",
+                role = "USER",
+                password = "password"
+            )
+        )
+        assertNull(sameEmailUser, "Creating a user with the same email should return null")
     }
 }

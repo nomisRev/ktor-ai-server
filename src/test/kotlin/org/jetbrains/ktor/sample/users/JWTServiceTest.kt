@@ -20,12 +20,15 @@ class JWTServiceTest : DatabaseSpec() {
     private val users by lazy { UserRepository(database, Argon2Hasher(AppTestConfig.argon2)) }
     private val jwtService by lazy { JWTService(AppTestConfig.jwt, users) }
 
+    suspend fun createTestUser(): User =
+        requireNotNull(users.createUser(newTestUser())) { "Test user cannot be null" }
+
     @Test
     fun `test generate token`() = runBlocking {
-        val user = users.createUser(newTestUser())
+        val user = createTestUser()
         val token = jwtService.generateToken(user.id)
 
-        val decodedJWT = JWT.decode(token)
+        val decodedJWT = JWT.decode(token.value)
         assertEquals(jwtConfig.issuer, decodedJWT.issuer)
         assertEquals(jwtConfig.audience, decodedJWT.audience.single())
         assertEquals(user.id, decodedJWT.getClaim("user_id").asLong())
@@ -33,16 +36,16 @@ class JWTServiceTest : DatabaseSpec() {
         assertNotNull(decodedJWT.issuedAt)
 
         val updatedUser = users.getUserByIdOrNull(user.id)
-        assertNotNull(updatedUser)
+        assertNotNull(updatedUser, "Updated user should not be null")
         assertTrue(updatedUser.expiresAt > user.expiresAt)
     }
 
     @Test
     fun `test validate token with valid token`() = runBlocking {
-        val user = users.createUser(newTestUser())
+        val user = createTestUser()
         val token = jwtService.generateToken(user.id)
 
-        val decodedJWT = JWT.decode(token)
+        val decodedJWT = JWT.decode(token.value)
         val jwtCredential = JWTCredential(decodedJWT)
 
         val userJWT = jwtService.validateToken(jwtCredential)
@@ -73,7 +76,7 @@ class JWTServiceTest : DatabaseSpec() {
 
     @Test
     fun `test validate token with expired token`() = runBlocking {
-        val user = users.createUser(newTestUser())
+        val user = createTestUser()
         val token = JWT.create()
             .withAudience(jwtConfig.audience)
             .withIssuer(jwtConfig.issuer)
@@ -111,14 +114,14 @@ class JWTServiceTest : DatabaseSpec() {
 
     @Test
     fun `test validate token with expired user token`() = runBlocking {
-        val user = users.createUser(newTestUser())
+        val user = createTestUser()
         users.updateExpiresAt(user.id, Instant.fromEpochMilliseconds(0))
 
         val token = jwtService.generateToken(user.id)
 
         users.updateExpiresAt(user.id, Instant.fromEpochMilliseconds(0))
 
-        val decodedJWT = JWT.decode(token)
+        val decodedJWT = JWT.decode(token.value)
         val jwtCredential = JWTCredential(decodedJWT)
 
         val userJWT = jwtService.validateToken(jwtCredential)

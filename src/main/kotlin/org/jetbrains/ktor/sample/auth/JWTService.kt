@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.server.auth.jwt.JWTCredential
 import kotlinx.datetime.Instant
+import org.jetbrains.ktor.sample.users.Token
 import org.jetbrains.ktor.sample.users.User
 import org.jetbrains.ktor.sample.users.UserRepository
 import java.time.Duration
@@ -22,19 +23,21 @@ class JWTService(private val config: JWTConfig, private val repository: UserRepo
 
     private val ONE_HOUR = Duration.ofHours(1).toMillis()
 
-    fun generateToken(userId: Long): String {
+    fun generateToken(userId: Long): Token {
         val issuedAt = System.currentTimeMillis()
         val expiresAt = issuedAt + ONE_HOUR
 
         repository.updateExpiresAt(userId, Instant.Companion.fromEpochMilliseconds(expiresAt))
 
-        return JWT.create()
-            .withAudience(config.audience)
-            .withIssuer(config.issuer)
-            .withClaim("user_id", userId)
-            .withExpiresAt(Date(expiresAt))
-            .withIssuedAt(Date(issuedAt))
-            .sign(algorithm)
+        return Token(
+            JWT.create()
+                .withAudience(config.audience)
+                .withIssuer(config.issuer)
+                .withClaim("user_id", userId)
+                .withExpiresAt(Date(expiresAt))
+                .withIssuedAt(Date(issuedAt))
+                .sign(algorithm)
+        )
     }
 
     fun validateToken(credential: JWTCredential): UserJWT? {

@@ -15,7 +15,10 @@ import org.junit.Test
 import org.junit.jupiter.api.assertAll
 import java.time.OffsetDateTime
 import kotlin.test.assertNotNull
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
+@ExperimentalUuidApi
 class UserRoutesTest {
     @Test
     fun `create user`() = withApp {
@@ -105,5 +108,58 @@ class UserRoutesTest {
         }
 
         assert(HttpStatusCode.Unauthorized == updateResponse.status)
+    }
+
+    @Test
+    fun `create user twice returns conflict`() = withApp {
+        val newUser = newTestUser()
+        val createResponse = post("/users") {
+            setBody(newUser)
+            contentType(ContentType.Application.Json)
+        }
+        assert(HttpStatusCode.Created == createResponse.status)
+
+        val duplicateResponse = post("/users") {
+            setBody(newUser)
+            contentType(ContentType.Application.Json)
+        }
+        assert(HttpStatusCode.Conflict == duplicateResponse.status)
+        assert("User already exists" == duplicateResponse.body<String>())
+    }
+
+    @Test
+    fun `create user twice with same username returns conflict`() = withApp {
+        val newUser = newTestUser()
+        val createResponse = post("/users") {
+            setBody(newUser)
+            contentType(ContentType.Application.Json)
+        }
+        assert(HttpStatusCode.Created == createResponse.status)
+
+        val sameNameUser = newUser.copy(email = "${Uuid.random()}@jb.com")
+        val sameNameResponse = post("/users") {
+            setBody(sameNameUser)
+            contentType(ContentType.Application.Json)
+        }
+        assert(HttpStatusCode.Conflict == sameNameResponse.status)
+        assert("User already exists" == sameNameResponse.body<String>())
+    }
+
+    @Test
+    fun `create user twice with same email returns conflict`() = withApp {
+        val newUser = newTestUser()
+        val createResponse = post("/users") {
+            setBody(newUser)
+            contentType(ContentType.Application.Json)
+        }
+        assert(HttpStatusCode.Created == createResponse.status)
+
+        val sameEmailUser = newUser.copy(name = "${Uuid.random()}")
+        val sameEmailResponse = post("/users") {
+            setBody(sameEmailUser)
+            contentType(ContentType.Application.Json)
+        }
+        assert(HttpStatusCode.Conflict == sameEmailResponse.status)
+        assert("User already exists" == sameEmailResponse.body<String>())
     }
 }

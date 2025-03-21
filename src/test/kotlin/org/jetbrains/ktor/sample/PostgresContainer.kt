@@ -14,11 +14,7 @@ object PostgresContainer {
     private val container: PostgreSQLContainer<Nothing> by lazy {
         PostgreSQLContainer<Nothing>(DockerImageName.parse("postgres:16-alpine"))
             .apply {
-                withDatabaseName("ktor_sample")
-                withUsername("ktor_user")
-                withPassword("<PASSWORD>")
                 waitingFor(Wait.forListeningPort())
-//                withCommand("postgres -c shared_preload_libraries=vector")
                 start()
             }
     }
@@ -31,7 +27,7 @@ object PostgresContainer {
             put("database.username", container.username)
             put("database.password", container.password)
             put("database.driverClassName", container.driverClassName)
-            put("database.maxPoolSize", "5")
+            put("database.maxPoolSize", "2")
             put("database.cachePrepStmts", "true")
             put("database.prepStmtCacheSize", "250")
             put("database.prepStmtCacheSqlLimit", "2048")
@@ -48,7 +44,7 @@ object PostgresContainer {
             name = container.databaseName,
             username = container.username,
             password = container.password,
-            maxPoolSize = 5,
+            maxPoolSize = 2,
             cachePrepStmts = true,
             prepStmtCacheSize = 250,
             prepStmtCacheSqlLimit = 2048,

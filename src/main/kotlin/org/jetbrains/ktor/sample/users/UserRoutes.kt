@@ -17,16 +17,16 @@ fun Routing.installUserRoutes(repository: UserRepository, jwtService: JWTService
         post {
             val new = call.receive<NewUser>()
             val user = repository.createUser(new)
-            call.respond(status = HttpStatusCode.Created, user)
+            if (user != null) call.respond(status = HttpStatusCode.Created, user)
+            else call.respond(HttpStatusCode.Conflict, "User already exists")
         }
         post("/login") {
             val login = call.receive<Login>()
             val result = repository.verifyPassword(login.username, login.password)
-            if (result.success) {
-                val token = jwtService.generateToken(result.userId)
-                call.respond(HttpStatusCode.OK, Token(token))
-            } else {
-                call.respond(status = HttpStatusCode.Unauthorized, message = "Invalid username or password")
+            when (result?.success) {
+                true -> call.respond(HttpStatusCode.OK, jwtService.generateToken(result.userId))
+                false -> call.respond(HttpStatusCode.Unauthorized, "Invalid username or password")
+                null -> call.respond(HttpStatusCode.NotFound, "User not found")
             }
         }
 

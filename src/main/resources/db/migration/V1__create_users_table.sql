@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
     user_id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    name VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
     role VARCHAR(50) NOT NULL,
     salt BYTEA NOT NULL,
     password_hash BYTEA NOT NULL,
