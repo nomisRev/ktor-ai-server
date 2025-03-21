@@ -1,4 +1,4 @@
-package org.jetbrains.ktor.sample.auth
+package org.jetbrains.ktor.sample.security
 
 import io.ktor.server.application.ApplicationEnvironment
 

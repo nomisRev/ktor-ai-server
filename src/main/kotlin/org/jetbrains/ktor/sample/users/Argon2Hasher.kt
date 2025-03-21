@@ -8,7 +8,6 @@ import org.bouncycastle.crypto.generators.Argon2BytesGenerator
 import org.bouncycastle.crypto.params.Argon2Parameters
 import java.security.SecureRandom
 
-
 class SaltAndHash(val salt: ByteArray, val hash: ByteArray) {
     operator fun component1() = salt
     operator fun component2() = hash

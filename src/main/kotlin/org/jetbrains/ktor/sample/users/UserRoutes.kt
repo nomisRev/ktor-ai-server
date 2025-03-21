@@ -9,8 +9,8 @@ import io.ktor.server.routing.Routing
 import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
-import org.jetbrains.ktor.sample.auth.JWTService
-import org.jetbrains.ktor.sample.auth.UserJWT
+import org.jetbrains.ktor.sample.security.JWTService
+import org.jetbrains.ktor.sample.security.UserJWT
 
 fun Routing.installUserRoutes(repository: UserRepository, jwtService: JWTService) {
     route("/users") {

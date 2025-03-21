@@ -8,7 +8,7 @@ import org.jetbrains.ktor.sample.ai.AiMetrics
 import org.jetbrains.ktor.sample.ai.AiRepo
 import org.jetbrains.ktor.sample.ai.ExposedChatMemoryStore
 import org.jetbrains.ktor.sample.users.Argon2Hasher
-import org.jetbrains.ktor.sample.auth.JWTService
+import org.jetbrains.ktor.sample.security.JWTService
 import org.jetbrains.ktor.sample.users.UserRepository
 
 class Dependencies(
@@ -20,7 +20,6 @@ class Dependencies(
 fun Application.dependencies(config: AppConfig): Dependencies {
     val database = setupDatabase(config.database, config.flyway)
     val registry = setupMetrics()
-    setupSillyMetrics(registry)
     val users = UserRepository(database, Argon2Hasher(config.argon2))
     return Dependencies(
         users = users,

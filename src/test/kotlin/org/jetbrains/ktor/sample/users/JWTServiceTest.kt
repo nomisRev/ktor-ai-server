@@ -7,7 +7,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Instant
 import org.jetbrains.ktor.sample.AppTestConfig
 import org.jetbrains.ktor.sample.DatabaseSpec
-import org.jetbrains.ktor.sample.auth.JWTService
+import org.jetbrains.ktor.sample.security.JWTService
 import org.junit.Test
 import java.util.Date
 import kotlin.test.assertEquals

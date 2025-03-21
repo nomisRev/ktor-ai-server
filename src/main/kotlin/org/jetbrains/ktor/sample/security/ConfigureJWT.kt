@@ -1,4 +1,4 @@
-package org.jetbrains.ktor.sample.auth
+package org.jetbrains.ktor.sample.security
 
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*
@@ -8,7 +8,7 @@ import io.ktor.server.response.respond
 
 fun Application.configureJWT(jwtConfig: JWTConfig, jwt: JWTService) {
     authentication {
-        this.jwt {
+        jwt {
             realm = jwtConfig.realm
             verifier(jwt.verifier)
             validate { credential -> jwt.validateToken(credential) }

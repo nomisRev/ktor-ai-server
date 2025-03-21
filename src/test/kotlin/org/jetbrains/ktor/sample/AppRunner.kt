@@ -16,11 +16,7 @@ fun withApp(test: suspend HttpClient.() -> Unit) =
         }
         val client = createClient {
             install(ContentNegotiation) {
-                json(Json {
-                    prettyPrint = true
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                })
+                json()
             }
         }
         startApplication()

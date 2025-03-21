@@ -14,6 +14,7 @@ fun Application.setupDatabase(config: DatabaseConfig, flywayConfig: FlywayConfig
     val dataSource = dataSource(config)
     flyway(dataSource, flywayConfig)
     val database = Database.connect(dataSource, databaseConfig = org.jetbrains.exposed.sql.DatabaseConfig {
+        // TODO: Configure alert in Prometheus/Grafana
         warnLongQueriesDuration = 1000
     })
 

@@ -1,4 +1,4 @@
-package org.jetbrains.ktor.sample.auth
+package org.jetbrains.ktor.sample.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
@@ -11,7 +11,8 @@ import org.jetbrains.ktor.sample.users.UserRepository
 import java.time.Duration
 import java.util.Date
 
-data class UserJWT(val user: User)
+@JvmInline
+value class UserJWT(val user: User)
 
 class JWTService(private val config: JWTConfig, private val repository: UserRepository) {
     private val algorithm = Algorithm.HMAC256(config.secret)

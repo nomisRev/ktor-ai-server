@@ -20,6 +20,7 @@ import dev.langchain4j.service.UserMessage
 import dev.langchain4j.service.V
 import dev.langchain4j.store.embedding.EmbeddingStore
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
+import dev.langchain4j.store.embedding.IngestionResult
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
 import dev.langchain4j.store.memory.chat.ChatMemoryStore
 import java.time.Duration
@@ -87,7 +88,7 @@ class AiRepo(
         .documentSplitter(splitter)
         .build()
 
-    fun loadDocuments() {
+    fun loadTestDocuments() {
         metrics.measureDocumentLoadTime {
             val text = AiRepo::class.java.classLoader.getResourceAsStream("test_content.txt").bufferedReader()
                 .use { it.readText() }
@@ -95,6 +96,12 @@ class AiRepo(
             ingestor.ingest(doc)
         }
     }
+
+    fun ingestDocument(content: String): IngestionResult =
+        metrics.measureDocumentLoadTime {
+            val doc = Document.document(content)
+            ingestor.ingest(doc)
+        }
 
     override fun answer(userId: Long, question: String): String =
         metrics.trackAiQuestion {

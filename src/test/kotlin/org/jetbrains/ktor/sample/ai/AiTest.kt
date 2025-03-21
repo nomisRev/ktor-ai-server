@@ -19,7 +19,7 @@ class AiTest : DatabaseSpec() {
 
     // @Test // Requires local llama.cpp to be running. TODO: test with Ollama/LMStudios
     fun test() {
-        ai.loadDocuments()
+        ai.loadTestDocuments()
         val answer = ai.answer(1L, "Tell me about **Alan Turing**")
         println(answer)
     }
