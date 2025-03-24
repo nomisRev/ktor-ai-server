@@ -1,0 +1,39 @@
+package org.jetbrains.ktor.sample.chat
+
+import io.ktor.server.http.content.staticResources
+import io.ktor.server.routing.Routing
+import io.ktor.server.sessions.get
+import io.ktor.server.sessions.sessions
+import io.ktor.server.websocket.webSocket
+import io.ktor.websocket.CloseReason
+import io.ktor.websocket.Frame
+import io.ktor.websocket.close
+import io.ktor.websocket.readText
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.filterIsInstance
+import org.jetbrains.ktor.sample.ai.AiRepo
+
+data class ChatSession(val id: Int)
+
+fun Routing.installChatRoutes(ai: AiRepo) {
+    staticResources("/", "web")
+
+//    authenticate {
+    webSocket("/ws") {
+        val session = call.sessions.get<ChatSession>()
+        if (session == null) close(CloseReason(CloseReason.Codes.VIOLATED_POLICY, "No session"))
+        else {
+//            val principal = call.principal<UserJWT>()!!
+            send(Frame.Text("Hey, I am your personal travel assistant. How may I help you today?"))
+            incoming.consumeAsFlow()
+                .filterIsInstance<Frame.Text>()
+                .collect { frame ->
+                    val question = frame.readText()
+                    val answer = ai.answer(session.id.toLong(), question)
+                    send(Frame.Text(answer))
+                }
+        }
+    }
+//    }
+}
+

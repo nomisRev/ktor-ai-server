@@ -4,7 +4,22 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### STS ###
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Kotlin ###
+.kotlin
+
+### Eclipse ###
 .apt_generated
 .classpath
 .factorypath
@@ -16,15 +31,6 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
-
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -35,8 +41,10 @@ out/
 ### VS Code ###
 .vscode/
 
-### MacOS ###
-.DS_STORE
+### Mac OS ###
+.DS_Store
 
-### Kotlin ###
-.kotlin
+app/src/main/resources/web/frontend.js
+app/src/main/resources/web/frontend.js.map
+app/src/main/resources/web/731.js
+app/src/main/resources/web/731.js.map
