@@ -9,14 +9,17 @@ import io.ktor.websocket.CloseReason
 import io.ktor.websocket.Frame
 import io.ktor.websocket.close
 import io.ktor.websocket.readText
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.serialization.Serializable
 import org.jetbrains.ktor.sample.ai.AiRepo
 
+@Serializable
 data class ChatSession(val id: Int)
 
-fun Routing.installChatRoutes(ai: AiRepo) {
-    staticResources("/", "web")
+fun Routing.installChatRoutes(ai: Deferred<AiRepo>) {
+    staticResources("", "web")
 
 //    authenticate {
     webSocket("/ws") {
@@ -29,7 +32,7 @@ fun Routing.installChatRoutes(ai: AiRepo) {
                 .filterIsInstance<Frame.Text>()
                 .collect { frame ->
                     val question = frame.readText()
-                    val answer = ai.answer(session.id.toLong(), question)
+                    val answer = ai.await().answer(session.id.toLong(), question)
                     send(Frame.Text(answer))
                 }
         }

@@ -43,14 +43,13 @@ fun Application.module() {
     intercept(ApplicationCallPipeline.Plugins) {
         if (call.sessions.get<ChatSession>() == null) {
             @OptIn(ExperimentalUuidApi::class)
-            call.sessions.set(ChatSession("1"))
+            call.sessions.set(ChatSession(1))
         }
     }
 
     routing {
         installUserRoutes(module.users, module.jwtService)
         installAdminRoutes(module.ai)
-        installAiRoutes(module.ai)
-        installChatRoutes()
+        installChatRoutes(module.ai)
     }
 }
