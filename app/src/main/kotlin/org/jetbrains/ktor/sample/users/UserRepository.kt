@@ -56,7 +56,7 @@ class UserRepository(val database: Database, private val argon2Hasher: Argon2Has
 
     suspend fun verifyPassword(
         username: String,
-        password: String
+        password: Password
     ): VerifyResult? {
         val data = transaction(database) {
             val row = Users.select(Users.id, Users.salt, Users.passwordHash)
@@ -65,7 +65,7 @@ class UserRepository(val database: Database, private val argon2Hasher: Argon2Has
             if (row == null) null
             else UserIdWithHash(row[Users.id].value, row[Users.salt], row[Users.passwordHash])
         }
-        return if (data != null) VerifyResult(argon2Hasher.verify(password, data.salt, data.hash), data.id)
+        return if (data != null) VerifyResult(argon2Hasher.verify(password.value, data.salt, data.hash), data.id)
         else null
     }
 

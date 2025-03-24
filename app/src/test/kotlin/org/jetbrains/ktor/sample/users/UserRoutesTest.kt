@@ -59,7 +59,7 @@ class UserRoutesTest {
         val user = createUser(newTestUser())
 
         val loginResponse = post("/users/login") {
-            setBody(Login(user.name, "wrongpassword"))
+            setBody(Login(user.name, Password("wrongpassword")))
             contentType(ContentType.Application.Json)
         }
 

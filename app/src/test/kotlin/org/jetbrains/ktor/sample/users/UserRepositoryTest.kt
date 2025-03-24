@@ -30,20 +30,20 @@ class UserRepositoryTest : DatabaseSpec() {
     @Test
     fun `test verifyPassword with correct password`() = runBlocking<Unit> {
         val user = insertUser()
-        val result = userRepository.verifyPassword(user.name, "password")
+        val result = userRepository.verifyPassword(user.name, Password("password"))
         assert(VerifyResult(true, user.id) == result)
     }
 
     @Test
     fun `test verifyPassword with incorrect password`() = runBlocking {
         val user = insertUser()
-        val result = userRepository.verifyPassword(user.name, "wrongpassword")
+        val result = userRepository.verifyPassword(user.name, Password("wrongpassword"))
         assert(VerifyResult(false, user.id) == result)
     }
 
     @Test
     fun `test verifyPassword with non-existent user`() = runBlocking {
-        val result = userRepository.verifyPassword("nonexistinguser", "password")
+        val result = userRepository.verifyPassword("nonexistinguser", Password("password"))
         assert(null == result)
     }
 
@@ -54,7 +54,7 @@ class UserRepositoryTest : DatabaseSpec() {
                 name = "Create User",
                 email = "CreateUser@example.com",
                 role = Role.USER,
-                password = "password"
+                password = Password("password")
             )
         )
         assertNotNull(user, "User should be created successfully")
@@ -72,7 +72,7 @@ class UserRepositoryTest : DatabaseSpec() {
                 name = "Get User By Id",
                 email = "GetUserById@example.com",
                 role = Role.USER,
-                password = "password"
+                password = Password("password")
             )
         )
         assertNotNull(user, "User should be created successfully")
@@ -107,12 +107,12 @@ class UserRepositoryTest : DatabaseSpec() {
     @Test
     fun `test update user password`() = runBlocking {
         val user = insertUser()
-        val initial = userRepository.verifyPassword(user.name, "password")
+        val initial = userRepository.verifyPassword(user.name, Password("password"))
 
-        userRepository.updateUserOrNull(user.id, UpdateUser(password = "newpassword"))
+        userRepository.updateUserOrNull(user.id, UpdateUser(password = Password("newpassword")))
 
-        val failed = userRepository.verifyPassword(user.name, "password")
-        val success = userRepository.verifyPassword(user.name, "newpassword")
+        val failed = userRepository.verifyPassword(user.name, Password("password"))
+        val success = userRepository.verifyPassword(user.name, Password("newpassword"))
         assertAll(
             { assert(VerifyResult(true, user.id) == initial) { "Initial password should still be valid" } },
             { assert(VerifyResult(false, user.id) == failed) { "Old password should not be valid anymore" } },
@@ -124,7 +124,7 @@ class UserRepositoryTest : DatabaseSpec() {
     fun `test update user with null values`() = runBlocking {
         val user = insertUser()
         val updatedUser = userRepository.updateUserOrNull(user.id, UpdateUser(name = "Updated Name"))
-        val verify = userRepository.verifyPassword("Updated Name", "password")
+        val verify = userRepository.verifyPassword("Updated Name", Password("password"))
 
         assertNotNull(updatedUser, "Updated user should not be null")
         assertAll(
@@ -160,7 +160,7 @@ class UserRepositoryTest : DatabaseSpec() {
             name = "Existing User",
             email = "existing@example.com",
             role = Role.USER,
-            password = "password"
+            password = Password("password")
         )
         val user = userRepository.createUser(newUser)
         assertNotNull(user, "First user creation should succeed")
@@ -175,7 +175,7 @@ class UserRepositoryTest : DatabaseSpec() {
                 name = "Existing User",
                 email = "different@example.com",
                 role = Role.USER,
-                password = "password"
+                password = Password("password")
             )
         )
         assertNull(sameNameUser, "Creating a user with the same name should return null")
@@ -186,7 +186,7 @@ class UserRepositoryTest : DatabaseSpec() {
                 name = "Different User",
                 email = "existing@example.com",
                 role = Role.USER,
-                password = "password"
+                password = Password("password")
             )
         )
         assertNull(sameEmailUser, "Creating a user with the same email should return null")

@@ -17,7 +17,7 @@ fun newTestUser(): NewUser {
         name = "$random User",
         email = "$random@example.com",
         role = Role.USER,
-        password = "password"
+        password = Password("password")
     )
 }
 
@@ -27,7 +27,7 @@ suspend fun HttpClient.createUser(newUser: NewUser): User =
         contentType(ContentType.Application.Json)
     }.body<User>()
 
-suspend fun HttpClient.login(user: User, password: String): Token =
+suspend fun HttpClient.login(user: User, password: Password): Token =
     post("/users/login") {
         setBody(Login(user.name, password))
         contentType(ContentType.Application.Json)

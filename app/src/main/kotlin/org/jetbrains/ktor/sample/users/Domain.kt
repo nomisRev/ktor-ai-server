@@ -18,7 +18,7 @@ data class User(
 @Serializable
 data class NewUser(
     val name: String,
-    val password: String,
+    val password: Password,
     val email: String,
     val role: Role
 )
@@ -26,12 +26,18 @@ data class NewUser(
 @Serializable
 data class UpdateUser(
     val name: String? = null,
-    val password: String? = null,
+    val password: Password? = null,
     val email: String? = null
 )
 
 @Serializable
-data class Login(val username: String, val password: String)
+@JvmInline
+value class Password(val value: String) {
+    override fun toString(): String = "<PASSWORD>"
+}
+
+@Serializable
+data class Login(val username: String, val password: Password)
 
 @Serializable
 @JvmInline

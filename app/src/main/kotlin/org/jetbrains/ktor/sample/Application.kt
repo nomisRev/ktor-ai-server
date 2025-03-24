@@ -25,7 +25,6 @@ import org.jetbrains.ktor.sample.config.dependencies
 import org.jetbrains.ktor.sample.users.installUserRoutes
 import kotlin.time.Duration.Companion.minutes
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 
 fun main(args: Array<String>) =
     io.ktor.server.netty.EngineMain.main(args)

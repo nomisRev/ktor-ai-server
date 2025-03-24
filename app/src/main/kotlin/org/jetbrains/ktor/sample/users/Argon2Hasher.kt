@@ -45,7 +45,7 @@ class Argon2Hasher(
             secureRandom.nextBytes(this)
         }
 
-    suspend fun encrypt(password: String): SaltAndHash = withContext(boundedIOContext) {
+    suspend fun encrypt(password: Password): SaltAndHash = withContext(boundedIOContext) {
         val salt = generateSalt()
         val builder = Argon2Parameters.Builder(Argon2Parameters.ARGON2_id)
             .withSalt(salt)
@@ -57,7 +57,7 @@ class Argon2Hasher(
         val hash = ByteArray(config.outputLength)
         Argon2BytesGenerator().apply {
             init(builder)
-        }.generateBytes(password.toCharArray(), hash)
+        }.generateBytes(password.value.toCharArray(), hash)
 
         SaltAndHash(salt, hash)
     }
