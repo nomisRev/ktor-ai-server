@@ -1,23 +1,55 @@
-# ktor-ai-chat-server
+# Ktor AI Travel Assistant
 
-This project uses [Gradle](https://gradle.org/).
-To build and run the application, use the *Gradle* tool window by clicking the Gradle icon in the right-hand toolbar,
-or run it directly from the terminal:
+AnAI-powered travel assistant chat application built with Ktor and Kotlin Multiplatform. This application provides personalized travel recommendations, information, and advice through a conversational interface.
 
-* Run `./gradlew run` to build and run the application.
-* Run `./gradlew build` to only build the application.
-* Run `./gradlew check` to run all checks, including tests.
-* Run `./gradlew clean` to clean all build outputs.
+## Overview
 
-Note the usage of the Gradle Wrapper (`./gradlew`).
-This is the suggested way to use Gradle in production projects.
+This project demonstrates how to build a modern AI-powered chat application using Kotlin and Ktor. It features:
 
-[Learn more about the Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html).
+- A travel agency assistant that provides personalized travel recommendations
+- Real-time chat interface using WebSockets
+- AI-powered responses using OpenAI models
+- Retrieval Augmented Generation (RAG) for enhanced responses with domain-specific knowledge
+- Conversation memory to maintain context across messages
 
-[Learn more about Gradle tasks](https://docs.gradle.org/current/userguide/command_line_interface.html#common_tasks).
+## Technologies
 
-This project follows the suggested multi-module setup and consists of the `app` and `utils` subprojects.
-The shared build logic was extracted to a convention plugin located in `buildSrc`.
+### Backend
+- **Ktor**: Kotlin asynchronous web framework
+- **LangChain4j**: Java/Kotlin library for working with large language models
+- **OpenAI**: AI models for generating responses
+- **Exposed**: Kotlin SQL framework for database access
+- **Flyway**: Database migration tool
+- **Kotlinx.serialization**: JSON serialization/deserialization
+- **WebSockets**: For real-time communication
+- **JWT**: For authentication and authorization
 
-This project uses a version catalog (see `gradle/libs.versions.toml`) to declare and version dependencies
-and both a build cache and a configuration cache (see `gradle.properties`).
+### Frontend
+- **Kotlin Multiplatform**: For sharing code between frontend and backend
+- **Kotlin/JS**: For browser-based UI
+- **Ktor Client**: For WebSocket communication with the server
+
+### DevOps
+- **Docker**: For containerization and deployment
+- **Gradle**: For build automation
+- **Prometheus**: For metrics and monitoring
+
+## Architecture
+
+The application follows a modular architecture:
+
+1. **AI Module**: Handles interaction with OpenAI models and document retrieval
+2. **Chat Module**: Manages WebSocket connections and message routing
+3. **User Module**: Handles user authentication and session management
+4. **Admin Module**: Provides administrative functions
+5. **Frontend Module**: Implements the user interface
+
+The application uses Retrieval Augmented Generation (RAG) to enhance AI responses with domain-specific knowledge. It can ingest documents to build a knowledge base that the AI can reference when answering questions.
+
+## Project Structure
+
+The project follows a multi-module setup:
+- `app`: Main server application
+- `frontend`: Browser-based user interface
+
+The project uses a version catalog (see `gradle/libs.versions.toml`) to declare and version dependencies.
