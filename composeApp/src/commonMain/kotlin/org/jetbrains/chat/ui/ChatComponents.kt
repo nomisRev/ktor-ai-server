@@ -9,6 +9,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -69,12 +73,9 @@ fun MessageBubble(message: Message) {
 }
 
 @Composable
-fun MessageInput(
-    text: String,
-    onTextChange: (String) -> Unit,
-    onSendClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
+fun MessageInput(onTextSend: (String) -> Unit, modifier: Modifier = Modifier) {
+    var text by remember { mutableStateOf("") }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -83,19 +84,20 @@ fun MessageInput(
     ) {
         TextField(
             value = text,
-            onValueChange = onTextChange,
+            onValueChange = { text = it },
             modifier = Modifier.weight(1f),
             placeholder = { Text("Type a message") },
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = colors.surface
-            ),
+            colors = TextFieldDefaults.textFieldColors(backgroundColor = colors.surface),
             maxLines = 3
         )
 
         Spacer(modifier = Modifier.width(8.dp))
 
         IconButton(
-            onClick = onSendClick,
+            onClick = {
+                onTextSend(text)
+                text = ""
+            },
             enabled = text.isNotBlank()
         ) {
             Icon(

@@ -18,43 +18,33 @@ class ChatViewModel(
     private val repository: ChatRepository = DemoChatRepository()
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(ChatState())
+    private val _state = MutableStateFlow<ChatState>(ChatState.Idle(emptyList()))
     val state: StateFlow<ChatState> = _state.asStateFlow()
 
-    fun updateInputText(text: String) {
-        _state.update { it.updateInputText(text) }
-    }
+    fun sendMessage(text: String) {
+        val trimmedText = text.trim()
+        if (trimmedText.isEmpty()) return
 
-    fun sendMessage() {
-        val currentState = _state.value
-        val inputText = currentState.inputText.trim()
-
-        if (inputText.isEmpty()) return
-
-        // Create user message
         val userMessage = Message(
-            content = inputText,
+            content = trimmedText,
             sender = Sender.USER,
             status = MessageStatus.SENT
         )
 
-        _state.update {
-            it.addMessage(userMessage).clearInputText().loading()
-        }
+        _state.update { ChatState.Loading(it.messages + userMessage) }
 
-        // Process AI response
         viewModelScope.launch {
             try {
                 repository.sendMessage(userMessage).collect { aiResponse ->
-                    _state.update { it.addMessage(aiResponse) }
+                    _state.update { ChatState.Idle(it.messages + aiResponse) }
                 }
             } catch (e: Exception) {
-                _state.update { it.withError("Failed to get response: ${e.message}") }
+                _state.update { ChatState.Error(it.messages, "Failed to get response: ${e.message}") }
             }
         }
     }
 
     fun clearError() {
-        _state.update { it.copy(error = null) }
+        _state.update { ChatState.Idle(it.messages) }
     }
 }

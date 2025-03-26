@@ -44,7 +44,4 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-app/src/main/resources/web/frontend.js
-app/src/main/resources/web/frontend.js.map
-app/src/main/resources/web/731.js
-app/src/main/resources/web/731.js.map
+app/src/main/resources/web/*

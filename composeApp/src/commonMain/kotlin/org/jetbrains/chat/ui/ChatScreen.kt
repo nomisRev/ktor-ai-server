@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.jetbrains.chat.model.ChatState
 import org.jetbrains.chat.model.Message
 import org.jetbrains.chat.viewmodel.ChatViewModel
 
@@ -39,9 +40,8 @@ fun MessageList(
 }
 
 @Composable
-fun ChatScreen(
-    viewModel: ChatViewModel = remember { ChatViewModel() }
-) {
+fun ChatScreen() {
+    val viewModel = remember { ChatViewModel() }
     val chatState by viewModel.state.collectAsStateWithLifecycle()
 
     Surface(
@@ -54,24 +54,15 @@ fun ChatScreen(
                 modifier = Modifier.weight(1f)
             )
 
-            if (chatState.isLoading) {
-                LoadingIndicator()
-            }
-
-            chatState.error?.let { error ->
-                ErrorMessage(
-                    message = error,
-                    onDismiss = viewModel::clearError
-                )
+            when (val state = chatState) {
+                is ChatState.Loading -> LoadingIndicator()
+                is ChatState.Error -> ErrorMessage(message = state.error, onDismiss = viewModel::clearError)
+                else -> Unit
             }
 
             Divider()
 
-            MessageInput(
-                text = chatState.inputText,
-                onTextChange = viewModel::updateInputText,
-                onSendClick = viewModel::sendMessage
-            )
+            MessageInput(onTextSend = viewModel::sendMessage)
         }
     }
 }

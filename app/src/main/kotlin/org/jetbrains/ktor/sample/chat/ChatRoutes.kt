@@ -23,19 +23,17 @@ fun Routing.installChatRoutes(ai: Deferred<AiRepo>) {
 
 //    authenticate {
     webSocket("/ws") {
-        val session = call.sessions.get<ChatSession>()
-        if (session == null) close(CloseReason(CloseReason.Codes.VIOLATED_POLICY, "No session"))
-        else {
+        val session = call.sessions.get<ChatSession>() ?: ChatSession(1)
+//        if (session == null) return@webSocket close(CloseReason(CloseReason.Codes.VIOLATED_POLICY, "No session"))
 //            val principal = call.principal<UserJWT>()!!
-            send(Frame.Text("Hey, I am your personal travel assistant. How may I help you today?"))
-            incoming.consumeAsFlow()
-                .filterIsInstance<Frame.Text>()
-                .collect { frame ->
-                    val question = frame.readText()
-                    val answer = ai.await().answer(session.id.toLong(), question)
-                    send(Frame.Text(answer))
-                }
-        }
+        send(Frame.Text("Hey, I am your personal travel assistant. How may I help you today?"))
+        incoming.consumeAsFlow()
+            .filterIsInstance<Frame.Text>()
+            .collect { frame ->
+                val question = frame.readText()
+                val answer = ai.await().answer(session.id.toLong(), question)
+                send(Frame.Text(answer))
+            }
     }
 //    }
 }

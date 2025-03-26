@@ -4,6 +4,7 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.random.Random
 
+
 data class Message(
     val content: String,
     val sender: Sender,
@@ -11,17 +12,11 @@ data class Message(
     val status: MessageStatus = MessageStatus.SENT
 )
 
-/**
- * Represents who sent a message.
- */
 enum class Sender {
     USER,
     AI
 }
 
-/**
- * Represents the current status of a message.
- */
 enum class MessageStatus {
     SENDING,
     SENT,
