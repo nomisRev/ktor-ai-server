@@ -5,20 +5,18 @@ import io.ktor.server.routing.Routing
 import io.ktor.server.sessions.get
 import io.ktor.server.sessions.sessions
 import io.ktor.server.websocket.webSocket
-import io.ktor.websocket.CloseReason
 import io.ktor.websocket.Frame
-import io.ktor.websocket.close
 import io.ktor.websocket.readText
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.serialization.Serializable
-import org.jetbrains.ktor.sample.ai.AiRepo
+import org.jetbrains.ktor.sample.ai.AiService
 
 @Serializable
 data class ChatSession(val id: Int)
 
-fun Routing.installChatRoutes(ai: Deferred<AiRepo>) {
+fun Routing.installChatRoutes(ai: Deferred<AiService>) {
     staticResources("", "web")
 
 //    authenticate {
@@ -31,10 +29,9 @@ fun Routing.installChatRoutes(ai: Deferred<AiRepo>) {
             .filterIsInstance<Frame.Text>()
             .collect { frame ->
                 val question = frame.readText()
-                val answer = ai.await().answer(session.id.toLong(), question)
-                send(Frame.Text(answer))
+                ai.await().answer(session.id.toLong(), question)
+                    .collect { outgoing.send(Frame.Text(it.toString())) }
             }
     }
 //    }
 }
-

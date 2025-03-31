@@ -34,5 +34,5 @@ plugins {
 }
 
 include(":app")
-include(":frontend")
 include(":composeApp")
+include(":langchain4j-kotlinx-coroutines")

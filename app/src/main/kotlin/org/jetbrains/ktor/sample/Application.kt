@@ -43,7 +43,7 @@ fun Application.module() {
 
     routing {
         installUserRoutes(module.users, module.jwtService)
-        installAdminRoutes(module.ai)
+        installAdminRoutes(module.documentService)
         installChatRoutes(module.ai)
     }
 }

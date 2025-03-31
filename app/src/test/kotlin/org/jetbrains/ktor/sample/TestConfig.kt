@@ -1,6 +1,6 @@
 package org.jetbrains.ktor.sample
 
-import org.jetbrains.ktor.sample.ai.AIConfig
+import org.jetbrains.ktor.sample.config.AIConfig
 import org.jetbrains.ktor.sample.security.JWTConfig
 import org.jetbrains.ktor.sample.config.AppConfig
 import org.jetbrains.ktor.sample.config.FlywayConfig

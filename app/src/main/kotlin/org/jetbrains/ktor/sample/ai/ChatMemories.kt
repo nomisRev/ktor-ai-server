@@ -32,7 +32,7 @@ class ExposedChatMemoryStore(private val database: Database) : ChatMemoryStore {
 
     override fun updateMessages(memoryId: Any?, messages: List<ChatMessage>) {
         val key = memoryId.toString()
-        val json: String = ChatMessageSerializer.messagesToJson(messages)
+        val json = ChatMessageSerializer.messagesToJson(messages)
         transaction(database) {
             ChatMemories.upsert(ChatMemories.memoryKey) {
                 it[memoryKey] = key

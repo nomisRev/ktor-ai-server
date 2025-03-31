@@ -1,7 +1,6 @@
 package org.jetbrains.ktor.sample.config
 
 import io.ktor.server.application.ApplicationEnvironment
-import org.jetbrains.ktor.sample.ai.AIConfig
 import org.jetbrains.ktor.sample.security.JWTConfig
 import org.jetbrains.ktor.sample.users.Argon2HasherConfig
 

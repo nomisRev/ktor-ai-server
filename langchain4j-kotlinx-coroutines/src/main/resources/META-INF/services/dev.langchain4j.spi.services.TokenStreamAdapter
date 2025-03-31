@@ -1,0 +1,2 @@
+org.jetbrains.langchain4j.TokenStreamToStringFlowAdapter
+org.jetbrains.langchain4j.TokenStreamToReplyFlowAdapter

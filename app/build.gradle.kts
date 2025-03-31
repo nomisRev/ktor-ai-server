@@ -22,6 +22,7 @@ dependencies {
     implementation(libs.bundles.flyway)
     implementation(libs.bundles.langchain4j)
     implementation(libs.micrometer.registry.prometheus)
+    implementation(projects.langchain4jKotlinxCoroutines)
 
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)

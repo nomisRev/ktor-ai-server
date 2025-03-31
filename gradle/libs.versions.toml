@@ -13,15 +13,18 @@ flyway = "10.10.0"
 micrometer = "1.12.2"
 androidx-lifecycle = "2.8.4"
 compose-multiplatform = "1.7.3"
+kotlinx-coroutines = "1.10.1"
 
 [libraries]
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 bouncycastle = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncycastle" }
 
 langchain4j = { module = "dev.langchain4j:langchain4j", version.ref = "langchain4j" }
 langchain4j-embeddings = { module = "dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2-q", version.ref = "langchain4j" }
 langchain4j-openai = { module = "dev.langchain4j:langchain4j-open-ai", version.ref = "langchain4j" }
-langchain4j-milvus = { module = "dev.langchain4j:langchain4j-milvus", version.ref = "langchain4j" }
+langchain4j-ollama = { module = "dev.langchain4j:langchain4j-ollama", version.ref = "langchain4j" }
 
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
@@ -76,7 +79,7 @@ langchain4j = [
     "langchain4j",
     "langchain4j-embeddings",
     "langchain4j-openai",
-    "langchain4j-milvus"
+    "langchain4j-ollama"
 ]
 ktor-server = [
     "ktor-server-netty",
