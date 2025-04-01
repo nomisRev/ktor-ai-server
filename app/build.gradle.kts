@@ -23,6 +23,7 @@ dependencies {
     implementation(libs.bundles.langchain4j)
     implementation(libs.micrometer.registry.prometheus)
     implementation(projects.langchain4jKotlinxCoroutines)
+    implementation("io.ktor:ktor-server-cors:3.1.1")
 
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)

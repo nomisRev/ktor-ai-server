@@ -11,7 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/composeApp" />
-            <option value="$PROJECT_DIR$/frontend" />
+            <option value="$PROJECT_DIR$/langchain4j-kotlinx-coroutines" />
           </set>
         </option>
       </GradleProjectSettings>

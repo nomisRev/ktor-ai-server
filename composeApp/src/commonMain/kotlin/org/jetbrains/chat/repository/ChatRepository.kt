@@ -1,53 +1,47 @@
 package org.jetbrains.chat.repository
 
-import kotlinx.coroutines.delay
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
+import io.ktor.client.plugins.websocket.webSocketSession
+import io.ktor.http.HttpMethod
+import io.ktor.websocket.Frame
+import io.ktor.websocket.readText
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flow
-import org.jetbrains.chat.model.Message
-import org.jetbrains.chat.model.Sender
-import kotlin.random.Random
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
-/**
- * Interface for chat repository operations.
- */
 interface ChatRepository {
-    /**
-     * Sends a message and returns a flow of the AI response.
-     */
-    fun sendMessage(message: Message): Flow<Message>
+    fun connect(): Flow<String>
+    fun sendMessage(message: String)
 }
 
-/**
- * Simple implementation of ChatRepository for demo purposes.
- * This implementation simulates AI responses with predefined messages.
- */
-class DemoChatRepository : ChatRepository {
-    private val aiResponses = listOf(
-        "Hello! How can I help you today?",
-        "That's an interesting question. Let me think about it...",
-        "I'm an AI assistant. I can help you with various tasks.",
-        "Could you provide more details about your question?",
-        "I'm here to assist you with any information you need.",
-        "That's a great point! Let me add some thoughts...",
-        "I understand your question. Here's what I think...",
-        "Let me search for that information for you.",
-        "I'm processing your request. Just a moment please.",
-        "Thanks for sharing that. Here's my response..."
-    )
+class WebSocketChatRepository(
+    private val client: HttpClient,
+    private val baseUrl: String,
+    private val scope: CoroutineScope
+) : ChatRepository {
+    private var session: DefaultClientWebSocketSession? = null
 
-    override fun sendMessage(message: Message): Flow<Message> = flow {
-        // Simulate network delay
-        delay(1000)
-        
-        // Randomly select an AI response
-        val responseText = aiResponses[Random.nextInt(aiResponses.size)]
-        
-        // Create and emit the AI response message
-        val responseMessage = Message(
-            content = responseText,
-            sender = Sender.AI
+    override fun connect(): Flow<String> = flow {
+        val s = client.webSocketSession(
+            method = HttpMethod.Get,
+            host = baseUrl,
+            path = "/ws"
         )
-        
-        emit(responseMessage)
+        session = s
+        s.incoming.consumeAsFlow()
+            .filterIsInstance<Frame.Text>()
+            .map { it.readText() }
+            .collect(this)
+    }
+
+    override fun sendMessage(message: String) {
+        scope.launch {
+            requireNotNull(session?.send(Frame.Text(message))) { "Session is not connected" }
+        }
     }
 }
