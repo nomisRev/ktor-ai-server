@@ -3,7 +3,9 @@ package org.jetbrains.ktor.sample.chat
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.http.content.staticResources
 import io.ktor.server.response.respond
+import io.ktor.server.response.respondRedirect
 import io.ktor.server.routing.Routing
+import io.ktor.server.routing.get
 import io.ktor.server.sessions.get
 import io.ktor.server.sessions.sessions
 import io.ktor.server.sse.sse
@@ -27,7 +29,19 @@ data class UserSession(
 )
 
 fun Routing.installChatRoutes(ai: Deferred<AiService>) {
-    staticResources("", "web")
+    get("/") {
+        val hasSession = call.sessions.get<UserSession>() != null
+        val redirectUrl = if (hasSession) "/home" else "login"
+        call.respondRedirect(redirectUrl)
+    }
+
+    staticResources("/", "web")
+    staticResources("/login", "web")
+    staticResources("/home", "web") {
+        modify { _, call ->
+            if (call.sessions.get<UserSession>() == null) call.respondRedirect("/login")
+        }
+    }
 
     webSocket("/ws") {
         val session = call.sessions.get<UserSession>()

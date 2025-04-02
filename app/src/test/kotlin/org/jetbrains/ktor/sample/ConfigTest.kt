@@ -2,7 +2,6 @@ package org.jetbrains.ktor.sample
 
 import io.ktor.server.config.*
 import io.ktor.server.testing.*
-import org.jetbrains.ktor.sample.security.JWTConfig
 import org.jetbrains.ktor.sample.config.DatabaseConfig
 import kotlin.test.Test
 

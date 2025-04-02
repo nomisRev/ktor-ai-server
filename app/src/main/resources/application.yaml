@@ -3,12 +3,7 @@ ktor:
     modules:
       - org.jetbrains.ktor.sample.ApplicationKt.module
   deployment:
-    port: "$PORT:8080"
-jwt:
-  issuer: "$JWT_ISSUER:https://jwt-provider-domain/"
-  audience: "$JWT_AUDIENCE:jwt-audience"
-  realm: "$JWT_REALM:ktor sample app"
-  secret: "$JWT_SECRET:secret"
+    port: "$PORT:8000"
 database:
   driverClassName: "$DB_DRIVER_CLASS_NAME:org.postgresql.Driver"
   host: "$DB_HOST:localhost"
@@ -30,3 +25,10 @@ ai:
   tokenizer: "$AI_TOKENIZER:all-minilm-l6-v2-q-tokenizer.json"
   maxSegmentSizeInTokens: "$AI_MAX_SEGMENT_SIZE:550"
   maxOverlapSizeInTokens: "$AI_MAX_OVERLAP_SIZE:50"
+oauth:
+  realm: "$AUTH_REALM:ktor-keycloak-example"
+  authorizeUrl: "$AUTH_URL:http://localhost/auth/realms/ktor-keycloak-example/protocol/openid-connect/auth"
+  accessTokenUrl: "$AUTH_URL:http://localhost/auth/realms/ktor-keycloak-example/protocol/openid-connect/token"
+  clientId: "$AUTH_CLIENT_ID:ktor-app"
+  clientSecret: "$AUTH_CLIENT_SECRET:<empty>"
+  redirectUrl: "$AUTH_REDIRECT_URL:http://localhost/callback"

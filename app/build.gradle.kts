@@ -1,5 +1,6 @@
 import io.ktor.plugin.features.DockerImageRegistry.Companion.dockerHub
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.io.File
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -15,6 +16,8 @@ application.mainClass = "io.ktor.server.netty.EngineMain"
 
 dependencies {
     implementation(libs.bundles.ktor.server)
+    implementation(libs.ktor.client.apache)
+    implementation(libs.ktor.client.content.negotiation)
     implementation(libs.bundles.exposed)
     implementation(libs.logback.classic)
     implementation(libs.kotlinx.datetime)
@@ -23,17 +26,10 @@ dependencies {
     implementation(libs.bundles.langchain4j)
     implementation(libs.micrometer.registry.prometheus)
     implementation(projects.langchain4jKotlinxCoroutines)
-    implementation("io.ktor:ktor-server-cors:3.1.1")
     implementation(libs.pdfbox)
 
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)
-}
-
-tasks.withType<KotlinCompile> {
-    compilerOptions {
-        javaParameters = true
-    }
 }
 
 ktor {
@@ -51,4 +47,24 @@ ktor {
         allowZip64 = true
         archiveFileName.set(project.name)
     }
+}
+
+tasks {
+    withType<KotlinCompile> {
+        compilerOptions {
+            // Needed for LangChain4J reflection tricks
+            // Maintains the parameter names instead of replacing with $0, $1, etc.
+            javaParameters = true
+        }
+    }
+
+    val cleanWebsite = create<Delete>("cleanWebsite") {
+        group = "build"
+        delete(
+            fileTree("${project.projectDir}/src/main/resources/web")
+        )
+    }
+
+    findByName("clean")?.dependsOn(cleanWebsite)
+    findByName("run")?.dependsOn(":composeApp:buildDevWebsite")
 }

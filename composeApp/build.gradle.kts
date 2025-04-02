@@ -21,7 +21,6 @@ kotlin {
                 outputFileName = "composeApp.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
                         add(rootDirPath)
                         add(projectDirPath)
                     }
@@ -49,5 +48,21 @@ kotlin {
             implementation(libs.ktor.client.websockets)
             implementation(libs.ktor.client.cio)
         }
+    }
+}
+
+tasks {
+    register("buildDevWebsite") {
+        group = "kotlin browser"
+        description = "Builds the website in development mode"
+        dependsOn("wasmJsBrowserDevelopmentWebpack")
+        dependsOn("wasmJsBrowserDevelopmentExecutableDistribution")
+    }
+
+    register("buildProdWebsite") {
+        group = "kotlin browser"
+        description = "Builds the website in production mode"
+        dependsOn("wasmJsBrowserProductionWebpack")
+        dependsOn("wasmJsBrowserDistribution")
     }
 }

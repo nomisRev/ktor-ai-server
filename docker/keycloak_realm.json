@@ -1,0 +1,25 @@
+{
+  "realm": "ktor-keycloak-example",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "ktor-app",
+      "directAccessGrantsEnabled": true,
+      "publicClient": true,
+      "redirectUris": ["*"],
+      "webOrigins": ["http://localhost:8081", "*"]
+    }
+  ],
+  "users": [
+    {
+      "username": "ktor_user",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "ktor_password",
+          "value": "ktor_password"
+        }
+      ]
+    }
+  ]
+}

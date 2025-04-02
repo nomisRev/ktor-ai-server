@@ -42,6 +42,7 @@ class AiService(config: AiModule, registry: MeterRegistry) {
         .description("Time taken to answer a question")
         .register(registry)
 
+
     fun answer(userId: Long, question: String): Flow<String> =
         chat.answer(userId, question)
             .track(::trackAiQuestion)

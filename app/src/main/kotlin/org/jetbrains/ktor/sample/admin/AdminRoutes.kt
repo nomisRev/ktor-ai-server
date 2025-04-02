@@ -20,8 +20,6 @@ import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.Serializable
 import org.jetbrains.ktor.sample.ai.DocumentService
-import org.jetbrains.ktor.sample.security.Role
-import org.jetbrains.ktor.sample.security.authorized
 import java.io.File
 import kotlin.io.path.createTempFile
 
@@ -29,22 +27,22 @@ import kotlin.io.path.createTempFile
 data class DocumentUpload(val content: String)
 
 fun Routing.installAdminRoutes(documents: Deferred<DocumentService>) {
-    authenticate {
-        authorized(Role.ADMIN) {
-            post("/admin/documents/upload") {
-                val upload = call.receive<DocumentUpload>()
-                documents.await().ingestDocument(upload.content)
-                call.respond(HttpStatusCode.Created)
-            }
-
-            // TODO: proper error handling
-            post("/admin/documents/upload-pdf") {
-                val pdfs = call.receiveMultipart().asFlow()
-                    .flatMapConcat { part -> parseFiles(part) }
-                documents.await().ingestPdfs(pdfs).collect()
-                call.respond(HttpStatusCode.Created)
-            }
+    authenticate("auth-oauth-keycloak") {
+//        authorized(Role.ADMIN) {
+        post("/admin/documents/upload") {
+            val upload = call.receive<DocumentUpload>()
+            documents.await().ingestDocument(upload.content)
+            call.respond(HttpStatusCode.Created)
         }
+
+        // TODO: proper error handling
+        post("/admin/documents/upload-pdf") {
+            val pdfs = call.receiveMultipart().asFlow()
+                .flatMapConcat { part -> parseFiles(part) }
+            documents.await().ingestPdfs(pdfs).collect()
+            call.respond(HttpStatusCode.Created)
+        }
+//        }
     }
 }
 

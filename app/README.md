@@ -88,7 +88,7 @@ When running with Docker Compose:
 1. Start the application and monitoring stack: `cd docker && docker-compose up -d`
 2. Access Grafana at http://localhost:3000 (default credentials: admin/admin)
 3. Access Prometheus at http://localhost:9090
-4. View raw metrics at http://localhost:8080/metrics
+4. View raw metrics at http://localhost:8000/metrics
 
 The Grafana dashboard includes the following panels:
 - AI Questions In Flight: Shows the number of AI questions currently being processed
