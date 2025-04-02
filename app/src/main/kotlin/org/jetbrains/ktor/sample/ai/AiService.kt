@@ -9,9 +9,9 @@ import io.micrometer.core.instrument.Gauge
 import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.Timer
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import org.jetbrains.ktor.sample.config.AiModule
 import org.jetbrains.ktor.sample.config.services
+import org.jetbrains.ktor.sample.track
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.time.TimeSource
@@ -68,12 +68,3 @@ class AiService(config: AiModule, registry: MeterRegistry) {
     }
 }
 
-/**
- * Wraps the [Flow] with builder methods like `trackAiQuestion { }, or `measureTimeMillis { }`
- */
-private fun <A> Flow<A>.track(tracker: suspend (suspend () -> Unit) -> Unit): Flow<A> =
-    flow {
-        tracker {
-            collect { emit(it) }
-        }
-    }

@@ -24,6 +24,7 @@ dependencies {
     implementation(libs.micrometer.registry.prometheus)
     implementation(projects.langchain4jKotlinxCoroutines)
     implementation("io.ktor:ktor-server-cors:3.1.1")
+    implementation(libs.pdfbox)
 
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)
@@ -51,5 +52,3 @@ ktor {
         archiveFileName.set(project.name)
     }
 }
-
-

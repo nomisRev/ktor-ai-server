@@ -17,6 +17,7 @@ import io.ktor.server.sessions.set
 import io.ktor.server.websocket.WebSockets
 import io.ktor.server.websocket.pingPeriod
 import kotlinx.datetime.Clock
+import org.jetbrains.ktor.sample.admin.installAdminRoutes
 import org.jetbrains.ktor.sample.chat.UserSession
 import org.jetbrains.ktor.sample.chat.installChatRoutes
 import org.jetbrains.ktor.sample.config.AppConfig
@@ -71,7 +72,7 @@ fun Application.module() {
 
     routing {
 //        installUserRoutes(module.users, module.jwtService)
-//        installAdminRoutes(module.documentService)
+        installAdminRoutes(module.documentService)
         installChatRoutes(module.ai)
     }
 }

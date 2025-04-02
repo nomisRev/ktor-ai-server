@@ -20,6 +20,7 @@ class AiTest : DatabaseSpec() {
         50
     )
     private val memory by lazy { ExposedChatMemoryStore(database) }
+    private val registry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
     private val module by lazy {
         AiModule(
             config, memory, OllamaStreamingChatModel.builder()
@@ -30,13 +31,11 @@ class AiTest : DatabaseSpec() {
                 .build()
         )
     }
-    private val registry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
     private val documents by lazy { DocumentService(module.ingestor, registry) }
     private val ai by lazy { AiService(module, registry) }
 
-    @Test // Requires local llama.cpp to be running.
+    @Test // Requires local Ollama to be running.
     fun test() = runBlocking {
-        documents.loadTestDocuments()
         ai.answer(1L, "Tell me about **Alan Turing**")
             .collect { println(it) }
     }

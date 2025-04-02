@@ -1,10 +1,14 @@
 package org.jetbrains.ktor.sample.chat
 
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.http.content.staticResources
+import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
 import io.ktor.server.sessions.get
 import io.ktor.server.sessions.sessions
+import io.ktor.server.sse.sse
 import io.ktor.server.websocket.webSocket
+import io.ktor.sse.ServerSentEvent
 import io.ktor.websocket.CloseReason
 import io.ktor.websocket.Frame
 import io.ktor.websocket.close
@@ -41,5 +45,12 @@ fun Routing.installChatRoutes(ai: Deferred<AiService>) {
                 outgoing.send(Frame.Text("### END ###"))
             }
     }
-}
 
+    sse("/chat") {
+        val session = call.sessions.get<UserSession>() ?: return@sse call.respond(HttpStatusCode.Unauthorized)
+        val question = call.request.queryParameters["question"] ?: return@sse call.respond(HttpStatusCode.BadRequest)
+        // TODO: Replace with memoryId / userId from UserSession
+        ai.await().answer(1L, question)
+            .collect { token -> send(ServerSentEvent(token)) }
+    }
+}
