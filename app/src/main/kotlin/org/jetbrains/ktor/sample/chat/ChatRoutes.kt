@@ -49,7 +49,7 @@ fun Routing.installChatRoutes(ai: Deferred<AiService>) {
             .collect { frame ->
                 val question = frame.readText()
                 // TODO: Replace with memoryId / userId from UserSession
-                ai.await().answer(1L, question)
+                ai.await().answer(session.userId, question)
                     // TODO: Handle errors gracefully
                     .collect { outgoing.send(Frame.Text(it)) }
                 outgoing.send(Frame.Text("### END ###"))
@@ -60,7 +60,7 @@ fun Routing.installChatRoutes(ai: Deferred<AiService>) {
         val session = call.sessions.get<UserSession>() ?: return@sse call.respond(HttpStatusCode.Unauthorized)
         val question = call.request.queryParameters["question"] ?: return@sse call.respond(HttpStatusCode.BadRequest)
         // TODO: Replace with memoryId / userId from UserSession
-        ai.await().answer(1L, question)
+        ai.await().answer(session.userId, question)
             .collect { token -> send(ServerSentEvent(token)) }
     }
 }
