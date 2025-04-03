@@ -1,5 +1,6 @@
 package org.jetbrains.ktor.sample.security
 
+import com.auth0.jwt.JWT
 import io.ktor.http.HttpStatusCode.Companion.Unauthorized
 import io.ktor.server.auth.OAuthAccessTokenResponse.OAuth2
 import io.ktor.server.auth.authenticate
@@ -24,11 +25,7 @@ fun Routing.installAuthRoutes() {
             val principal: OAuth2? = call.authentication.principal()
             if (principal == null) call.respond(Unauthorized)
             else {
-                val userSession = UserSession(
-                    accessToken = principal.accessToken,
-                    refreshToken = principal.refreshToken,
-                    expiresAt = Instant.now().epochSecond + principal.expiresIn
-                )
+                val userSession = UserSession(JWT.decode(principal.accessToken).subject)
                 call.sessions.set(userSession)
                 call.respondRedirect("/")
             }

@@ -14,18 +14,22 @@ data class OAuthConfig(
     val accessTokenUrl: String,
     val clientId: String,
     val clientSecret: String,
-    val redirectUrl: String
+    val redirectUrl: String,
+    val encryptionKey: String,
+    val signKey: String,
 ) {
     companion object {
         fun load(environment: ApplicationEnvironment): OAuthConfig {
-            val config = environment.config.config("oauth")
+            val config = environment.config.config("auth")
             return OAuthConfig(
                 realm = config.property("realm").getString(),
                 authorizeUrl = config.property("authorizeUrl").getString(),
                 accessTokenUrl = config.property("accessTokenUrl").getString(),
                 clientId = config.property("clientId").getString(),
                 clientSecret = config.property("clientSecret").getString(),
-                redirectUrl = config.property("redirectUrl").getString()
+                redirectUrl = config.property("redirectUrl").getString(),
+                encryptionKey = config.property("encryptionKey").getString(),
+                signKey = config.property("signKey").getString(),
             )
         }
     }

@@ -17,7 +17,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.sse.serverSentEventsSession
+import io.ktor.client.plugins.sse.sse
 import io.ktor.client.plugins.websocket.WebSockets
+import io.ktor.client.request.parameter
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.jetbrains.chat.repository.WebSocketChatRepository
 import org.jetbrains.chat.viewmodel.ChatViewModel
@@ -30,13 +36,27 @@ import org.jetbrains.chat.viewmodel.MessageType
 @Composable
 fun ChatScreen() {
     val scope = rememberCoroutineScope()
-    val client = remember { HttpClient { install(WebSockets) } }
-    val repository = remember { WebSocketChatRepository(client, "localhost", scope) }
+    val httpClient = remember { HttpClient { install(WebSockets) } }
+    val repository = remember { WebSocketChatRepository(httpClient, "localhost", scope) }
     val viewModel = remember { ChatViewModel(repository, scope) }
     val state by viewModel.state.collectAsState()
-    
+
+    val EVENT_URL = ""
+
+    scope.launch {
+        val session = httpClient.serverSentEventsSession(urlString = EVENT_URL) {
+            contentType(ContentType.Application.Json)
+            parameter("query", "...")
+        }
+        try {
+            session.incoming.collect {  }
+        } finally {
+            session.cancel()
+        }
+    }
+
     LaunchedEffect(Unit) { viewModel.connect() }
-    
+
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
@@ -44,14 +64,14 @@ fun ChatScreen() {
             messages = state.messages,
             modifier = Modifier.weight(1f)
         )
-        
+
         Spacer(modifier = Modifier.height(8.dp))
-        
+
         MessageInput(
             onSendMessage = { viewModel.sendMessage(it) },
             isLoading = state.isLoading
         )
-        
+
         if (state.error != null) {
             Text(
                 text = state.error!!,
@@ -79,7 +99,7 @@ private fun ChatMessages(
             listState.animateScrollToItem(messages.size - 1)
         }
     }
-    
+
     LazyColumn(
         state = listState,
         modifier = modifier.fillMaxWidth(),
@@ -100,7 +120,7 @@ private fun MessageItem(
     modifier: Modifier = Modifier
 ) {
     val isUserMessage = message.type == MessageType.USER
-    
+
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = if (isUserMessage) Arrangement.End else Arrangement.Start
@@ -122,10 +142,10 @@ private fun MessageItem(
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Spacer(modifier = Modifier.width(8.dp))
         }
-        
+
         // Message bubble
         Column(
             modifier = Modifier
@@ -148,7 +168,7 @@ private fun MessageItem(
                 text = message.content,
                 color = if (isUserMessage) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface
             )
-            
+
             if (!message.isComplete) {
                 LinearProgressIndicator(
                     modifier = Modifier
@@ -158,10 +178,10 @@ private fun MessageItem(
                 )
             }
         }
-        
+
         if (isUserMessage) {
             Spacer(modifier = Modifier.width(8.dp))
-            
+
             // User avatar
             Box(
                 modifier = Modifier
@@ -193,7 +213,7 @@ private fun MessageInput(
 ) {
     var text by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
-    
+
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -206,9 +226,9 @@ private fun MessageInput(
             enabled = !isLoading,
             singleLine = true
         )
-        
+
         Spacer(modifier = Modifier.width(8.dp))
-        
+
         IconButton(
             onClick = {
                 if (text.isNotBlank()) {

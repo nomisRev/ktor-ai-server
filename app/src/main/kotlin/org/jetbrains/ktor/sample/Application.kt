@@ -6,16 +6,17 @@ import io.ktor.server.application.*
 import io.ktor.server.application.install
 import io.ktor.server.routing.routing
 import io.ktor.serialization.kotlinx.json.json
-import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
+import io.ktor.server.sessions.SessionTransportTransformerEncrypt
 import io.ktor.server.sessions.Sessions
 import io.ktor.server.sessions.cookie
 import io.ktor.server.sessions.maxAge
 import io.ktor.server.sse.SSE
 import io.ktor.server.websocket.WebSockets
 import io.ktor.server.websocket.pingPeriod
+import io.ktor.util.hex
 import org.jetbrains.ktor.sample.admin.installAdminRoutes
 import org.jetbrains.ktor.sample.chat.UserSession
 import org.jetbrains.ktor.sample.chat.installChatRoutes
@@ -29,7 +30,7 @@ import kotlin.uuid.ExperimentalUuidApi
 fun main(args: Array<String>) =
     io.ktor.server.netty.EngineMain.main(args)
 
-@OptIn(ExperimentalUuidApi::class)
+@OptIn(ExperimentalUuidApi::class, ExperimentalStdlibApi::class)
 fun Application.module() {
     val config = AppConfig.load(environment)
     val module = dependencies(config)
@@ -45,6 +46,7 @@ fun Application.module() {
             cookie.extensions["SameSite"] = "lax"
             cookie.maxAge = 5.minutes
             cookie.httpOnly = true
+            transform(SessionTransportTransformerEncrypt(hex(config.oauth.encryptionKey), hex(config.oauth.signKey)))
         }
     }
 

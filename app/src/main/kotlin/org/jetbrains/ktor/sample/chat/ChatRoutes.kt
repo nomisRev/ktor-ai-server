@@ -22,11 +22,7 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.ktor.sample.ai.AiService
 
 @Serializable
-data class UserSession(
-    val accessToken: String,
-    val refreshToken: String?,
-    val expiresAt: Long
-)
+data class UserSession(val userId: String)
 
 fun Routing.installChatRoutes(ai: Deferred<AiService>) {
     get("/") {

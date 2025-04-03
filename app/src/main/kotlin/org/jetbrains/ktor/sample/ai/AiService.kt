@@ -43,7 +43,7 @@ class AiService(config: AiModule, registry: MeterRegistry) {
         .register(registry)
 
 
-    fun answer(userId: Long, question: String): Flow<String> =
+    fun answer(userId: String, question: String): Flow<String> =
         chat.answer(userId, question)
             .track(::trackAiQuestion)
 
@@ -61,7 +61,7 @@ class AiService(config: AiModule, registry: MeterRegistry) {
     private interface Chat {
         @SystemMessage(SYSTEM_MESSAGE)
         @UserMessage("{{question}}")
-        fun answer(@MemoryId userId: Long, @V("question") question: String): Flow<String>
+        fun answer(@MemoryId userId: String, @V("question") question: String): Flow<String>
 
         @SystemMessage(SYSTEM_MESSAGE)
         @UserMessage("{{question}}")

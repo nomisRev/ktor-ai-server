@@ -11,9 +11,10 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.upsert
+import kotlin.uuid.Uuid
 
 object ChatMemories : LongIdTable("chat_memories", "memory_id") {
-    val memoryKey = varchar("memory_key", 255).uniqueIndex()
+    val memoryKey = varchar("memory_key", 36).uniqueIndex()
     val messages = text("messages")
 }
 
