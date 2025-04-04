@@ -6,8 +6,8 @@
       "clientId": "ktor-app",
       "directAccessGrantsEnabled": true,
       "publicClient": true,
-      "redirectUris": ["*"],
-      "webOrigins": ["http://localhost:8081", "*"]
+      "redirectUris": ["http://localhost/callback"],
+      "webOrigins": ["http://localhost"]
     }
   ],
   "users": [

@@ -34,7 +34,15 @@ fun main(args: Array<String>) =
 fun Application.module() {
     val config = AppConfig.load(environment)
     val module = dependencies(config)
+    configure(config)
+    routing {
+        installAuthRoutes()
+        installAdminRoutes(module.documentService)
+        installChatRoutes(module.ai)
+    }
+}
 
+private fun Application.configure(config: AppConfig) {
     configureOAuth(config.oauth)
     install(ContentNegotiation) { json() }
     install(DefaultHeaders)
@@ -64,11 +72,5 @@ fun Application.module() {
         allowHeader(HttpHeaders.Referrer)
         allowHeader("SESSION")
         exposeHeader("SESSION")
-    }
-
-    routing {
-        installAuthRoutes()
-        installAdminRoutes(module.documentService)
-        installChatRoutes(module.ai)
     }
 }

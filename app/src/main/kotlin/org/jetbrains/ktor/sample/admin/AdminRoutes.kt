@@ -3,6 +3,7 @@ package org.jetbrains.ktor.sample.admin
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.PartData
 import io.ktor.http.content.asFlow
+import io.ktor.http.content.streamProvider
 import io.ktor.server.auth.authenticate
 import io.ktor.server.request.receive
 import io.ktor.server.request.receiveMultipart
@@ -28,7 +29,6 @@ data class DocumentUpload(val content: String)
 
 fun Routing.installAdminRoutes(documents: Deferred<DocumentService>) {
     authenticate("auth-oauth-keycloak") {
-//        authorized(Role.ADMIN) {
         post("/admin/documents/upload") {
             val upload = call.receive<DocumentUpload>()
             documents.await().ingestDocument(upload.content)
@@ -42,19 +42,16 @@ fun Routing.installAdminRoutes(documents: Deferred<DocumentService>) {
             documents.await().ingestPdfs(pdfs).collect()
             call.respond(HttpStatusCode.Created)
         }
-//        }
     }
 }
 
 private fun parseFiles(part: PartData): Flow<File> =
     if (part !is PartData.FileItem) emptyFlow()
     else flow {
-        val tmp = createTempFile(
-            part.originalFileName,
-            ".pdf"
-        ).toFile()
+        val tmp = createTempFile(part.originalFileName, ".pdf").toFile()
         try {
-            part.provider().copyTo(tmp.writeChannel())
+            val readChannel = part.provider()
+            readChannel.copyTo(tmp.writeChannel())
             emit(tmp)
         } finally {
             tmp.delete()

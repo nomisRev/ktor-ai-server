@@ -7,27 +7,6 @@ import kotlin.test.Test
 
 class ConfigTest {
     @Test
-    fun `test loading configuration`() {
-        val environment = createTestEnvironment {
-            config = MapApplicationConfig(
-                "jwt.issuer" to "https://test-auth-domain/",
-                "jwt.audience" to "test-audience",
-                "jwt.realm" to "test realm",
-                "jwt.secret" to "test-secret"
-            )
-        }
-
-        assert(
-            JWTConfig(
-                issuer = "https://test-auth-domain/",
-                audience = "test-audience",
-                realm = "test realm",
-                secret = "test-secret"
-            ) == JWTConfig.load(environment)
-        )
-    }
-
-    @Test
     fun `test loading database configuration`() {
         val environment = createTestEnvironment {
             config = MapApplicationConfig(

@@ -36,7 +36,7 @@ class AiTest : DatabaseSpec() {
 
     @Test // Requires local Ollama to be running.
     fun test() = runBlocking {
-        ai.answer(1L, "Tell me about **Alan Turing**")
+        ai.answer("userId", "Tell me about **Alan Turing**")
             .collect { println(it) }
     }
 }

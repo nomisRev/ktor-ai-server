@@ -8,7 +8,7 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 
-data class OAuthConfig(
+data class AuthConfig(
     val realm: String,
     val authorizeUrl: String,
     val accessTokenUrl: String,
@@ -19,9 +19,9 @@ data class OAuthConfig(
     val signKey: String,
 ) {
     companion object {
-        fun load(environment: ApplicationEnvironment): OAuthConfig {
+        fun load(environment: ApplicationEnvironment): AuthConfig {
             val config = environment.config.config("auth")
-            return OAuthConfig(
+            return AuthConfig(
                 realm = config.property("realm").getString(),
                 authorizeUrl = config.property("authorizeUrl").getString(),
                 accessTokenUrl = config.property("accessTokenUrl").getString(),
@@ -35,7 +35,7 @@ data class OAuthConfig(
     }
 }
 
-fun Application.configureOAuth(config: OAuthConfig) {
+fun Application.configureOAuth(config: AuthConfig) {
     val httpClient = HttpClient(Apache) {
         install(ContentNegotiation) { json() }
     }

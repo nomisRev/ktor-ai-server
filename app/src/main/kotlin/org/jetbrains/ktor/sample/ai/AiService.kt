@@ -10,7 +10,6 @@ import io.micrometer.core.instrument.MeterRegistry
 import io.micrometer.core.instrument.Timer
 import kotlinx.coroutines.flow.Flow
 import org.jetbrains.ktor.sample.config.AiModule
-import org.jetbrains.ktor.sample.config.services
 import org.jetbrains.ktor.sample.track
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger
@@ -29,8 +28,8 @@ and personalized travel information to customers. You should:
 5. Maintain a friendly, professional tone that inspires confidence in your recommendations.
 """
 
-class AiService(config: AiModule, registry: MeterRegistry) {
-    private val chat: Chat = config.services<Chat>()
+class AiService(module: AiModule, registry: MeterRegistry) {
+    private val chat: Chat = module.service<Chat>()
     private val inflight = AtomicInteger(0)
     private val gauge = Gauge
         .builder("ai.question.answer.inflight") { inflight.get() }

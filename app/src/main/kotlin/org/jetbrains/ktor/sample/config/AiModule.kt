@@ -73,12 +73,13 @@ class AiModule(
         .documentSplitter(splitter)
         .build()
 
-    fun <A : Any> aiServices(kClass: KClass<A>): AiServices<A> =
+    fun <A : Any> service(kClass: KClass<A>): A =
         AiServices.builder<A>(kClass.java)
             .streamingChatLanguageModel(model)
             .chatMemoryProvider(memory)
             .contentRetriever(retriever)
-}
+            .build()
 
-inline fun <reified A : Any> AiModule.services(): A =
-    aiServices(A::class).build()
+    inline fun <reified A : Any> service(): A =
+        service(A::class)
+}
