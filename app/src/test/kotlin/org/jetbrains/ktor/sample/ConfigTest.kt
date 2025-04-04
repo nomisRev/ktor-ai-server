@@ -2,25 +2,26 @@ package org.jetbrains.ktor.sample
 
 import io.ktor.server.config.*
 import io.ktor.server.testing.*
-import org.jetbrains.ktor.sample.config.DatabaseConfig
 import kotlin.test.Test
+import org.jetbrains.ktor.sample.config.DatabaseConfig
 
 class ConfigTest {
     @Test
     fun `test loading database configuration`() {
         val environment = createTestEnvironment {
-            config = MapApplicationConfig(
-                "database.host" to "localhost",
-                "database.port" to "5432",
-                "database.name" to "testdb",
-                "database.username" to "test-user",
-                "database.password" to "test-password",
-                "database.driverClassName" to "org.driver.TestDriver",
-                "database.maxPoolSize" to "-1",
-                "database.cachePrepStmts" to "true",
-                "database.prepStmtCacheSize" to "250",
-                "database.prepStmtCacheSqlLimit" to "2048",
-            )
+            config =
+                MapApplicationConfig(
+                    "database.host" to "localhost",
+                    "database.port" to "5432",
+                    "database.name" to "testdb",
+                    "database.username" to "test-user",
+                    "database.password" to "test-password",
+                    "database.driverClassName" to "org.driver.TestDriver",
+                    "database.maxPoolSize" to "-1",
+                    "database.cachePrepStmts" to "true",
+                    "database.prepStmtCacheSize" to "250",
+                    "database.prepStmtCacheSqlLimit" to "2048",
+                )
         }
 
         assert(

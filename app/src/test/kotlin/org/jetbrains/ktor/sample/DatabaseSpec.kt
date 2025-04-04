@@ -1,12 +1,12 @@
 package org.jetbrains.ktor.sample
 
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.ktor.sample.config.dataSource
 import org.jetbrains.ktor.sample.config.flyway
 import org.junit.ClassRule
 import org.junit.rules.ExternalResource
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 
 abstract class DatabaseSpec {
     lateinit var database: Database
@@ -18,14 +18,10 @@ abstract class DatabaseSpec {
         flyway(dataSource, AppTestConfig.flyway)
         database = Database.connect(dataSource)
     }
-
-
 }
 
-class CloseableExternalResource<A>(
-    val initializer: () -> A,
-    val close: (A) -> Unit
-) : ExternalResource() {
+class CloseableExternalResource<A>(val initializer: () -> A, val close: (A) -> Unit) :
+    ExternalResource() {
     override fun before() {
         super.before()
         println("before")
@@ -43,13 +39,14 @@ class Test {
         println("boo")
         assert(true)
     }
+
     @Test
     fun foo() {
         println("foo")
         assert(true)
     }
+
     companion object {
-        @JvmStatic @get:ClassRule
-        val resource = CloseableExternalResource({}, {})
+        @JvmStatic @get:ClassRule val resource = CloseableExternalResource({}, {})
     }
 }

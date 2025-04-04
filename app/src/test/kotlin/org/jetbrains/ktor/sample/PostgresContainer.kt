@@ -1,22 +1,22 @@
 package org.jetbrains.ktor.sample
 
-import org.testcontainers.containers.PostgreSQLContainer
-import org.testcontainers.utility.DockerImageName
 import io.ktor.server.config.MapApplicationConfig
 import org.jetbrains.ktor.sample.config.DatabaseConfig
+import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.containers.wait.strategy.Wait
+import org.testcontainers.utility.DockerImageName
 
 object PostgresContainer {
     /**
-     * At the end of the testsuite the Ryuk container started by Testcontainers will stop the container.
+     * At the end of the testsuite the Ryuk container started by Testcontainers will stop the
+     * container.
      * https://java.testcontainers.org/test_framework_integration/manual_lifecycle_control/
      */
     private val container: PostgreSQLContainer<Nothing> by lazy {
-        PostgreSQLContainer<Nothing>(DockerImageName.parse("postgres:16-alpine"))
-            .apply {
-                waitingFor(Wait.forListeningPort())
-                start()
-            }
+        PostgreSQLContainer<Nothing>(DockerImageName.parse("postgres:16-alpine")).apply {
+            waitingFor(Wait.forListeningPort())
+            start()
+        }
     }
 
     fun getMapAppConfig() =

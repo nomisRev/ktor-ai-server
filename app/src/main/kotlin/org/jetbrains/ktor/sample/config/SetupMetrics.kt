@@ -18,31 +18,23 @@ import kotlinx.coroutines.launch
 
 fun Application.setupMetrics(): PrometheusMeterRegistry {
     val prometheus = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
-    install(MicrometerMetrics) {
-        registry = prometheus
-    }
-    routing {
-        get("/metrics") {
-            call.respond(prometheus.scrape())
-        }
-    }
+    install(MicrometerMetrics) { registry = prometheus }
+    routing { get("/metrics") { call.respond(prometheus.scrape()) } }
     setupSillyMetrics(prometheus)
     monitor.subscribe(ApplicationStopped) { prometheus.close() }
     return prometheus
 }
 
-
 // Simulate some events for a Gauge and a Counter to integration test Prometheus, and Grafana
 private fun Application.setupSillyMetrics(registry: MeterRegistry) {
-    val sillyCounter = Counter
-        .builder("silly.counter")
-        .description("A silly counter that increments randomly")
-        .register(registry)
+    val sillyCounter =
+        Counter.builder("silly.counter")
+            .description("A silly counter that increments randomly")
+            .register(registry)
 
     var randomGaugeValue = 0.0
 
-    Gauge
-        .builder("silly.gauge", this) { randomGaugeValue }
+    Gauge.builder("silly.gauge", this) { randomGaugeValue }
         .description("A silly gauge that shows random values")
         .register(registry)
 

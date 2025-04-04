@@ -17,9 +17,9 @@ fun isLoggedIn(): Boolean {
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
-fun main() = ComposeViewport(document.body!!) {
-    MaterialTheme {
-        if (isLoggedIn()) ChatScreen()
-        else window.location.href = "http://localhost/login"
+fun main() =
+    ComposeViewport(document.body!!) {
+        MaterialTheme {
+            if (isLoggedIn()) ChatScreen() else window.location.href = "http://localhost/login"
+        }
     }
-}

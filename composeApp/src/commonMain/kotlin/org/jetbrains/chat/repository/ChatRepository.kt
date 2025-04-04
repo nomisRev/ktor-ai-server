@@ -16,24 +16,22 @@ import kotlinx.coroutines.launch
 
 interface ChatRepository {
     fun connect(): Flow<String>
+
     fun sendMessage(message: String)
 }
 
 class WebSocketChatRepository(
     private val client: HttpClient,
     private val baseUrl: String,
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
 ) : ChatRepository {
     private var session: DefaultClientWebSocketSession? = null
 
     override fun connect(): Flow<String> = flow {
-        val s = client.webSocketSession(
-            method = HttpMethod.Get,
-            host = baseUrl,
-            path = "/ws"
-        )
+        val s = client.webSocketSession(method = HttpMethod.Get, host = baseUrl, path = "/ws")
         session = s
-        s.incoming.consumeAsFlow()
+        s.incoming
+            .consumeAsFlow()
             .filterIsInstance<Frame.Text>()
             .map { it.readText() }
             .collect(this)

@@ -11,7 +11,6 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.upsert
-import kotlin.uuid.Uuid
 
 object ChatMemories : LongIdTable("chat_memories", "memory_id") {
     val memoryKey = varchar("memory_key", 36).uniqueIndex()
@@ -22,12 +21,13 @@ class ExposedChatMemoryStore(private val database: Database) : ChatMemoryStore {
 
     override fun getMessages(memoryId: Any): List<ChatMessage> {
         val key = memoryId.toString()
-        val json = transaction(database) {
-            ChatMemories.selectAll()
-                .where { ChatMemories.memoryKey eq key }
-                .map { it[ChatMemories.messages] }
-                .singleOrNull()
-        }
+        val json =
+            transaction(database) {
+                ChatMemories.selectAll()
+                    .where { ChatMemories.memoryKey eq key }
+                    .map { it[ChatMemories.messages] }
+                    .singleOrNull()
+            }
         return ChatMessageDeserializer.messagesFromJson(json)
     }
 
@@ -44,8 +44,6 @@ class ExposedChatMemoryStore(private val database: Database) : ChatMemoryStore {
 
     override fun deleteMessages(memoryId: Any?) {
         val key = memoryId.toString()
-        transaction(database) {
-            ChatMemories.deleteWhere { memoryKey eq key }
-        }
+        transaction(database) { ChatMemories.deleteWhere { memoryKey eq key } }
     }
 }

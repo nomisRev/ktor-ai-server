@@ -28,36 +28,44 @@ data class AIConfig(
     val maxOverlapSizeInTokens: Int,
 ) {
     companion object {
-        fun load(environment: ApplicationEnvironment): AIConfig = with(environment.config) {
-            AIConfig(
-                baseUrl = property("ai.baseUrl").getString(),
-                apiKey = property("ai.apiKey").getString(),
-                model = property("ai.model").getString(),
-                tokenizer = property("ai.tokenizer").getString(),
-                maxSegmentSizeInTokens = property("ai.maxSegmentSizeInTokens").getString().toInt(),
-                maxOverlapSizeInTokens = property("ai.maxOverlapSizeInTokens").getString().toInt()
-            )
-        }
+        fun load(environment: ApplicationEnvironment): AIConfig =
+            with(environment.config) {
+                AIConfig(
+                    baseUrl = property("ai.baseUrl").getString(),
+                    apiKey = property("ai.apiKey").getString(),
+                    model = property("ai.model").getString(),
+                    tokenizer = property("ai.tokenizer").getString(),
+                    maxSegmentSizeInTokens =
+                        property("ai.maxSegmentSizeInTokens").getString().toInt(),
+                    maxOverlapSizeInTokens =
+                        property("ai.maxOverlapSizeInTokens").getString().toInt(),
+                )
+            }
     }
 }
 
 class AiModule(
     config: AIConfig,
     memoryStore: ChatMemoryStore,
-    private val model: StreamingChatLanguageModel
+    private val model: StreamingChatLanguageModel,
 ) {
     private val store: EmbeddingStore<TextSegment> = InMemoryEmbeddingStore<TextSegment>()
     private val embeddings: EmbeddingModel = AllMiniLmL6V2QuantizedEmbeddingModel()
     private val tokenizer: Tokenizer = HuggingFaceTokenizer(config.tokenizer)
     private val splitter: DocumentSplitter =
-        DocumentSplitters.recursive(config.maxSegmentSizeInTokens, config.maxOverlapSizeInTokens, tokenizer)
+        DocumentSplitters.recursive(
+            config.maxSegmentSizeInTokens,
+            config.maxOverlapSizeInTokens,
+            tokenizer,
+        )
 
-    private val retriever: EmbeddingStoreContentRetriever = EmbeddingStoreContentRetriever.builder()
-        .embeddingStore(store)
-        .embeddingModel(embeddings)
-        .maxResults(5)
-        .minScore(0.5)
-        .build()
+    private val retriever: EmbeddingStoreContentRetriever =
+        EmbeddingStoreContentRetriever.builder()
+            .embeddingStore(store)
+            .embeddingModel(embeddings)
+            .maxResults(5)
+            .minScore(0.5)
+            .build()
 
     private val memory: ChatMemoryProvider = ChatMemoryProvider { memoryId: Any? ->
         MessageWindowChatMemory.builder()
@@ -67,11 +75,12 @@ class AiModule(
             .build()
     }
 
-    val ingestor: EmbeddingStoreIngestor = EmbeddingStoreIngestor.builder()
-        .embeddingStore(store)
-        .embeddingModel(embeddings)
-        .documentSplitter(splitter)
-        .build()
+    val ingestor: EmbeddingStoreIngestor =
+        EmbeddingStoreIngestor.builder()
+            .embeddingStore(store)
+            .embeddingModel(embeddings)
+            .documentSplitter(splitter)
+            .build()
 
     fun <A : Any> service(kClass: KClass<A>): A =
         AiServices.builder<A>(kClass.java)
@@ -80,6 +89,5 @@ class AiModule(
             .contentRetriever(retriever)
             .build()
 
-    inline fun <reified A : Any> service(): A =
-        service(A::class)
+    inline fun <reified A : Any> service(): A = service(A::class)
 }

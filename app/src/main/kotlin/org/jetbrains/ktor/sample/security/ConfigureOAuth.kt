@@ -36,9 +36,7 @@ data class AuthConfig(
 }
 
 fun Application.configureOAuth(config: AuthConfig) {
-    val httpClient = HttpClient(Apache) {
-        install(ContentNegotiation) { json() }
-    }
+    val httpClient = HttpClient(Apache) { install(ContentNegotiation) { json() } }
     monitor.subscribe(ApplicationStopped) { httpClient.close() }
     authentication {
         oauth("auth-oauth-keycloak") {
@@ -51,7 +49,7 @@ fun Application.configureOAuth(config: AuthConfig) {
                     requestMethod = HttpMethod.Post,
                     clientId = config.clientId,
                     clientSecret = config.clientSecret,
-                    defaultScopes = listOf("openid", "profile", "email")
+                    defaultScopes = listOf("openid", "profile", "email"),
                 )
             }
             client = httpClient

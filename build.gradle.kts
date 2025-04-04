@@ -6,4 +6,17 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.kotlin.assert) apply false
     alias(libs.plugins.ktor) apply false
+    alias(libs.plugins.spotless)
+}
+
+spotless {
+    kotlin {
+        target("**/*.kt")
+        ktfmt(libs.versions.ktfmt.get())
+            .kotlinlangStyle()
+            .configure {
+                it.setRemoveUnusedImports(true)
+                it.setManageTrailingCommas(true)
+            }
+    }
 }

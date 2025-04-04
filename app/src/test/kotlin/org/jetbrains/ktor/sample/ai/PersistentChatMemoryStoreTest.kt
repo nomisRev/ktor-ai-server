@@ -2,9 +2,9 @@ package org.jetbrains.ktor.sample.ai
 
 import dev.langchain4j.data.message.AiMessage
 import dev.langchain4j.data.message.UserMessage
+import kotlin.test.assertEquals
 import org.jetbrains.ktor.sample.DatabaseSpec
 import org.junit.Test
-import kotlin.test.assertEquals
 
 class PersistentChatMemoryStoreTest : DatabaseSpec() {
     private val memoryStore by lazy { ExposedChatMemoryStore(database) }
@@ -24,7 +24,8 @@ class PersistentChatMemoryStoreTest : DatabaseSpec() {
     fun `test update existing messages`() {
         val memoryId = "test-memory-id-2"
         val initialMessages = listOf(UserMessage("Initial message"))
-        val updatedMessages = initialMessages + listOf(AiMessage("Response"), UserMessage("Follow-up question"))
+        val updatedMessages =
+            initialMessages + listOf(AiMessage("Response"), UserMessage("Follow-up question"))
 
         memoryStore.updateMessages(memoryId, initialMessages)
         memoryStore.updateMessages(memoryId, updatedMessages)

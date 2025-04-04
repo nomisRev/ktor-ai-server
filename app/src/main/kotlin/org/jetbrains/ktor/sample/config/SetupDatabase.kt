@@ -13,10 +13,15 @@ import org.jetbrains.exposed.sql.transactions.TransactionManager
 fun Application.setupDatabase(config: DatabaseConfig, flywayConfig: FlywayConfig): Database {
     val dataSource = dataSource(config)
     flyway(dataSource, flywayConfig)
-    val database = Database.connect(dataSource, databaseConfig = org.jetbrains.exposed.sql.DatabaseConfig {
-        // TODO: Configure alert in Prometheus/Grafana
-        warnLongQueriesDuration = 1000
-    })
+    val database =
+        Database.connect(
+            dataSource,
+            databaseConfig =
+                org.jetbrains.exposed.sql.DatabaseConfig {
+                    // TODO: Configure alert in Prometheus/Grafana
+                    warnLongQueriesDuration = 1000
+                },
+        )
 
     monitor.subscribe(ApplicationStopped) {
         TransactionManager.closeAndUnregister(database)
@@ -35,16 +40,18 @@ fun flyway(dataSource: HikariDataSource, flywayConfig: FlywayConfig): MigrateRes
         .migrate()
 
 fun dataSource(config: DatabaseConfig): HikariDataSource =
-    HikariDataSource(HikariConfig().apply {
-        jdbcUrl = "jdbc:postgresql://${config.host}:${config.port}/${config.name}"
-        username = config.username
-        password = config.password
-        driverClassName = config.driverClassName
-        maximumPoolSize = config.maxPoolSize
-        addDataSourceProperty("cachePrepStmts", config.cachePrepStmts.toString())
-        addDataSourceProperty("prepStmtCacheSize", config.prepStmtCacheSize.toString())
-        addDataSourceProperty("prepStmtCacheSqlLimit", config.prepStmtCacheSqlLimit.toString())
-    })
+    HikariDataSource(
+        HikariConfig().apply {
+            jdbcUrl = "jdbc:postgresql://${config.host}:${config.port}/${config.name}"
+            username = config.username
+            password = config.password
+            driverClassName = config.driverClassName
+            maximumPoolSize = config.maxPoolSize
+            addDataSourceProperty("cachePrepStmts", config.cachePrepStmts.toString())
+            addDataSourceProperty("prepStmtCacheSize", config.prepStmtCacheSize.toString())
+            addDataSourceProperty("prepStmtCacheSqlLimit", config.prepStmtCacheSqlLimit.toString())
+        }
+    )
 
 data class DatabaseConfig(
     val driverClassName: String,
@@ -59,33 +66,33 @@ data class DatabaseConfig(
     val prepStmtCacheSqlLimit: Int,
 ) {
     companion object {
-        fun load(environment: ApplicationEnvironment): DatabaseConfig = with(environment.config) {
-            DatabaseConfig(
-                driverClassName = property("database.driverClassName").getString(),
-                host = property("database.host").getString(),
-                port = property("database.port").getString().toInt(),
-                name = property("database.name").getString(),
-                username = property("database.username").getString(),
-                password = property("database.password").getString(),
-                maxPoolSize = property("database.maxPoolSize").getString().toInt(),
-                cachePrepStmts = property("database.cachePrepStmts").getString().toBoolean(),
-                prepStmtCacheSize = property("database.prepStmtCacheSize").getString().toInt(),
-                prepStmtCacheSqlLimit = property("database.prepStmtCacheSqlLimit").getString().toInt(),
-            )
-        }
+        fun load(environment: ApplicationEnvironment): DatabaseConfig =
+            with(environment.config) {
+                DatabaseConfig(
+                    driverClassName = property("database.driverClassName").getString(),
+                    host = property("database.host").getString(),
+                    port = property("database.port").getString().toInt(),
+                    name = property("database.name").getString(),
+                    username = property("database.username").getString(),
+                    password = property("database.password").getString(),
+                    maxPoolSize = property("database.maxPoolSize").getString().toInt(),
+                    cachePrepStmts = property("database.cachePrepStmts").getString().toBoolean(),
+                    prepStmtCacheSize = property("database.prepStmtCacheSize").getString().toInt(),
+                    prepStmtCacheSqlLimit =
+                        property("database.prepStmtCacheSqlLimit").getString().toInt(),
+                )
+            }
     }
 }
 
-data class FlywayConfig(
-    val locations: String,
-    val baselineOnMigrate: Boolean
-) {
+data class FlywayConfig(val locations: String, val baselineOnMigrate: Boolean) {
     companion object {
-        fun load(environment: ApplicationEnvironment): FlywayConfig = with(environment.config) {
-            FlywayConfig(
-                locations = property("flyway.locations").getString(),
-                baselineOnMigrate = property("flyway.baselineOnMigrate").getString().toBoolean()
-            )
-        }
+        fun load(environment: ApplicationEnvironment): FlywayConfig =
+            with(environment.config) {
+                FlywayConfig(
+                    locations = property("flyway.locations").getString(),
+                    baselineOnMigrate = property("flyway.baselineOnMigrate").getString().toBoolean(),
+                )
+            }
     }
 }

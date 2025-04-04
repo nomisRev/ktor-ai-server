@@ -7,7 +7,7 @@ data class AppConfig(
     val oauth: AuthConfig,
     val database: DatabaseConfig,
     val ai: AIConfig,
-    val flyway: FlywayConfig
+    val flyway: FlywayConfig,
 ) {
     companion object {
         fun load(environment: ApplicationEnvironment): AppConfig =
@@ -15,7 +15,7 @@ data class AppConfig(
                 oauth = AuthConfig.load(environment),
                 database = DatabaseConfig.load(environment),
                 ai = AIConfig.load(environment),
-                flyway = FlywayConfig.load(environment)
+                flyway = FlywayConfig.load(environment),
             )
     }
 }

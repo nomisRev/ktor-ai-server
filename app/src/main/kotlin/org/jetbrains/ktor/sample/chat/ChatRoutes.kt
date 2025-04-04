@@ -21,8 +21,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.serialization.Serializable
 import org.jetbrains.ktor.sample.ai.AiService
 
-@Serializable
-data class UserSession(val userId: String)
+@Serializable data class UserSession(val userId: String)
 
 fun Routing.installChatRoutes(ai: Deferred<AiService>) {
     get("/") {
@@ -41,24 +40,28 @@ fun Routing.installChatRoutes(ai: Deferred<AiService>) {
 
     webSocket("/ws") {
         val session = call.sessions.get<UserSession>()
-        if (session == null) return@webSocket close(CloseReason(CloseReason.Codes.VIOLATED_POLICY, "No session"))
+        if (session == null)
+            return@webSocket close(CloseReason(CloseReason.Codes.VIOLATED_POLICY, "No session"))
         send(Frame.Text("Hey, I am your personal travel assistant. How may I help you today?"))
         send(Frame.Text("### END ###"))
-        incoming.consumeAsFlow()
-            .filterIsInstance<Frame.Text>()
-            .collect { frame ->
-                val question = frame.readText()
-                ai.await().answer(session.userId, question)
-                    // TODO: Handle errors gracefully
-                    .collect { outgoing.send(Frame.Text(it)) }
-                outgoing.send(Frame.Text("### END ###"))
-            }
+        incoming.consumeAsFlow().filterIsInstance<Frame.Text>().collect { frame ->
+            val question = frame.readText()
+            ai.await()
+                .answer(session.userId, question)
+                // TODO: Handle errors gracefully
+                .collect { outgoing.send(Frame.Text(it)) }
+            outgoing.send(Frame.Text("### END ###"))
+        }
     }
 
     sse("/chat") {
-        val session = call.sessions.get<UserSession>() ?: return@sse call.respond(HttpStatusCode.Unauthorized)
-        val question = call.request.queryParameters["question"] ?: return@sse call.respond(HttpStatusCode.BadRequest)
-        ai.await().answer(session.userId, question)
-            .collect { token -> send(ServerSentEvent(token)) }
+        val session =
+            call.sessions.get<UserSession>() ?: return@sse call.respond(HttpStatusCode.Unauthorized)
+        val question =
+            call.request.queryParameters["question"]
+                ?: return@sse call.respond(HttpStatusCode.BadRequest)
+        ai.await().answer(session.userId, question).collect { token ->
+            send(ServerSentEvent(token))
+        }
     }
 }

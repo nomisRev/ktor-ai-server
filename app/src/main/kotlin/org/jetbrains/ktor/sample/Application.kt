@@ -2,13 +2,13 @@ package org.jetbrains.ktor.sample
 
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
+import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
 import io.ktor.server.application.install
-import io.ktor.server.routing.routing
-import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
+import io.ktor.server.routing.routing
 import io.ktor.server.sessions.SessionTransportTransformerEncrypt
 import io.ktor.server.sessions.Sessions
 import io.ktor.server.sessions.cookie
@@ -17,6 +17,8 @@ import io.ktor.server.sse.SSE
 import io.ktor.server.websocket.WebSockets
 import io.ktor.server.websocket.pingPeriod
 import io.ktor.util.hex
+import kotlin.time.Duration.Companion.minutes
+import kotlin.uuid.ExperimentalUuidApi
 import org.jetbrains.ktor.sample.admin.installAdminRoutes
 import org.jetbrains.ktor.sample.chat.UserSession
 import org.jetbrains.ktor.sample.chat.installChatRoutes
@@ -24,11 +26,8 @@ import org.jetbrains.ktor.sample.config.AppConfig
 import org.jetbrains.ktor.sample.config.dependencies
 import org.jetbrains.ktor.sample.security.configureOAuth
 import org.jetbrains.ktor.sample.security.installAuthRoutes
-import kotlin.time.Duration.Companion.minutes
-import kotlin.uuid.ExperimentalUuidApi
 
-fun main(args: Array<String>) =
-    io.ktor.server.netty.EngineMain.main(args)
+fun main(args: Array<String>) = io.ktor.server.netty.EngineMain.main(args)
 
 @OptIn(ExperimentalUuidApi::class, ExperimentalStdlibApi::class)
 fun Application.module() {
@@ -54,7 +53,12 @@ private fun Application.configure(config: AppConfig) {
             cookie.extensions["SameSite"] = "lax"
             cookie.maxAge = 5.minutes
             cookie.httpOnly = true
-            transform(SessionTransportTransformerEncrypt(hex(config.oauth.encryptionKey), hex(config.oauth.signKey)))
+            transform(
+                SessionTransportTransformerEncrypt(
+                    hex(config.oauth.encryptionKey),
+                    hex(config.oauth.signKey),
+                )
+            )
         }
     }
 
