@@ -1,6 +1,5 @@
 import io.ktor.plugin.features.DockerImageRegistry.Companion.dockerHub
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.io.File
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -26,7 +25,6 @@ dependencies {
     implementation(libs.bundles.langchain4j)
     implementation(libs.micrometer.registry.prometheus)
     implementation(projects.langchain4jKotlinxCoroutines)
-    implementation(libs.pdfbox)
 
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)

@@ -14,7 +14,6 @@ micrometer = "1.12.2"
 androidx-lifecycle = "2.8.4"
 compose-multiplatform = "1.7.3"
 kotlinx-coroutines = "1.10.1"
-pdfbox = "3.0.3"
 spotless = "7.0.2"
 ktfmt = "0.54"
 
@@ -23,18 +22,17 @@ kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core",
 
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 bouncycastle = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncycastle" }
-pdfbox = { module = "org.apache.pdfbox:pdfbox", version.ref = "pdfbox" }
 
 langchain4j = { module = "dev.langchain4j:langchain4j", version.ref = "langchain4j" }
 langchain4j-embeddings = { module = "dev.langchain4j:langchain4j-embeddings-all-minilm-l6-v2-q", version.ref = "langchain4j" }
 langchain4j-openai = { module = "dev.langchain4j:langchain4j-open-ai", version.ref = "langchain4j" }
 langchain4j-ollama = { module = "dev.langchain4j:langchain4j-ollama", version.ref = "langchain4j" }
+langchain4j-pdf = { module = "dev.langchain4j:langchain4j-document-parser-apache-pdfbox", version.ref = "langchain4j" }
 
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-websockets = { module = "io.ktor:ktor-client-websockets", version.ref = "ktor" }
 ktor-client-apache = { module = "io.ktor:ktor-client-apache", version.ref = "ktor" }
-
 
 ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
 ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
@@ -61,7 +59,6 @@ flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
 
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
 testcontainers-core = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 testcontainers-junit = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
@@ -87,7 +84,8 @@ langchain4j = [
     "langchain4j",
     "langchain4j-embeddings",
     "langchain4j-openai",
-    "langchain4j-ollama"
+    "langchain4j-ollama",
+    "langchain4j-pdf"
 ]
 ktor-server = [
     "ktor-server-netty",

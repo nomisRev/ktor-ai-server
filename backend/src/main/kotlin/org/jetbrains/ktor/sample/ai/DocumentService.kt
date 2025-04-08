@@ -1,6 +1,7 @@
 package org.jetbrains.ktor.sample.ai
 
 import dev.langchain4j.data.document.Document
+import dev.langchain4j.data.document.parser.apache.pdfbox.ApachePdfBoxDocumentParser
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import dev.langchain4j.store.embedding.IngestionResult
 import io.micrometer.core.instrument.MeterRegistry
@@ -9,12 +10,12 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 import kotlin.time.TimeSource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import org.apache.pdfbox.Loader
-import org.apache.pdfbox.text.PDFTextStripper
 import org.jetbrains.ktor.sample.track
 
 class DocumentService(private val ingestor: EmbeddingStoreIngestor, registry: MeterRegistry) {
@@ -22,6 +23,8 @@ class DocumentService(private val ingestor: EmbeddingStoreIngestor, registry: Me
         Timer.builder("ai.document.load.time")
             .description("Time taken to load a document")
             .register(registry)
+
+    private val parser = ApachePdfBoxDocumentParser()
 
     suspend fun ingestDocument(content: String): IngestionResult =
         withContext(Dispatchers.IO) {
@@ -31,15 +34,15 @@ class DocumentService(private val ingestor: EmbeddingStoreIngestor, registry: Me
             }
         }
 
+    private fun ingestPdf(file: File): Flow<IngestionResult> = flow {
+        val document = parser.parse(file.inputStream())
+        emit(ingestor.ingest(document))
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun ingestPdfs(files: Flow<File>): Flow<IngestionResult> =
         files
-            .map { file ->
-                Loader.loadPDF(file).use { document ->
-                    val text = PDFTextStripper().getText(document)
-                    val doc = Document.document(text)
-                    ingestor.ingest(doc)
-                }
-            }
+            .flatMapMerge { file -> ingestPdf(file) }
             .flowOn(Dispatchers.IO)
             .track(::measureDocumentLoadTime)
 
