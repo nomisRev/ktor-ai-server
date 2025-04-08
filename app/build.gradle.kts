@@ -1,70 +1,68 @@
-import io.ktor.plugin.features.DockerImageRegistry.Companion.dockerHub
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.io.File
+import org.gradle.kotlin.dsl.assign
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalDistributionDsl
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
-    alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.kotlin.assert)
-    alias(libs.plugins.ktor)
-    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.compose.compiler)
 }
 
-group = "org.jetbrains"
-version = "0.0.1"
-
-application.mainClass = "io.ktor.server.netty.EngineMain"
-
-dependencies {
-    implementation(libs.bundles.ktor.server)
-    implementation(libs.ktor.client.apache)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.bundles.exposed)
-    implementation(libs.logback.classic)
-    implementation(libs.kotlinx.datetime)
-    implementation(libs.bouncycastle)
-    implementation(libs.bundles.flyway)
-    implementation(libs.bundles.langchain4j)
-    implementation(libs.micrometer.registry.prometheus)
-    implementation(projects.langchain4jKotlinxCoroutines)
-    implementation(libs.pdfbox)
-
-    testImplementation(libs.bundles.ktor.client)
-    testImplementation(libs.bundles.testing)
-}
-
-ktor {
-    development = System.getenv("CI") != null
-    docker {
-        localImageName = "ktor-ai-example"
-        imageTag = project.version.toString()
-        externalRegistry = dockerHub(
-            appName = provider { project.name },
-            username = providers.environmentVariable("DOCKER_HUB_USERNAME"),
-            password = providers.environmentVariable("DOCKER_HUB_PASSWORD")
-        )
+kotlin {
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "composeApp"
+        browser {
+            val rootDirPath = project.rootDir.path
+            val projectDirPath = project.projectDir.path
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        add(rootDirPath)
+                        add(projectDirPath)
+                    }
+                }
+            }
+            @OptIn(ExperimentalDistributionDsl::class)
+            distribution {
+                outputDirectory = file("$rootDir/app/src/main/resources/web")
+            }
+        }
+        binaries.executable()
     }
-    fatJar {
-        allowZip64 = true
-        archiveFileName.set(project.name)
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.ktor.client.websockets)
+            implementation(libs.ktor.client.cio)
+        }
     }
 }
 
 tasks {
-    withType<KotlinCompile> {
-        compilerOptions {
-            // Needed for LangChain4J reflection tricks
-            // Maintains the parameter names instead of replacing with $0, $1, etc.
-            javaParameters = true
-        }
+    register("buildDevWebsite") {
+        group = "kotlin browser"
+        description = "Builds the website in development mode"
+        dependsOn("wasmJsBrowserDevelopmentWebpack")
+        dependsOn("wasmJsBrowserDevelopmentExecutableDistribution")
     }
 
-    val cleanWebsite = create<Delete>("cleanWebsite") {
-        group = "build"
-        delete(
-            fileTree("${project.projectDir}/src/main/resources/web")
-        )
+    register("buildProdWebsite") {
+        group = "kotlin browser"
+        description = "Builds the website in production mode"
+        dependsOn("wasmJsBrowserProductionWebpack")
+        dependsOn("wasmJsBrowserDistribution")
     }
-
-    findByName("clean")?.dependsOn(cleanWebsite)
-    findByName("run")?.dependsOn(":composeApp:buildDevWebsite")
 }

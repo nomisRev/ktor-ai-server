@@ -44,4 +44,4 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-app/src/main/resources/web/*
+backend/src/main/resources/web/*
