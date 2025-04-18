@@ -4,33 +4,34 @@ ktor:
       - org.jetbrains.ktor.sample.ApplicationKt.module
   deployment:
     port: "$PORT:8000"
-database:
-  driverClassName: "$DB_DRIVER_CLASS_NAME:org.postgresql.Driver"
-  host: "$DB_HOST:localhost"
-  port: "$DATABASE_PORT:5432"
-  name: "$DB_NAME:ktor_sample"
-  username: "$DB_USERNAME:ktor_user"
-  password: "$DB_PASSWORD:ktor_password"
-  maxPoolSize: "$DB_MAX_POOL_SIZE:20"
-  cachePrepStmts: "$DB_CACHE_PREP_STMTS:true"
-  prepStmtCacheSize: "$DB_PREP_STMT_CACHE_SIZE:250"
-  prepStmtCacheSqlLimit: "$DB_PREP_STMT_CACHE_SQL_LIMIT:2048"
-flyway:
-  locations: "$FLYWAY_LOCATIONS:classpath:db/migration"
-  baselineOnMigrate: "$FLYWAY_BASELINE_ON_MIGRATE:true"
-ai:
-  baseUrl: "$AI_BASE_URL:http://localhost:11434"
-  apiKey: "$AI_API_KEY:not-needed-for-local-llama"
-  model: "$AI_MODEL:llama3.2"
-  tokenizer: "$AI_TOKENIZER:all-minilm-l6-v2-q-tokenizer.json"
-  maxSegmentSizeInTokens: "$AI_MAX_SEGMENT_SIZE:550"
-  maxOverlapSizeInTokens: "$AI_MAX_OVERLAP_SIZE:50"
-auth:
-  realm: "$AUTH_REALM:ktor-keycloak-example"
-  authorizeUrl: "$AUTH_URL:http://localhost/auth/realms/ktor-keycloak-example/protocol/openid-connect/auth"
-  accessTokenUrl: "$AUTH_URL:http://localhost/auth/realms/ktor-keycloak-example/protocol/openid-connect/token"
-  clientId: "$AUTH_CLIENT_ID:ktor-app"
-  clientSecret: "$AUTH_CLIENT_SECRET:<empty>"
-  redirectUrl: "$AUTH_REDIRECT_URL:http://localhost/callback"
-  encryptionKey: b324d8a737c6cb016f2c1b6e3501ecb2
-  signKey: 59aa1b97d4baf65e1a95101aa35cff307fb9c9e653918f14e33736c2bd3362ca
+config:
+  database:
+    driverClassName: "$DB_DRIVER_CLASS_NAME:org.postgresql.Driver"
+    host: "$DB_HOST:localhost"
+    port: "$DATABASE_PORT:5432"
+    name: "$DB_NAME:ktor_sample"
+    username: "$DB_USERNAME:ktor_user"
+    password: "$DB_PASSWORD:ktor_password"
+    maxPoolSize: "$DB_MAX_POOL_SIZE:20"
+    cachePrepStmts: "$DB_CACHE_PREP_STMTS:true"
+    prepStmtCacheSize: "$DB_PREP_STMT_CACHE_SIZE:250"
+    prepStmtCacheSqlLimit: "$DB_PREP_STMT_CACHE_SQL_LIMIT:2048"
+  flyway:
+    locations: "$FLYWAY_LOCATIONS:classpath:db/migration"
+    baselineOnMigrate: "$FLYWAY_BASELINE_ON_MIGRATE:true"
+  ai:
+    baseUrl: "$AI_BASE_URL:http://localhost:11434"
+    apiKey: "$AI_API_KEY:not-needed-for-local-llama"
+    model: "$AI_MODEL:llama3.2"
+    tokenizer: "$AI_TOKENIZER:all-minilm-l6-v2-q-tokenizer.json"
+    maxSegmentSizeInTokens: "$AI_MAX_SEGMENT_SIZE:550"
+    maxOverlapSizeInTokens: "$AI_MAX_OVERLAP_SIZE:50"
+  auth:
+    realm: "$AUTH_REALM:ktor-keycloak-example"
+    authorizeUrl: "$AUTH_URL:http://localhost/auth/realms/ktor-keycloak-example/protocol/openid-connect/auth"
+    accessTokenUrl: "$AUTH_URL:http://localhost/auth/realms/ktor-keycloak-example/protocol/openid-connect/token"
+    clientId: "$AUTH_CLIENT_ID:ktor-app"
+    clientSecret: "$AUTH_CLIENT_SECRET:<empty>"
+    redirectUrl: "$AUTH_REDIRECT_URL:http://localhost/callback"
+    encryptionKey: b324d8a737c6cb016f2c1b6e3501ecb2
+    signKey: 59aa1b97d4baf65e1a95101aa35cff307fb9c9e653918f14e33736c2bd3362ca

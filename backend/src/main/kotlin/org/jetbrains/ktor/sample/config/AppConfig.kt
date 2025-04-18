@@ -4,7 +4,7 @@ import io.ktor.server.application.ApplicationEnvironment
 import org.jetbrains.ktor.sample.security.AuthConfig
 
 data class AppConfig(
-    val oauth: AuthConfig,
+    val auth: AuthConfig,
     val database: DatabaseConfig,
     val ai: AIConfig,
     val flyway: FlywayConfig,
@@ -12,7 +12,7 @@ data class AppConfig(
     companion object {
         fun load(environment: ApplicationEnvironment): AppConfig =
             AppConfig(
-                oauth = AuthConfig.load(environment),
+                auth = AuthConfig.load(environment),
                 database = DatabaseConfig.load(environment),
                 ai = AIConfig.load(environment),
                 flyway = FlywayConfig.load(environment),

@@ -9,7 +9,7 @@ val AppTestConfig by lazy {
     AppConfig(
         database = PostgresContainer.getDatabaseConfig(),
         flyway = FlywayConfig(locations = "classpath:db/migration", baselineOnMigrate = true),
-        oauth =
+        auth =
             AuthConfig(
                 realm = "ktor-sample",
                 authorizeUrl = "http://localhost:8080/oauth2/authorize",

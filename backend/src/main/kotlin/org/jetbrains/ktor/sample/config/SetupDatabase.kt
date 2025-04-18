@@ -69,17 +69,19 @@ data class DatabaseConfig(
         fun load(environment: ApplicationEnvironment): DatabaseConfig =
             with(environment.config) {
                 DatabaseConfig(
-                    driverClassName = property("database.driverClassName").getString(),
-                    host = property("database.host").getString(),
-                    port = property("database.port").getString().toInt(),
-                    name = property("database.name").getString(),
-                    username = property("database.username").getString(),
-                    password = property("database.password").getString(),
-                    maxPoolSize = property("database.maxPoolSize").getString().toInt(),
-                    cachePrepStmts = property("database.cachePrepStmts").getString().toBoolean(),
-                    prepStmtCacheSize = property("database.prepStmtCacheSize").getString().toInt(),
+                    driverClassName = property("config.database.driverClassName").getString(),
+                    host = property("config.database.host").getString(),
+                    port = property("config.database.port").getString().toInt(),
+                    name = property("config.database.name").getString(),
+                    username = property("config.database.username").getString(),
+                    password = property("config.database.password").getString(),
+                    maxPoolSize = property("config.database.maxPoolSize").getString().toInt(),
+                    cachePrepStmts =
+                        property("config.database.cachePrepStmts").getString().toBoolean(),
+                    prepStmtCacheSize =
+                        property("config.database.prepStmtCacheSize").getString().toInt(),
                     prepStmtCacheSqlLimit =
-                        property("database.prepStmtCacheSqlLimit").getString().toInt(),
+                        property("config.database.prepStmtCacheSqlLimit").getString().toInt(),
                 )
             }
     }
@@ -90,8 +92,9 @@ data class FlywayConfig(val locations: String, val baselineOnMigrate: Boolean) {
         fun load(environment: ApplicationEnvironment): FlywayConfig =
             with(environment.config) {
                 FlywayConfig(
-                    locations = property("flyway.locations").getString(),
-                    baselineOnMigrate = property("flyway.baselineOnMigrate").getString().toBoolean(),
+                    locations = property("config.flyway.locations").getString(),
+                    baselineOnMigrate =
+                        property("config.flyway.baselineOnMigrate").getString().toBoolean(),
                 )
             }
     }

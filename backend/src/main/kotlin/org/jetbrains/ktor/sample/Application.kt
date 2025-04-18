@@ -18,7 +18,6 @@ import io.ktor.server.websocket.WebSockets
 import io.ktor.server.websocket.pingPeriod
 import io.ktor.util.hex
 import kotlin.time.Duration.Companion.minutes
-import kotlin.uuid.ExperimentalUuidApi
 import org.jetbrains.ktor.sample.admin.installAdminRoutes
 import org.jetbrains.ktor.sample.chat.UserSession
 import org.jetbrains.ktor.sample.chat.installChatRoutes
@@ -27,8 +26,7 @@ import org.jetbrains.ktor.sample.config.dependencies
 import org.jetbrains.ktor.sample.security.configureOAuth
 import org.jetbrains.ktor.sample.security.installAuthRoutes
 
-fun main(args: Array<String>): Unit =
-    io.ktor.server.netty.EngineMain.main(args)
+fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
     val config = AppConfig.load(environment)
@@ -42,7 +40,7 @@ fun Application.module() {
 }
 
 private fun Application.configure(config: AppConfig) {
-    configureOAuth(config.oauth)
+    configureOAuth(config.auth)
     install(ContentNegotiation) { json() }
     install(DefaultHeaders)
     install(SSE)
@@ -55,8 +53,8 @@ private fun Application.configure(config: AppConfig) {
             cookie.httpOnly = true
             transform(
                 SessionTransportTransformerEncrypt(
-                    hex(config.oauth.encryptionKey),
-                    hex(config.oauth.signKey),
+                    hex(config.auth.encryptionKey),
+                    hex(config.auth.signKey),
                 )
             )
         }

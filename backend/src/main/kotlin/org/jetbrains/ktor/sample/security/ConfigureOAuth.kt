@@ -20,7 +20,7 @@ data class AuthConfig(
 ) {
     companion object {
         fun load(environment: ApplicationEnvironment): AuthConfig {
-            val config = environment.config.config("auth")
+            val config = environment.config.config("config.auth")
             return AuthConfig(
                 realm = config.property("realm").getString(),
                 authorizeUrl = config.property("authorizeUrl").getString(),

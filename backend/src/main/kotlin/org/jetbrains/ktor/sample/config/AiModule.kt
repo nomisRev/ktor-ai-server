@@ -31,14 +31,14 @@ data class AIConfig(
         fun load(environment: ApplicationEnvironment): AIConfig =
             with(environment.config) {
                 AIConfig(
-                    baseUrl = property("ai.baseUrl").getString(),
-                    apiKey = property("ai.apiKey").getString(),
-                    model = property("ai.model").getString(),
-                    tokenizer = property("ai.tokenizer").getString(),
+                    baseUrl = property("config.ai.baseUrl").getString(),
+                    apiKey = property("config.ai.apiKey").getString(),
+                    model = property("config.ai.model").getString(),
+                    tokenizer = property("config.ai.tokenizer").getString(),
                     maxSegmentSizeInTokens =
-                        property("ai.maxSegmentSizeInTokens").getString().toInt(),
+                        property("config.ai.maxSegmentSizeInTokens").getString().toInt(),
                     maxOverlapSizeInTokens =
-                        property("ai.maxOverlapSizeInTokens").getString().toInt(),
+                        property("config.ai.maxOverlapSizeInTokens").getString().toInt(),
                 )
             }
     }
