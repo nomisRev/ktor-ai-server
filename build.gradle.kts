@@ -11,12 +11,12 @@ plugins {
 
 spotless {
     kotlin {
-        target("**/*.kt")
-        ktfmt(libs.versions.ktfmt.get())
-            .kotlinlangStyle()
-            .configure {
-                it.setRemoveUnusedImports(true)
-                it.setManageTrailingCommas(true)
-            }
+        target("**/*.kt", "**/*.kts")
+        ktfmt(libs.versions.ktfmt.get()).kotlinlangStyle().configure {
+            it.setRemoveUnusedImports(true)
+            it.setManageTrailingCommas(true)
+        }
     }
 }
+
+tasks.named("build") { dependsOn("spotlessApply") }

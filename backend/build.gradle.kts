@@ -9,6 +9,7 @@ plugins {
 }
 
 group = "org.jetbrains"
+
 version = "0.0.1"
 
 application.mainClass = "io.ktor.server.netty.EngineMain"
@@ -35,11 +36,12 @@ ktor {
     docker {
         localImageName = "ktor-ai-example"
         imageTag = project.version.toString()
-        externalRegistry = dockerHub(
-            appName = provider { project.name },
-            username = providers.environmentVariable("DOCKER_HUB_USERNAME"),
-            password = providers.environmentVariable("DOCKER_HUB_PASSWORD")
-        )
+        externalRegistry =
+            dockerHub(
+                appName = provider { project.name },
+                username = providers.environmentVariable("DOCKER_HUB_USERNAME"),
+                password = providers.environmentVariable("DOCKER_HUB_PASSWORD"),
+            )
     }
     fatJar {
         allowZip64 = true
@@ -56,12 +58,11 @@ tasks {
         }
     }
 
-    val cleanWebsite = create<Delete>("cleanWebsite") {
-        group = "build"
-        delete(
-            fileTree("${project.projectDir}/src/main/resources/web")
-        )
-    }
+    val cleanWebsite =
+        create<Delete>("cleanWebsite") {
+            group = "build"
+            delete(fileTree("${project.projectDir}/src/main/resources/web"))
+        }
 
     findByName("clean")?.dependsOn(cleanWebsite)
     findByName("run")?.dependsOn(":composeApp:buildDevWebsite")

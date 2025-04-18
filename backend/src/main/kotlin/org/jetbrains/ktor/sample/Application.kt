@@ -27,9 +27,9 @@ import org.jetbrains.ktor.sample.config.dependencies
 import org.jetbrains.ktor.sample.security.configureOAuth
 import org.jetbrains.ktor.sample.security.installAuthRoutes
 
-fun main(args: Array<String>) = io.ktor.server.netty.EngineMain.main(args)
+fun main(args: Array<String>): Unit =
+    io.ktor.server.netty.EngineMain.main(args)
 
-@OptIn(ExperimentalUuidApi::class, ExperimentalStdlibApi::class)
 fun Application.module() {
     val config = AppConfig.load(environment)
     val module = dependencies(config)

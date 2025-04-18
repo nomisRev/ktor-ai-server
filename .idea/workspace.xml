@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="94b7bd79-6ae7-41df-8e52-cf1a25430f6e" name="Changes" comment="Add some example notebooks. BankAgent broken.">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/app_wasm_js.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/composeApp_wasm_js.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/frontend2_wasm_js.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/frontend_js.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/Application.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/Application.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/OllamaNotebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/OllamaNotebook.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/admin/AdminRoutes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/admin/AdminRoutes.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/kotlin/org/jetbrains/ktor/sample/ai/DocumentServiceTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/kotlin/org/jetbrains/ktor/sample/ai/DocumentServiceTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/langchain4j-kotlinx-coroutines/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/langchain4j-kotlinx-coroutines/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/frontend">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/app">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/composeApp">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/backend">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ktor-ai-chat-server" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ktor-ai-chat-server" type="f1a62948:ProjectNode" />
+                <item name="backend" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ktor-ai-chat-server" type="f1a62948:ProjectNode" />
+                <item name="backend" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ktor-ai-chat-server" type="f1a62948:ProjectNode" />
+                <item name="backend" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="jib" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Jupyter Notebook" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;nomisRev&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:nomisRev/ktor-ai-server.git&quot;,
+    &quot;accountId&quot;: &quot;fbf12252-1e88-47f8-997c-b1c1191e5fff&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.diffplug.spotless/spotless-plugin-gradle/7.0.2/766a0cad031543fb1537db6b41438914da7b8ffb/spotless-plugin-gradle-7.0.2-sources.jar!/com/diffplug/gradle/spotless/BaseKotlinExtension.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.diffplug.spotless/spotless-plugin-gradle/7.0.2/766a0cad031543fb1537db6b41438914da7b8ffb/spotless-plugin-gradle-7.0.2-sources.jar!/com/diffplug/gradle/spotless/FormatExtension.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-call-logging-jvm/3.1.1/4aaa2eac96dc2b1fc0406e62fa544fb9d63960d8/ktor-server-call-logging-jvm-3.1.1-sources.jar!/jvmMain/io/ktor/server/plugins/calllogging/CallLogging.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-call-logging-jvm/3.1.1/4aaa2eac96dc2b1fc0406e62fa544fb9d63960d8/ktor-server-call-logging-jvm-3.1.1-sources.jar!/jvmMain/io/ktor/server/plugins/calllogging/MDCProvider.kt" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.compose.foundation/foundation-layout/1.7.3/f5ed66a598198ba774329f8d2fd53cc20505e313/foundation-layout-1.7.3-sources.jar!/commonMain/androidx/compose/foundation/layout/Column.kt" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/Application.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/admin/AdminRoutes.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/ai/AiService.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/ai/DocumentService.kt" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/chat/ChatRoutes.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/config/AiModule.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/security/AuthRoutes.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/security/ConfigureOAuth.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/src/test/kotlin/org/jetbrains/ktor/sample/PostgresContainer.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/backend/src/test/kotlin/org/jetbrains/ktor/sample/admin/AdminRoutesTest.kt" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar:///opt/homebrew/opt/sdkman-cli/libexec/candidates/java/21.0.6-tem/lib/src.zip!/java.base/java/util/concurrent/ConcurrentHashMap.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="KotlinMultiplatform" KONAN_HOME="$USER_HOME$/.konan/kotlin-native-prebuilt-macos-aarch64-2.1.10" />
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2ufhUZg2xi8D8XGkZvM2WzSej6F" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Docker.docker.postgres: Compose Deployment.executor": "Run",
+    "Docker.docker: Compose Deployment.executor": "Run",
+    "Gradle.AdminRoutesTest.executor": "Run",
+    "Gradle.AiTest.executor": "Run",
+    "Gradle.AiTest.test.executor": "Run",
+    "Gradle.Build ktor-ai-chat-server.executor": "Run",
+    "Gradle.ConfigTest.executor": "Run",
+    "Gradle.DocumentServiceTest.executor": "Run",
+    "Gradle.DocumentServiceTest.testIngestPdfDocument.executor": "Run",
+    "Gradle.PersistentChatMemoryStoreTest.executor": "Run",
+    "Gradle.Test.executor": "Run",
+    "Gradle.Tests in 'org.jetbrains.ktor.sample'.executor": "Run",
+    "Gradle.ktor-ai-chat-server [composeApp:wasmJsBrowserProductionRun].executor": "Run",
+    "Gradle.ktor-ai-chat-server:backend [buildImage].executor": "Run",
+    "Gradle.ktor-ai-chat-server:composeApp [buildDevWebsite].executor": "Run",
+    "Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserDevelopmentExecutableDistribution].executor": "Run",
+    "Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserDevelopmentRun].executor": "Run",
+    "Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserDevelopmentWebpack].executor": "Run",
+    "Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserDistribution].executor": "Run",
+    "Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserProductionWebpack].executor": "Run",
+    "Gradle.ktor-ai-chat-server:frontend [jsBrowserDevelopmentExecutableDistribution].executor": "Run",
+    "Gradle.ktor-ai-chat-server:frontend [jsBrowserDistribution].executor": "Debug",
+    "Gradle.ktor-ai-chat-server:frontend [jsBrowserProductionRun].executor": "Run",
+    "Gradle.ktor-ai-chat-server:frontend [jsBrowserProductionWebpack].executor": "Run",
+    "JUnit.web in ktor-ai-chat-server.app.main.executor": "Run",
+    "Kotlin.ApplicationKt.executor": "Run",
+    "Kotlin.MainKt.executor": "Run",
+    "Ktor.ApplicationKt (1).executor": "Run",
+    "Ktor.ApplicationKt.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/simonvergauwen/Developer/ktor-ai-chat-server",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/app/src/main/resources/web" />
+      <recent name="$PROJECT_DIR$/docker" />
+      <recent name="$PROJECT_DIR$/app" />
+      <recent name="$PROJECT_DIR$/langchain4j-kotlinx-coroutines" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="org.jetbrains.langchain4j" />
+    </key>
+    <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="org.jetbrains.ktor.sample.security" />
+      <recent name="org.jetbrains.ktor.sample.config" />
+      <recent name="org.jetbrains.ktor.sample.chat" />
+    </key>
+  </component>
+  <component name="RubyModuleManagerSettings">
+    <option name="blackListedRootsPaths">
+      <list>
+        <option value="$PROJECT_DIR$" />
+        <option value="$PROJECT_DIR$/app/build/generated/compose/resourceGenerator/kotlin/commonMainResourceCollectors" />
+        <option value="$PROJECT_DIR$/langchain4j-kotlinx-coroutines/src/main" />
+        <option value="$PROJECT_DIR$/backend" />
+        <option value="$PROJECT_DIR$/app/build/generated/compose/resourceGenerator/kotlin/wasmJsMainResourceCollectors" />
+        <option value="$PROJECT_DIR$/langchain4j-kotlinx-coroutines/src/test" />
+        <option value="$PROJECT_DIR$/app/build/generated/compose/resourceGenerator/kotlin/commonMainResourceAccessors" />
+        <option value="$PROJECT_DIR$/app/build/generated/compose/resourceGenerator/kotlin/commonResClass" />
+        <option value="$PROJECT_DIR$/app" />
+        <option value="$PROJECT_DIR$/app/build/kotlin-multiplatform-resources/aggregated-resources/wasmJs" />
+        <option value="$PROJECT_DIR$/app/build/generated/compose/resourceGenerator/assembledResources/wasmJsTest" />
+        <option value="$PROJECT_DIR$/backend/src/test" />
+        <option value="$PROJECT_DIR$/backend/src/main" />
+        <option value="$PROJECT_DIR$/app/src/wasmJsMain" />
+        <option value="$PROJECT_DIR$/langchain4j-kotlinx-coroutines" />
+        <option value="$PROJECT_DIR$/app/src/commonMain" />
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Gradle.AdminRoutesTest">
+    <configuration name="AdminRoutesTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":backend:test" />
+            <option value="--tests" />
+            <option value="&quot;org.jetbrains.ktor.sample.admin.AdminRoutesTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests in 'org.jetbrains.ktor.sample'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":backend:test" />
+            <option value="--tests" />
+            <option value="&quot;org.jetbrains.ktor.sample.*&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="ktor-ai-chat-server:backend [buildImage]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/backend" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildImage" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="ApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.jetbrains.ktor.sample.ApplicationKt" />
+      <module name="org.jetbrains.ktor-ai-chat-server.backend.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.jetbrains.ktor.sample.MainKt" />
+      <module name="org.jetbrains.ktor-ai-chat-server.backend.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EngineMain (1)" type="KtorApplicationConfigurationType" factoryName="Ktor" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="io.ktor.server.netty.EngineMain" />
+      <module name="ktor-ai-chat-server.backend.main" />
+      <option name="alternativeJrePath" />
+      <option name="alternativeJrePathEnabled" value="false" />
+      <option name="includeProvidedScope" value="false" />
+      <option name="mainClass" value="io.ktor.server.netty.EngineMain" />
+      <option name="passParentEnvs" value="true" />
+      <option name="programParameters" />
+      <option name="shortenCommandLine" />
+      <option name="vmParameters" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EngineMain" type="KtorApplicationConfigurationType" factoryName="Ktor" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="io.ktor.server.netty.EngineMain" />
+      <module name="org.jetbrains.ktor-ai-chat-server.backend.main" />
+      <option name="alternativeJrePath" />
+      <option name="alternativeJrePathEnabled" value="false" />
+      <option name="includeProvidedScope" value="false" />
+      <option name="mainClass" value="io.ktor.server.netty.EngineMain" />
+      <option name="passParentEnvs" value="true" />
+      <option name="programParameters" />
+      <option name="shortenCommandLine" />
+      <option name="vmParameters" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.AdminRoutesTest" />
+        <item itemvalue="Gradle.Tests in 'org.jetbrains.ktor.sample'" />
+        <item itemvalue="Gradle.ktor-ai-chat-server:backend [buildImage]" />
+        <item itemvalue="Kotlin.MainKt" />
+        <item itemvalue="Kotlin.ApplicationKt" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="94b7bd79-6ae7-41df-8e52-cf1a25430f6e" name="Changes" comment="" />
+      <created>1742645552393</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1742645552393</updated>
+      <workItem from="1742645553375" duration="10766000" />
+      <workItem from="1742805919394" duration="2326000" />
+      <workItem from="1742809373630" duration="3438000" />
+      <workItem from="1742908862406" duration="2169000" />
+      <workItem from="1742928399484" duration="10912000" />
+      <workItem from="1742981058632" duration="7406000" />
+      <workItem from="1743013425635" duration="2675000" />
+      <workItem from="1743427268704" duration="12728000" />
+      <workItem from="1743489357346" duration="48946000" />
+      <workItem from="1743622056028" duration="244000" />
+      <workItem from="1743660667812" duration="19390000" />
+      <workItem from="1743703139647" duration="1681000" />
+      <workItem from="1743704841135" duration="1272000" />
+      <workItem from="1743750395817" duration="75000" />
+      <workItem from="1743750479722" duration="61000" />
+      <workItem from="1743750619426" duration="3631000" />
+      <workItem from="1743755166174" duration="4051000" />
+      <workItem from="1743853897044" duration="1714000" />
+      <workItem from="1744033087602" duration="1000" />
+      <workItem from="1744092412512" duration="5221000" />
+      <workItem from="1744099494806" duration="607000" />
+      <workItem from="1744100753720" duration="5916000" />
+      <workItem from="1744114086398" duration="16000" />
+      <workItem from="1744114107082" duration="3757000" />
+      <workItem from="1744185271828" duration="6330000" />
+      <workItem from="1744285748364" duration="1202000" />
+      <workItem from="1744355149762" duration="23845000" />
+      <workItem from="1744404047758" duration="5964000" />
+      <workItem from="1744457840682" duration="575000" />
+      <workItem from="1744463170559" duration="2886000" />
+      <workItem from="1744485097711" duration="927000" />
+      <workItem from="1744564697955" duration="680000" />
+      <workItem from="1744616232513" duration="608000" />
+      <workItem from="1744702067825" duration="9000" />
+      <workItem from="1744702229552" duration="440000" />
+      <workItem from="1744702684566" duration="194000" />
+      <workItem from="1744786688509" duration="2575000" />
+      <workItem from="1744805136560" duration="35000" />
+      <workItem from="1744805259837" duration="12000" />
+      <workItem from="1744805780772" duration="2126000" />
+      <workItem from="1744896051508" duration="24000" />
+      <workItem from="1744896237998" duration="1469000" />
+      <workItem from="1744898305374" duration="27000" />
+      <workItem from="1744957977976" duration="975000" />
+      <workItem from="1744958958445" duration="163000" />
+      <workItem from="1744959138987" duration="694000" />
+    </task>
+    <task id="LOCAL-00001" summary="Refactor to Gradle Multi-Module project:&#10; - Move src to app/src&#10; - Introduce Kotlin JS project as frontend for our AI Chat server">
+      <option name="closed" value="true" />
+      <created>1742807571655</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1742807571655</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Refactor WebSocket handling and improve ChatRoutes interface&#10;&#10;Refactored WebSocket client to enhance connection management and error handling by using flows. Updated ChatRoutes to support asynchronous AI repository initialization. These changes improve code clarity, maintainability, and resilience.">
+      <option name="closed" value="true" />
+      <created>1742811360691</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1742811360691</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Refactor password handling to use Password value class&#10;&#10;Replaced plain String representation of passwords with the Password value class for better type safety and encapsulation. This change affects login, user creation, password updates, and verification processes across tests and the main application. Ensured to update all relevant logic and tests accordingly.">
+      <option name="closed" value="true" />
+      <created>1742812797633</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1742812797633</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add initial Kotlin Multiplatform project for Compose-based app&#10;&#10;This commit adds a Compose Multiplatform project targeting iOS, Web (WASM), and common platforms. It includes base UI components, a platform-specific implementation for greeting functionality, and the necessary Gradle and Xcode configurations. The setup enables shared code across platforms while incorporating platform-specific UI and resources.">
+      <option name="closed" value="true" />
+      <created>1742930965851</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1742930965851</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Replace Greeting system with Chat feature in Compose app&#10;&#10;Removed the Greeting and platform-specific implementations and introduced a chat interface with message bubbles, input handling, and a demo repository for simulated AI responses. Integrated Compose UI components for messaging and added the necessary model, ViewModel, and repository classes to support the chat system.">
+      <option name="closed" value="true" />
+      <created>1742933021795</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1742933021795</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Remove unused iOS, and frontend modules.&#10;&#10;This commit deletes the obsolete assets and code, `iosApp` module, and frontend-related resources. It also simplifies the project configuration, refactors chat state management, and updates the build scripts accordingly for a cleaner and more focused codebase.">
+      <option name="closed" value="true" />
+      <created>1743013460307</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1743013460307</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Refactor AI module and integrate LangChain4j with Kotlin Coroutines.&#10;&#10;The AI module has been restructured for a clearer separation of concerns. LangChain4j integration with Kotlin Coroutines enables seamless streaming using Flow APIs. This also adds metric tracking and changes to routes and services for improved scalability and maintainability.">
+      <option name="closed" value="true" />
+      <created>1743447662834</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1743447662834</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Refactor AI module and integrate LangChain4j with Kotlin Coroutines.&#10;&#10;The AI module has been restructured for a clearer separation of concerns. LangChain4j integration with Kotlin Coroutines enables seamless streaming using Flow APIs. This also adds metric tracking and changes to routes and services for improved scalability and maintainability.">
+      <option name="closed" value="true" />
+      <created>1743447789056</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1743447789056</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Refactor AI module and integrate LangChain4j with Kotlin Coroutines.&#10;&#10;The AI module has been restructured for a clearer separation of concerns. LangChain4j integration with Kotlin Coroutines enables seamless streaming using Flow APIs. This also adds metric tracking and changes to routes and services for improved scalability and maintainability.">
+      <option name="closed" value="true" />
+      <created>1743447867403</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1743447867403</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Refactor AI services into modular components&#10;&#10;Reorganized the AI system into separate, modular services to enhance maintainability and flexibility. Introduced `AiService` and `DocumentService` to handle AI responses and document ingestion respectively, replacing the monolithic `AiRepo`. Added coroutine-based streaming support with `langchain4j-kotlinx-coroutines`.">
+      <option name="closed" value="true" />
+      <created>1743448070761</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1743448070761</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Remove legacy chat components and integrate WebSocket-based architecture&#10;&#10;This commit transitions from the old chat implementation to a WebSocket-based approach, removing all previous UI components, repositories, and models. It introduces a WebSocketChatRepository, updated `ChatScreen` UI, and a revamped `ChatViewModel` for real-time communication. Additionally, server routes and configurations have been adjusted for WebSocket support and session handling.">
+      <option name="closed" value="true" />
+      <created>1743531788718</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1743531788718</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Refactor document ingestion and extend PDF handling support&#10;&#10;Moved `track` Flow extension to a dedicated file for reuse and refactored document ingestion logic in `DocumentService` to add support for streaming PDF uploads. Added SSE support for chat routes and introduced the Apache PDFBox library for processing PDFs.">
+      <option name="closed" value="true" />
+      <created>1743582043486</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1743582043486</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Refactor document ingestion and extend PDF handling support&#10;&#10;Moved `track` Flow extension to a dedicated file for reuse and refactored document ingestion logic in `DocumentService` to add support for streaming PDF uploads. Added SSE support for chat routes and introduced the Apache PDFBox library for processing PDFs.">
+      <option name="closed" value="true" />
+      <created>1743582051863</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1743582051863</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Add OAuth2 support with Keycloak and replace JWT-based auth&#10;&#10;Replaced JWT authentication with OAuth2 using Keycloak for better security and session management. Added configuration for OAuth2 in both the application and Docker setup. Removed unused JWT-related code and updated routes, sessions, and dependencies accordingly.">
+      <option name="closed" value="true" />
+      <created>1743598502333</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1743598502333</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Add OAuth2 support with Keycloak and replace JWT-based auth&#10;&#10;Replaced JWT authentication with OAuth2 using Keycloak for better security and session management. Added configuration for OAuth2 in both the application and Docker setup. Removed unused JWT-related code and updated routes, sessions, and dependencies accordingly.">
+      <option name="closed" value="true" />
+      <created>1743669618970</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1743669618970</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Add OAuth2 support with Keycloak and replace JWT-based auth&#10;&#10;Replaced JWT authentication with OAuth2 using Keycloak for better security and session management. Added configuration for OAuth2 in both the application and Docker setup. Removed unused JWT-related code and updated routes, sessions, and dependencies accordingly.">
+      <option name="closed" value="true" />
+      <created>1743675296434</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1743675296434</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Refactor authentication system and improve session handling&#10;&#10;Replaced &quot;oauth&quot; with &quot;auth&quot; in configuration and added encryption/signing keys for session security. Changed `userId` type to String and updated `UserSession` structure for JWT decoding. Introduced support for server-sent events and cleaned up ChatScreen formatting.">
+      <option name="closed" value="true" />
+      <created>1743704731205</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1743704731205</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Update Keycloak user and integrate session-based userId&#10;&#10;Added detailed attributes (name, email) for the Keycloak user configuration to improve user representation in the system. Replaced hardcoded `1L` with `session.userId` in `ChatRoutes` to correctly handle interactions based on the authenticated user's session.">
+      <option name="closed" value="true" />
+      <created>1743706285468</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1743706285468</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Remove unused features and improve OAuth integration.&#10;&#10;Deleted unreferenced authorization code, tests, and helpers. Enabled Prometheus and Grafana services in Docker Compose. Refactored application module configuration and improved dependency handling. Updated OAuth configuration and streamlined AI service initialization for better modularity.">
+      <option name="closed" value="true" />
+      <created>1743754018921</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1743754018921</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Refactor Spotless with KtFmt for improved consistency and readability&#10;&#10;This commit applies formatting adjustments for cleaner code, ensures consistent indentation, and improves alignment across files. Unnecessary imports are removed.">
+      <option name="closed" value="true" />
+      <created>1743754714095</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1743754714095</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Refactor project structure and consolidate modules&#10;&#10;Moved `composeApp` functionality into `app` and introduced `backend` module. Updated build configurations, dependencies, and file paths to align with this restructured project layout for better modularity and maintainability.">
+      <option name="closed" value="true" />
+      <created>1744093972624</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1744093972624</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Refactor PDF processing to use `ApachePdfBoxDocumentParser`.&#10;&#10;Replaced the `pdfbox` library with `langchain4j-pdf` for PDF processing. Updated the `DocumentService` to use `ApachePdfBoxDocumentParser` for improved handling and streamlined ingestion of PDF files. Removed unused dependencies and adjusted related build configurations.">
+      <option name="closed" value="true" />
+      <created>1744101326872</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1744101326872</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Remove unused dependencies and improve code formatting.&#10;&#10;Cleaned up unused imports and dependencies, including `kotlin-test` and PDFBox. Made minor formatting adjustments for better readability and consistency. These changes simplify the codebase and improve maintainability.">
+      <option name="closed" value="true" />
+      <created>1744105057709</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1744105057709</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Add some example notebooks. BankAgent broken.">
+      <option name="closed" value="true" />
+      <created>1744399928361</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1744399928361</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Refactor to Gradle Multi-Module project:&#10; - Move src to app/src&#10; - Introduce Kotlin JS project as frontend for our AI Chat server" />
+    <MESSAGE value="Refactor WebSocket handling and improve ChatRoutes interface&#10;&#10;Refactored WebSocket client to enhance connection management and error handling by using flows. Updated ChatRoutes to support asynchronous AI repository initialization. These changes improve code clarity, maintainability, and resilience." />
+    <MESSAGE value="Refactor password handling to use Password value class&#10;&#10;Replaced plain String representation of passwords with the Password value class for better type safety and encapsulation. This change affects login, user creation, password updates, and verification processes across tests and the main application. Ensured to update all relevant logic and tests accordingly." />
+    <MESSAGE value="Add initial Kotlin Multiplatform project for Compose-based app&#10;&#10;This commit adds a Compose Multiplatform project targeting iOS, Web (WASM), and common platforms. It includes base UI components, a platform-specific implementation for greeting functionality, and the necessary Gradle and Xcode configurations. The setup enables shared code across platforms while incorporating platform-specific UI and resources." />
+    <MESSAGE value="Replace Greeting system with Chat feature in Compose app&#10;&#10;Removed the Greeting and platform-specific implementations and introduced a chat interface with message bubbles, input handling, and a demo repository for simulated AI responses. Integrated Compose UI components for messaging and added the necessary model, ViewModel, and repository classes to support the chat system." />
+    <MESSAGE value="Remove unused iOS, and frontend modules.&#10;&#10;This commit deletes the obsolete assets and code, `iosApp` module, and frontend-related resources. It also simplifies the project configuration, refactors chat state management, and updates the build scripts accordingly for a cleaner and more focused codebase." />
+    <MESSAGE value="Refactor AI module and integrate LangChain4j with Kotlin Coroutines.&#10;&#10;The AI module has been restructured for a clearer separation of concerns. LangChain4j integration with Kotlin Coroutines enables seamless streaming using Flow APIs. This also adds metric tracking and changes to routes and services for improved scalability and maintainability." />
+    <MESSAGE value="Refactor AI services into modular components&#10;&#10;Reorganized the AI system into separate, modular services to enhance maintainability and flexibility. Introduced `AiService` and `DocumentService` to handle AI responses and document ingestion respectively, replacing the monolithic `AiRepo`. Added coroutine-based streaming support with `langchain4j-kotlinx-coroutines`." />
+    <MESSAGE value="Remove legacy chat components and integrate WebSocket-based architecture&#10;&#10;This commit transitions from the old chat implementation to a WebSocket-based approach, removing all previous UI components, repositories, and models. It introduces a WebSocketChatRepository, updated `ChatScreen` UI, and a revamped `ChatViewModel` for real-time communication. Additionally, server routes and configurations have been adjusted for WebSocket support and session handling." />
+    <MESSAGE value="Refactor document ingestion and extend PDF handling support&#10;&#10;Moved `track` Flow extension to a dedicated file for reuse and refactored document ingestion logic in `DocumentService` to add support for streaming PDF uploads. Added SSE support for chat routes and introduced the Apache PDFBox library for processing PDFs." />
+    <MESSAGE value="Add OAuth2 support with Keycloak and replace JWT-based auth&#10;&#10;Replaced JWT authentication with OAuth2 using Keycloak for better security and session management. Added configuration for OAuth2 in both the application and Docker setup. Removed unused JWT-related code and updated routes, sessions, and dependencies accordingly." />
+    <MESSAGE value="Refactor authentication system and improve session handling&#10;&#10;Replaced &quot;oauth&quot; with &quot;auth&quot; in configuration and added encryption/signing keys for session security. Changed `userId` type to String and updated `UserSession` structure for JWT decoding. Introduced support for server-sent events and cleaned up ChatScreen formatting." />
+    <MESSAGE value="Update Keycloak user and integrate session-based userId&#10;&#10;Added detailed attributes (name, email) for the Keycloak user configuration to improve user representation in the system. Replaced hardcoded `1L` with `session.userId` in `ChatRoutes` to correctly handle interactions based on the authenticated user's session." />
+    <MESSAGE value="Remove unused features and improve OAuth integration.&#10;&#10;Deleted unreferenced authorization code, tests, and helpers. Enabled Prometheus and Grafana services in Docker Compose. Refactored application module configuration and improved dependency handling. Updated OAuth configuration and streamlined AI service initialization for better modularity." />
+    <MESSAGE value="Refactor Spotless with KtFmt for improved consistency and readability&#10;&#10;This commit applies formatting adjustments for cleaner code, ensures consistent indentation, and improves alignment across files. Unnecessary imports are removed." />
+    <MESSAGE value="Refactor project structure and consolidate modules&#10;&#10;Moved `composeApp` functionality into `app` and introduced `backend` module. Updated build configurations, dependencies, and file paths to align with this restructured project layout for better modularity and maintainability." />
+    <MESSAGE value="Refactor PDF processing to use `ApachePdfBoxDocumentParser`.&#10;&#10;Replaced the `pdfbox` library with `langchain4j-pdf` for PDF processing. Updated the `DocumentService` to use `ApachePdfBoxDocumentParser` for improved handling and streamlined ingestion of PDF files. Removed unused dependencies and adjusted related build configurations." />
+    <MESSAGE value="Remove unused dependencies and improve code formatting.&#10;&#10;Cleaned up unused imports and dependencies, including `kotlin-test` and PDFBox. Made minor formatting adjustments for better readability and consistency. These changes simplify the codebase and improve maintainability." />
+    <MESSAGE value="Add some example notebooks. BankAgent broken." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add some example notebooks. BankAgent broken." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-server-cors-jvm/3.1.1/137b0080c54c588e426fe682cabe39a34e504472/ktor-server-cors-jvm-3.1.1-sources.jar!/commonMain/io/ktor/server/plugins/cors/CORSUtils.kt</url>
+          <line>53</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

@@ -1,5 +1,4 @@
 import org.gradle.kotlin.dsl.assign
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalDistributionDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -19,17 +18,17 @@ kotlin {
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
                 outputFileName = "composeApp.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        add(rootDirPath)
-                        add(projectDirPath)
+                devServer =
+                    (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                        static =
+                            (static ?: mutableListOf()).apply {
+                                add(rootDirPath)
+                                add(projectDirPath)
+                            }
                     }
-                }
             }
             @OptIn(ExperimentalDistributionDsl::class)
-            distribution {
-                outputDirectory = file("$rootDir/app/src/main/resources/web")
-            }
+            distribution { outputDirectory = file("$rootDir/backend/src/main/resources/web") }
         }
         binaries.executable()
     }

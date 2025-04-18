@@ -22,7 +22,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.Serializable
 import org.jetbrains.ktor.sample.ai.DocumentService
 
-@Serializable data class DocumentUpload(val content: String)
+@Serializable
+data class DocumentUpload(val content: String)
 
 fun Routing.installAdminRoutes(documents: Deferred<DocumentService>) {
     authenticate("auth-oauth-keycloak") {

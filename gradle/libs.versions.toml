@@ -13,9 +13,10 @@ flyway = "10.10.0"
 micrometer = "1.12.2"
 androidx-lifecycle = "2.8.4"
 compose-multiplatform = "1.7.3"
-kotlinx-coroutines = "1.10.1"
+kotlinx-coroutines = "1.9.0"
 spotless = "7.0.2"
 ktfmt = "0.54"
+langchain4j-kotlin = "0.1.8"
 
 [libraries]
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
@@ -28,6 +29,7 @@ langchain4j-embeddings = { module = "dev.langchain4j:langchain4j-embeddings-all-
 langchain4j-openai = { module = "dev.langchain4j:langchain4j-open-ai", version.ref = "langchain4j" }
 langchain4j-ollama = { module = "dev.langchain4j:langchain4j-ollama", version.ref = "langchain4j" }
 langchain4j-pdf = { module = "dev.langchain4j:langchain4j-document-parser-apache-pdfbox", version.ref = "langchain4j" }
+lanchain4j-kotlin = { module = "me.kpavlov.langchain4j.kotlin:langchain4j-kotlin", version.ref = "langchain4j-kotlin" }
 
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
@@ -85,7 +87,8 @@ langchain4j = [
     "langchain4j-embeddings",
     "langchain4j-openai",
     "langchain4j-ollama",
-    "langchain4j-pdf"
+    "langchain4j-pdf",
+    "lanchain4j-kotlin"
 ]
 ktor-server = [
     "ktor-server-netty",

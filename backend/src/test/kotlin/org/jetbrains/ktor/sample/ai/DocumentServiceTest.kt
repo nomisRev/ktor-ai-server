@@ -14,8 +14,6 @@ import kotlinx.coroutines.runBlocking
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.PDPage
 import org.apache.pdfbox.pdmodel.PDPageContentStream
-import org.apache.pdfbox.pdmodel.font.PDType1Font
-import org.apache.pdfbox.pdmodel.font.Standard14Fonts
 import org.jetbrains.ktor.sample.DatabaseSpec
 import org.jetbrains.ktor.sample.config.AIConfig
 import org.jetbrains.ktor.sample.config.AiModule
@@ -60,7 +58,8 @@ class DocumentServiceTest : DatabaseSpec() {
 
             PDPageContentStream(document, page).use { contentStream ->
                 contentStream.beginText()
-                contentStream.setFont(PDType1Font(Standard14Fonts.FontName.HELVETICA), 12f)
+                //
+                // contentStream.setFont(PDType1Font(Standard14Fonts.FontName.HELVETICA), 12f)
                 contentStream.newLineAtOffset(100f, 700f)
                 contentStream.showText(content)
                 contentStream.endText()
