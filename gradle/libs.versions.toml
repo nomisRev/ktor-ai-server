@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.1.10"
-ktor = "3.1.1"
+ktor = "3.2.0-eap-1289"
 logback = "1.4.14"
 exposed = "0.60.0"
 hikari = "6.2.1"
@@ -49,6 +49,7 @@ ktor-server-config-yaml = { module = "io.ktor:ktor-server-config-yaml", version.
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 ktor-server-metrics-micrometer = { module = "io.ktor:ktor-server-metrics-micrometer", version.ref = "ktor" }
 ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
+ktor-server-di = { module = "io.ktor:ktor-server-di", version.ref = "ktor" }
 micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus", version.ref = "micrometer" }
 
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
@@ -102,7 +103,8 @@ ktor-server = [
     "ktor-server-default-headers",
     "ktor-server-sessions",
     "ktor-server-sse",
-    "ktor-server-cors"
+    "ktor-server-cors",
+    "ktor-server-di"
 ]
 testing = [
     "ktor-server-test-host",
@@ -117,7 +119,7 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
+ktor = { id = "io.ktor.plugin", version = "3.1.1" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-assert = { id = "org.jetbrains.kotlin.plugin.power-assert", version.ref = "kotlin" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

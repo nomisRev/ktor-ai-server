@@ -7,7 +7,9 @@ import io.ktor.http.HttpMethod
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class AuthConfig(
     val realm: String,
     val authorizeUrl: String,
@@ -17,23 +19,7 @@ data class AuthConfig(
     val redirectUrl: String,
     val encryptionKey: String,
     val signKey: String,
-) {
-    companion object {
-        fun load(environment: ApplicationEnvironment): AuthConfig {
-            val config = environment.config.config("config.auth")
-            return AuthConfig(
-                realm = config.property("realm").getString(),
-                authorizeUrl = config.property("authorizeUrl").getString(),
-                accessTokenUrl = config.property("accessTokenUrl").getString(),
-                clientId = config.property("clientId").getString(),
-                clientSecret = config.property("clientSecret").getString(),
-                redirectUrl = config.property("redirectUrl").getString(),
-                encryptionKey = config.property("encryptionKey").getString(),
-                signKey = config.property("signKey").getString(),
-            )
-        }
-    }
-}
+)
 
 fun Application.configureOAuth(config: AuthConfig) {
     val httpClient = HttpClient(Apache) { install(ContentNegotiation) { json() } }

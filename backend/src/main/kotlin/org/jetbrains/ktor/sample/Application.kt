@@ -8,6 +8,7 @@ import io.ktor.server.application.install
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
+import io.ktor.server.plugins.di.annotations.Property
 import io.ktor.server.routing.routing
 import io.ktor.server.sessions.SessionTransportTransformerEncrypt
 import io.ktor.server.sessions.Sessions
@@ -28,8 +29,7 @@ import org.jetbrains.ktor.sample.security.installAuthRoutes
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
-fun Application.module() {
-    val config = AppConfig.load(environment)
+fun Application.module(@Property("config") config: AppConfig) {
     val module = dependencies(config)
     configure(config)
     routing {

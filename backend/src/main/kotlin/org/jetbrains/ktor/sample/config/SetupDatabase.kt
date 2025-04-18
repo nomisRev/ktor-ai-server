@@ -3,8 +3,8 @@ package org.jetbrains.ktor.sample.config
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import io.ktor.server.application.Application
-import io.ktor.server.application.ApplicationEnvironment
 import io.ktor.server.application.ApplicationStopped
+import kotlinx.serialization.Serializable
 import org.flywaydb.core.Flyway
 import org.flywaydb.core.api.output.MigrateResult
 import org.jetbrains.exposed.sql.Database
@@ -53,6 +53,7 @@ fun dataSource(config: DatabaseConfig): HikariDataSource =
         }
     )
 
+@Serializable
 data class DatabaseConfig(
     val driverClassName: String,
     val host: String,
@@ -64,38 +65,7 @@ data class DatabaseConfig(
     val cachePrepStmts: Boolean,
     val prepStmtCacheSize: Int,
     val prepStmtCacheSqlLimit: Int,
-) {
-    companion object {
-        fun load(environment: ApplicationEnvironment): DatabaseConfig =
-            with(environment.config) {
-                DatabaseConfig(
-                    driverClassName = property("config.database.driverClassName").getString(),
-                    host = property("config.database.host").getString(),
-                    port = property("config.database.port").getString().toInt(),
-                    name = property("config.database.name").getString(),
-                    username = property("config.database.username").getString(),
-                    password = property("config.database.password").getString(),
-                    maxPoolSize = property("config.database.maxPoolSize").getString().toInt(),
-                    cachePrepStmts =
-                        property("config.database.cachePrepStmts").getString().toBoolean(),
-                    prepStmtCacheSize =
-                        property("config.database.prepStmtCacheSize").getString().toInt(),
-                    prepStmtCacheSqlLimit =
-                        property("config.database.prepStmtCacheSqlLimit").getString().toInt(),
-                )
-            }
-    }
-}
+)
 
-data class FlywayConfig(val locations: String, val baselineOnMigrate: Boolean) {
-    companion object {
-        fun load(environment: ApplicationEnvironment): FlywayConfig =
-            with(environment.config) {
-                FlywayConfig(
-                    locations = property("config.flyway.locations").getString(),
-                    baselineOnMigrate =
-                        property("config.flyway.baselineOnMigrate").getString().toBoolean(),
-                )
-            }
-    }
-}
+@Serializable
+data class FlywayConfig(val locations: String, val baselineOnMigrate: Boolean)

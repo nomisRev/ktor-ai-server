@@ -16,9 +16,10 @@ import dev.langchain4j.store.embedding.EmbeddingStore
 import dev.langchain4j.store.embedding.EmbeddingStoreIngestor
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore
 import dev.langchain4j.store.memory.chat.ChatMemoryStore
-import io.ktor.server.application.ApplicationEnvironment
+import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
 
+@Serializable
 data class AIConfig(
     val baseUrl: String,
     val apiKey: String,
@@ -26,23 +27,7 @@ data class AIConfig(
     val tokenizer: String,
     val maxSegmentSizeInTokens: Int,
     val maxOverlapSizeInTokens: Int,
-) {
-    companion object {
-        fun load(environment: ApplicationEnvironment): AIConfig =
-            with(environment.config) {
-                AIConfig(
-                    baseUrl = property("config.ai.baseUrl").getString(),
-                    apiKey = property("config.ai.apiKey").getString(),
-                    model = property("config.ai.model").getString(),
-                    tokenizer = property("config.ai.tokenizer").getString(),
-                    maxSegmentSizeInTokens =
-                        property("config.ai.maxSegmentSizeInTokens").getString().toInt(),
-                    maxOverlapSizeInTokens =
-                        property("config.ai.maxOverlapSizeInTokens").getString().toInt(),
-                )
-            }
-    }
-}
+)
 
 class AiModule(
     config: AIConfig,
