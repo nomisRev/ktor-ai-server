@@ -1,4 +1,4 @@
-import io.ktor.plugin.features.DockerImageRegistry.Companion.dockerHub
+import io.ktor.plugin.features.DockerImageRegistry.Companion.googleContainerRegistry
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -32,15 +32,15 @@ dependencies {
 }
 
 ktor {
-    development = System.getenv("CI") != null
     docker {
         localImageName = "ktor-ai-example"
         imageTag = project.version.toString()
         externalRegistry =
-            dockerHub(
+            googleContainerRegistry(
+                projectName = provider { "Kotlin Conf 2025" },
                 appName = provider { project.name },
-                username = providers.environmentVariable("DOCKER_HUB_USERNAME"),
-                password = providers.environmentVariable("DOCKER_HUB_PASSWORD"),
+                username = providers.environmentVariable("GCLOUD_REGISTRY_USERNAME"),
+                password = providers.environmentVariable("GCLOUD_REGISTRY_PASSWORD"),
             )
     }
     fatJar {

@@ -5,26 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94b7bd79-6ae7-41df-8e52-cf1a25430f6e" name="Changes" comment="Add some example notebooks. BankAgent broken.">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/app_wasm_js.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/composeApp_wasm_js.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/frontend2_wasm_js.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/frontend_js.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/Application.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/Application.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/OllamaNotebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/OllamaNotebook.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/admin/AdminRoutes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/admin/AdminRoutes.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/kotlin/org/jetbrains/ktor/sample/ai/DocumentServiceTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/kotlin/org/jetbrains/ktor/sample/ai/DocumentServiceTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/config/AiModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/config/AiModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/config/AppConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/config/AppConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/config/SetupDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/config/SetupDatabase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/security/ConfigureOAuth.kt" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/kotlin/org/jetbrains/ktor/sample/security/ConfigureOAuth.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/langchain4j-kotlinx-coroutines/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/langchain4j-kotlinx-coroutines/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -150,63 +138,63 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Docker.docker.postgres: Compose Deployment.executor": "Run",
-    "Docker.docker: Compose Deployment.executor": "Run",
-    "Gradle.AdminRoutesTest.executor": "Run",
-    "Gradle.AiTest.executor": "Run",
-    "Gradle.AiTest.test.executor": "Run",
-    "Gradle.Build ktor-ai-chat-server.executor": "Run",
-    "Gradle.ConfigTest.executor": "Run",
-    "Gradle.DocumentServiceTest.executor": "Run",
-    "Gradle.DocumentServiceTest.testIngestPdfDocument.executor": "Run",
-    "Gradle.PersistentChatMemoryStoreTest.executor": "Run",
-    "Gradle.Test.executor": "Run",
-    "Gradle.Tests in 'org.jetbrains.ktor.sample'.executor": "Run",
-    "Gradle.ktor-ai-chat-server [composeApp:wasmJsBrowserProductionRun].executor": "Run",
-    "Gradle.ktor-ai-chat-server:backend [buildImage].executor": "Run",
-    "Gradle.ktor-ai-chat-server:composeApp [buildDevWebsite].executor": "Run",
-    "Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserDevelopmentExecutableDistribution].executor": "Run",
-    "Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserDevelopmentRun].executor": "Run",
-    "Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserDevelopmentWebpack].executor": "Run",
-    "Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserDistribution].executor": "Run",
-    "Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserProductionWebpack].executor": "Run",
-    "Gradle.ktor-ai-chat-server:frontend [jsBrowserDevelopmentExecutableDistribution].executor": "Run",
-    "Gradle.ktor-ai-chat-server:frontend [jsBrowserDistribution].executor": "Debug",
-    "Gradle.ktor-ai-chat-server:frontend [jsBrowserProductionRun].executor": "Run",
-    "Gradle.ktor-ai-chat-server:frontend [jsBrowserProductionWebpack].executor": "Run",
-    "JUnit.web in ktor-ai-chat-server.app.main.executor": "Run",
-    "Kotlin.ApplicationKt.executor": "Run",
-    "Kotlin.MainKt.executor": "Run",
-    "Ktor.ApplicationKt (1).executor": "Run",
-    "Ktor.ApplicationKt.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/simonvergauwen/Developer/ktor-ai-chat-server",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Docker.docker.postgres: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AdminRoutesTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AiTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AiTest.test.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build ktor-ai-chat-server.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ConfigTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DocumentServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DocumentServiceTest.testIngestPdfDocument.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PersistentChatMemoryStoreTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Test.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tests in 'org.jetbrains.ktor.sample'.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ktor-ai-chat-server [composeApp:wasmJsBrowserProductionRun].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ktor-ai-chat-server:backend [buildImage].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ktor-ai-chat-server:composeApp [buildDevWebsite].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserDevelopmentExecutableDistribution].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserDevelopmentRun].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserDevelopmentWebpack].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserDistribution].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ktor-ai-chat-server:composeApp [wasmJsBrowserProductionWebpack].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ktor-ai-chat-server:frontend [jsBrowserDevelopmentExecutableDistribution].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ktor-ai-chat-server:frontend [jsBrowserDistribution].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.ktor-ai-chat-server:frontend [jsBrowserProductionRun].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.ktor-ai-chat-server:frontend [jsBrowserProductionWebpack].executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.web in ktor-ai-chat-server.app.main.executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin.ApplicationKt.executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin.MainKt.executor&quot;: &quot;Run&quot;,
+    &quot;Ktor.ApplicationKt (1).executor&quot;: &quot;Run&quot;,
+    &quot;Ktor.ApplicationKt.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/simonvergauwen/Developer/ktor-ai-chat-server&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": []
+  &quot;keyToStringList&quot;: {
+    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: []
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -249,7 +237,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.AdminRoutesTest">
+  <component name="RunManager" selected="Ktor.ApplicationKt">
     <configuration name="AdminRoutesTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -320,16 +308,37 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="ApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.jetbrains.ktor.sample.ApplicationKt" />
+    <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.jetbrains.ktor.sample.MainKt" />
       <module name="org.jetbrains.ktor-ai-chat-server.backend.main" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.jetbrains.ktor.sample.MainKt" />
-      <module name="org.jetbrains.ktor-ai-chat-server.backend.main" />
+    <configuration name="ApplicationKt" type="KtorApplicationConfigurationType" factoryName="Ktor" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="DB_HOST" value="34.140.126.39" />
+        <env name="DB_NAME" value="postgres" />
+        <env name="DB_PASSWORD" value="[{GBF#741Bb,A_tD" />
+        <env name="DB_USERNAME" value="postgres" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="org.jetbrains.ktor.sample.ApplicationKt" />
+      <module name="ktor-ai-chat-server.backend.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.jetbrains.ktor.sample.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="alternativeJrePath" />
+      <option name="alternativeJrePathEnabled" value="false" />
+      <option name="includeProvidedScope" value="false" />
+      <option name="mainClass" value="org.jetbrains.ktor.sample.ApplicationKt" />
+      <option name="passParentEnvs" value="true" />
+      <option name="programParameters" value="" />
+      <option name="shortenCommandLine" />
+      <option name="vmParameters" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -372,13 +381,22 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Gradle.AdminRoutesTest" />
+      <item itemvalue="Gradle.ktor-ai-chat-server:backend [buildImage]" />
+      <item itemvalue="Gradle.Tests in 'org.jetbrains.ktor.sample'" />
+      <item itemvalue="Kotlin.MainKt" />
+      <item itemvalue="Ktor.EngineMain" />
+      <item itemvalue="Ktor.EngineMain (1)" />
+      <item itemvalue="Ktor.ApplicationKt" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Ktor.ApplicationKt" />
         <item itemvalue="Gradle.AdminRoutesTest" />
         <item itemvalue="Gradle.Tests in 'org.jetbrains.ktor.sample'" />
         <item itemvalue="Gradle.ktor-ai-chat-server:backend [buildImage]" />
         <item itemvalue="Kotlin.MainKt" />
-        <item itemvalue="Kotlin.ApplicationKt" />
       </list>
     </recent_temporary>
   </component>
