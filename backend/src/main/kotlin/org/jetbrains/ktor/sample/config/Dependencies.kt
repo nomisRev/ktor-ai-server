@@ -1,9 +1,8 @@
 package org.jetbrains.ktor.sample.config
 
 import dev.langchain4j.model.chat.StreamingChatLanguageModel
-import dev.langchain4j.model.ollama.OllamaStreamingChatModel
+import dev.langchain4j.model.openai.OpenAiStreamingChatModel
 import io.ktor.server.application.Application
-import java.time.Duration
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -17,13 +16,10 @@ fun Application.dependencies(config: AppConfig): Dependencies {
     val database = setupDatabase(config.database, config.flyway)
     val registry = setupMetrics()
     val model: StreamingChatLanguageModel =
-        OllamaStreamingChatModel.builder()
+        OpenAiStreamingChatModel.builder()
             .baseUrl(config.ai.baseUrl)
-            .logRequests(true)
-            .logResponses(true)
+            .apiKey(config.ai.apiKey)
             .modelName(config.ai.model)
-            .temperature(0.7)
-            .timeout(Duration.ofMinutes(2))
             .build()
 
     val aiModule =
