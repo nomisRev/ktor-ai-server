@@ -14,9 +14,9 @@ import io.ktor.server.sessions.set
 import org.jetbrains.ktor.sample.chat.UserSession
 
 fun Routing.installAuthRoutes() {
-    authenticate("auth-oauth-keycloak") {
+    authenticate {
         get("/login") {
-            // The OAuth plugin will intercept this request and redirect to Keycloak
+            // The OAuth plugin will intercept this request and redirect to Google
             // No need to do anything here
         }
 
@@ -24,7 +24,8 @@ fun Routing.installAuthRoutes() {
             val principal: OAuth2? = call.authentication.principal()
             if (principal == null) call.respond(Unauthorized)
             else {
-                val userSession = UserSession(JWT.decode(principal.accessToken).subject)
+                val userSession =
+                    UserSession(JWT.decode(principal.extraParameters["id_token"]).subject)
                 call.sessions.set(userSession)
                 call.respondRedirect("/")
             }

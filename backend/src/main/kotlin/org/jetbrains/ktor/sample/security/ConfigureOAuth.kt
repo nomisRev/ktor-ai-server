@@ -11,7 +11,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AuthConfig(
-    val realm: String,
     val authorizeUrl: String,
     val accessTokenUrl: String,
     val clientId: String,
@@ -25,11 +24,11 @@ fun Application.configureOAuth(config: AuthConfig) {
     val httpClient = HttpClient(Apache) { install(ContentNegotiation) { json() } }
     monitor.subscribe(ApplicationStopped) { httpClient.close() }
     authentication {
-        oauth("auth-oauth-keycloak") {
+        oauth {
             urlProvider = { config.redirectUrl }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
-                    name = "keycloak",
+                    name = "google",
                     authorizeUrl = config.authorizeUrl,
                     accessTokenUrl = config.accessTokenUrl,
                     requestMethod = HttpMethod.Post,

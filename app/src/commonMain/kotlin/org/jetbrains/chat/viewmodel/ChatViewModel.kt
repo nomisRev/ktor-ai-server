@@ -3,11 +3,13 @@ package org.jetbrains.chat.viewmodel
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import org.jetbrains.chat.repository.ChatRepository
@@ -37,8 +39,8 @@ class ChatViewModel(private val repository: ChatRepository, private val scope: C
     private val _state = MutableStateFlow(ChatState())
     val state: StateFlow<ChatState> = _state.asStateFlow()
 
-    fun connect() =
-        scope.launch { repository.connect().collect { message -> processIncomingMessage(message) } }
+    fun connect(): Job =
+        repository.connect().map { message -> processIncomingMessage(message) }.launchIn(scope)
 
     fun sendMessage(content: String) {
         if (content.isBlank()) return

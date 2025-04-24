@@ -11,7 +11,6 @@ val AppTestConfig by lazy {
         flyway = FlywayConfig(locations = "classpath:db/migration", baselineOnMigrate = true),
         auth =
             AuthConfig(
-                realm = "ktor-sample",
                 authorizeUrl = "http://localhost:8080/oauth2/authorize",
                 accessTokenUrl = "http://localhost:8080/oauth2/token",
                 clientId = "ktor-sample-app",

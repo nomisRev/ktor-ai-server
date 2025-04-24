@@ -1,7 +1,5 @@
 package org.jetbrains.ktor.sample.config
 
-import dev.langchain4j.model.chat.StreamingChatLanguageModel
-import dev.langchain4j.model.openai.OpenAiStreamingChatModel
 import io.ktor.server.application.Application
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -15,15 +13,7 @@ class Dependencies(val ai: Deferred<AiService>, val documentService: Deferred<Do
 fun Application.dependencies(config: AppConfig): Dependencies {
     val database = setupDatabase(config.database, config.flyway)
     val registry = setupMetrics()
-    val model: StreamingChatLanguageModel =
-        OpenAiStreamingChatModel.builder()
-            .baseUrl(config.ai.baseUrl)
-            .apiKey(config.ai.apiKey)
-            .modelName(config.ai.model)
-            .build()
-
-    val aiModule =
-        async(Dispatchers.IO) { AiModule(config.ai, ExposedChatMemoryStore(database), model) }
+    val aiModule = async(Dispatchers.IO) { AiModule(config.ai, ExposedChatMemoryStore(database)) }
 
     return Dependencies(
         ai = async(Dispatchers.IO) { AiService(aiModule.await(), registry) },

@@ -17,12 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.ktor.client.HttpClient
-import io.ktor.client.plugins.sse.serverSentEventsSession
 import io.ktor.client.plugins.websocket.WebSockets
-import io.ktor.client.request.parameter
-import io.ktor.http.ContentType
-import io.ktor.http.contentType
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.jetbrains.chat.repository.WebSocketChatRepository
 import org.jetbrains.chat.viewmodel.ChatViewModel
@@ -37,21 +32,6 @@ fun ChatScreen() {
     val repository = remember { WebSocketChatRepository(httpClient, "localhost", scope) }
     val viewModel = remember { ChatViewModel(repository, scope) }
     val state by viewModel.state.collectAsState()
-
-    val EVENT_URL = ""
-
-    scope.launch {
-        val session =
-            httpClient.serverSentEventsSession(urlString = EVENT_URL) {
-                contentType(ContentType.Application.Json)
-                parameter("query", "...")
-            }
-        try {
-            session.incoming.collect {}
-        } finally {
-            session.cancel()
-        }
-    }
 
     LaunchedEffect(Unit) { viewModel.connect() }
 

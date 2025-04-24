@@ -25,7 +25,7 @@ import org.jetbrains.ktor.sample.ai.DocumentService
 @Serializable data class DocumentUpload(val content: String)
 
 fun Routing.installAdminRoutes(documents: Deferred<DocumentService>) {
-    authenticate("auth-oauth-keycloak") {
+    authenticate {
         post("/admin/documents/upload") {
             val upload = call.receive<DocumentUpload>()
             documents.await().ingestDocument(upload.content)

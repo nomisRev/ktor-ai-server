@@ -6,6 +6,7 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
 import io.ktor.server.application.install
 import io.ktor.server.config.property
+import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
@@ -44,11 +45,13 @@ private fun Application.configure(config: AppConfig) {
     configureOAuth(config.auth)
     install(ContentNegotiation) { json() }
     install(DefaultHeaders)
+    install(CallLogging)
     install(SSE)
     install(WebSockets) { pingPeriod = 1.minutes }
     install(Sessions) {
         cookie<UserSession>("SESSION") {
-            cookie.secure = true
+            // TODO true for production
+            cookie.secure = false
             cookie.extensions["SameSite"] = "lax"
             cookie.maxAge = 5.minutes
             cookie.httpOnly = true

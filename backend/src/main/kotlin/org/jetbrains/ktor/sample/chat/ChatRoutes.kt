@@ -60,8 +60,9 @@ fun Routing.installChatRoutes(ai: Deferred<AiService>) {
         val question =
             call.request.queryParameters["question"]
                 ?: return@sse call.respond(HttpStatusCode.BadRequest)
-        ai.await().answer(session.userId, question).collect { token ->
-            send(ServerSentEvent(token))
-        }
+        ai.await()
+            .answer(session.userId, question)
+            // TODO handle errors gracefully
+            .collect { token -> send(ServerSentEvent(token)) }
     }
 }

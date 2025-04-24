@@ -42,7 +42,8 @@ fun flyway(dataSource: HikariDataSource, flywayConfig: FlywayConfig): MigrateRes
 fun dataSource(config: DatabaseConfig): HikariDataSource =
     HikariDataSource(
         HikariConfig().apply {
-            jdbcUrl = "jdbc:postgresql://${config.host}:${config.port}/${config.name}?sslmode=require"
+            jdbcUrl =
+                "jdbc:postgresql://${config.host}:${config.port}/${config.name}?sslmode=require"
             username = config.username
             password = config.password
             driverClassName = config.driverClassName
@@ -67,5 +68,4 @@ data class DatabaseConfig(
     val prepStmtCacheSqlLimit: Int,
 )
 
-@Serializable
-data class FlywayConfig(val locations: String, val baselineOnMigrate: Boolean)
+@Serializable data class FlywayConfig(val locations: String, val baselineOnMigrate: Boolean)

@@ -22,14 +22,13 @@ config:
   ai:
     baseUrl: "$AI_BASE_URL:http://localhost:11434"
     apiKey: "$AI_API_KEY:not-needed-for-local-llama"
-    model: "$AI_MODEL:llama3.2"
+    model: "$AI_MODEL:gpt-4o-mini"
     tokenizer: "$AI_TOKENIZER:all-minilm-l6-v2-q-tokenizer.json"
     maxSegmentSizeInTokens: "$AI_MAX_SEGMENT_SIZE:550"
     maxOverlapSizeInTokens: "$AI_MAX_OVERLAP_SIZE:50"
   auth:
-    realm: "$AUTH_REALM:ktor-keycloak-example"
-    authorizeUrl: "$AUTH_URL:http://localhost/auth/realms/ktor-keycloak-example/protocol/openid-connect/auth"
-    accessTokenUrl: "$AUTH_URL:http://localhost/auth/realms/ktor-keycloak-example/protocol/openid-connect/token"
+    authorizeUrl: "$AUTH_URL:https://accounts.google.com/o/oauth2/auth"
+    accessTokenUrl: "$AUTH_TOKEN_URL:https://oauth2.googleapis.com/token"
     clientId: "$AUTH_CLIENT_ID:ktor-app"
     clientSecret: "$AUTH_CLIENT_SECRET:<empty>"
     redirectUrl: "$AUTH_REDIRECT_URL:http://localhost/callback"
