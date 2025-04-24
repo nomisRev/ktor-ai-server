@@ -29,7 +29,7 @@ import org.jetbrains.chat.viewmodel.MessageType
 fun ChatScreen() {
     val scope = rememberCoroutineScope()
     val httpClient = remember { HttpClient { install(WebSockets) } }
-    val repository = remember { WebSocketChatRepository(httpClient, "localhost", scope) }
+    val repository = remember { WebSocketChatRepository(httpClient, "localhost:8000", scope) }
     val viewModel = remember { ChatViewModel(repository, scope) }
     val state by viewModel.state.collectAsState()
 

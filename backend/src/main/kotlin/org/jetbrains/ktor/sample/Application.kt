@@ -66,7 +66,7 @@ private fun Application.configure(config: AppConfig) {
 
     install(CORS) {
         // TODO: replace by correct domain(s) in production.
-        allowHost("localhost:80")
+        allowHost("localhost:8000")
 
         allowMethod(HttpMethod.Get)
         allowMethod(HttpMethod.Post)

@@ -31,6 +31,6 @@ config:
     accessTokenUrl: "$AUTH_TOKEN_URL:https://oauth2.googleapis.com/token"
     clientId: "$AUTH_CLIENT_ID:ktor-app"
     clientSecret: "$AUTH_CLIENT_SECRET:<empty>"
-    redirectUrl: "$AUTH_REDIRECT_URL:http://localhost/callback"
+    redirectUrl: "$AUTH_REDIRECT_URL:http://localhost:8000/callback"
     encryptionKey: b324d8a737c6cb016f2c1b6e3501ecb2
     signKey: 59aa1b97d4baf65e1a95101aa35cff307fb9c9e653918f14e33736c2bd3362ca

@@ -42,6 +42,7 @@ fun Routing.installChatRoutes(ai: Deferred<AiService>) {
         val session = call.sessions.get<UserSession>()
         if (session == null)
             return@webSocket close(CloseReason(CloseReason.Codes.VIOLATED_POLICY, "No session"))
+        // TODO: prepend with history
         send(Frame.Text("Hey, I am your personal travel assistant. How may I help you today?"))
         send(Frame.Text("### END ###"))
         incoming.consumeAsFlow().filterIsInstance<Frame.Text>().collect { frame ->
