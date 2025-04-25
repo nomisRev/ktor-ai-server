@@ -11,93 +11,79 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 import org.jetbrains.ktor.sample.withApp
 
 class CustomerRoutesTest {
 
     @Test
     fun `create customer returns 201 Created`() = withApp {
-        // Create a customer
+        val create = CreateCustomer(name = "Test Customer", email = "test.customer@example.com")
         val createResponse =
             post("/api/customers") {
                 contentType(ContentType.Application.Json)
-                setBody(CreateCustomer(name = "Test Customer", email = "test.customer@example.com"))
+                setBody(create)
             }
 
-        // Verify response
         assertEquals(HttpStatusCode.Created, createResponse.status)
-        val customer = createResponse.body<CustomerResponse>()
-        assertNotNull(customer.id)
-        assertEquals("Test Customer", customer.name)
-        assertEquals("test.customer@example.com", customer.email)
-        assertNotNull(customer.createdAt)
+
+        val customer = createResponse.body<Customer>()
+        assertEquals(create.name, customer.name)
+        assertEquals(create.email, customer.email)
     }
 
     @Test
     fun `get customer returns 200 OK`() = withApp {
-        // Create a customer first
-        val createResponse =
+        val create =
+            CreateCustomer(name = "Get Test Customer", email = "get.test.customer@example.com")
+        val createdCustomer =
             post("/api/customers") {
-                contentType(ContentType.Application.Json)
-                setBody(
-                    CreateCustomer(
-                        name = "Get Test Customer",
-                        email = "get.test.customer@example.com",
-                    )
-                )
-            }
-        val createdCustomer = createResponse.body<CustomerResponse>()
+                    contentType(ContentType.Application.Json)
+                    setBody(create)
+                }
+                .body<Customer>()
 
-        // Get the customer
         val getResponse = get("/api/customers/${createdCustomer.id}")
 
-        // Verify response
         assertEquals(HttpStatusCode.OK, getResponse.status)
-        val customer = getResponse.body<CustomerResponse>()
+
+        val customer = getResponse.body<Customer>()
         assertEquals(createdCustomer.id, customer.id)
-        assertEquals("Get Test Customer", customer.name)
-        assertEquals("get.test.customer@example.com", customer.email)
+        assertEquals(create.name, customer.name)
+        assertEquals(create.email, customer.email)
     }
 
     @Test
     fun `update customer returns 200 OK`() = withApp {
-        // Create a customer first
-        val createResponse =
+        val createdCustomer =
             post("/api/customers") {
-                contentType(ContentType.Application.Json)
-                setBody(
-                    CreateCustomer(
-                        name = "Update Test Customer",
-                        email = "update.test.customer@example.com",
+                    contentType(ContentType.Application.Json)
+                    setBody(
+                        CreateCustomer(
+                            name = "Update Test Customer",
+                            email = "update.test.customer@example.com",
+                        )
                     )
-                )
-            }
-        val createdCustomer = createResponse.body<CustomerResponse>()
+                }
+                .body<Customer>()
 
-        // Update the customer
+        val update =
+            UpdateCustomer(name = "Updated Customer", email = "updated.customer@example.com")
         val updateResponse =
             put("/api/customers/${createdCustomer.id}") {
                 contentType(ContentType.Application.Json)
-                setBody(
-                    UpdateCustomer(
-                        name = "Updated Customer",
-                        email = "updated.customer@example.com",
-                    )
-                )
+                setBody(update)
             }
 
-        // Verify response
         assertEquals(HttpStatusCode.OK, updateResponse.status)
-        val updatedCustomer = updateResponse.body<CustomerResponse>()
+
+        val updatedCustomer = updateResponse.body<Customer>()
         assertEquals(createdCustomer.id, updatedCustomer.id)
-        assertEquals("Updated Customer", updatedCustomer.name)
-        assertEquals("updated.customer@example.com", updatedCustomer.email)
+        assertEquals(update.name, updatedCustomer.name)
+        assertEquals(update.email, updatedCustomer.email)
     }
 
     @Test
     fun `delete customer returns 204 No Content`() = withApp {
-        // Create a customer first
         val createResponse =
             post("/api/customers") {
                 contentType(ContentType.Application.Json)
@@ -108,15 +94,13 @@ class CustomerRoutesTest {
                     )
                 )
             }
-        val createdCustomer = createResponse.body<CustomerResponse>()
 
-        // Delete the customer
+        val createdCustomer = createResponse.body<Customer>()
+
         val deleteResponse = delete("/api/customers/${createdCustomer.id}")
 
-        // Verify response
         assertEquals(HttpStatusCode.NoContent, deleteResponse.status)
 
-        // Try to get the deleted customer
         val getResponse = get("/api/customers/${createdCustomer.id}")
         assertEquals(HttpStatusCode.NotFound, getResponse.status)
     }

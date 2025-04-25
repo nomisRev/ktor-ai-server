@@ -27,7 +27,6 @@ dependencies {
     implementation(libs.micrometer.registry.prometheus)
     implementation(projects.langchain4jKotlinxCoroutines)
 
-    testImplementation(libs.kotlinx.collections)
     testImplementation(libs.bundles.ktor.client)
     testImplementation(libs.bundles.testing)
 }

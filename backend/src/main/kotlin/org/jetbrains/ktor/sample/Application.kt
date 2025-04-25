@@ -40,8 +40,8 @@ fun Application.module() {
         installAuthRoutes()
         installAdminRoutes(module.documentService)
         installChatRoutes(module.ai)
-        installCustomerRoutes(module.customerService)
-        installBookingRoutes(module.bookingService)
+        installCustomerRoutes(module.customerRepository)
+        installBookingRoutes(module.bookingRepository)
     }
 }
 

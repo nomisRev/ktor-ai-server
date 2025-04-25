@@ -3,11 +3,20 @@ package org.jetbrains.ktor.sample.booking
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
+import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.kotlin.datetime.CurrentTimestamp
+import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class BookingService(private val database: Database) {
+object Bookings : IntIdTable("bookings", "booking_id") {
+    val customerId = reference("customer_id", Customers)
+    val bookingDate = timestamp("booking_date").defaultExpression(CurrentTimestamp)
+    val amount = double("amount")
+}
+
+class BookingRepository(private val database: Database) {
     suspend fun createBooking(customerId: Int, amount: Double): Booking =
         withContext(Dispatchers.IO) {
             transaction(database) {

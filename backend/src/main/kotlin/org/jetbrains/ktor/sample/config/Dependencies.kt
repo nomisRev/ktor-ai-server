@@ -7,14 +7,14 @@ import kotlinx.coroutines.async
 import org.jetbrains.ktor.sample.ai.AiService
 import org.jetbrains.ktor.sample.ai.DocumentService
 import org.jetbrains.ktor.sample.ai.ExposedChatMemoryStore
-import org.jetbrains.ktor.sample.booking.BookingService
-import org.jetbrains.ktor.sample.booking.CustomerService
+import org.jetbrains.ktor.sample.booking.BookingRepository
+import org.jetbrains.ktor.sample.booking.CustomerRepository
 
 class Dependencies(
     val ai: Deferred<AiService>,
     val documentService: Deferred<DocumentService>,
-    val customerService: CustomerService,
-    val bookingService: BookingService,
+    val customerRepository: CustomerRepository,
+    val bookingRepository: BookingRepository,
 )
 
 fun Application.dependencies(config: AppConfig): Dependencies {
@@ -26,7 +26,7 @@ fun Application.dependencies(config: AppConfig): Dependencies {
         ai = async(Dispatchers.IO) { AiService(aiModule.await(), registry) },
         documentService =
             async(Dispatchers.IO) { DocumentService(aiModule.await().ingestor, registry) },
-        customerService = CustomerService(database),
-        bookingService = BookingService(database),
+        customerRepository = CustomerRepository(database),
+        bookingRepository = BookingRepository(database),
     )
 }

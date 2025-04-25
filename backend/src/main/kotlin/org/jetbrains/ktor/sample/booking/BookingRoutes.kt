@@ -1,6 +1,10 @@
 package org.jetbrains.ktor.sample.booking
 
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.HttpStatusCode.Companion.BadRequest
+import io.ktor.http.HttpStatusCode.Companion.Created
+import io.ktor.http.HttpStatusCode.Companion.NotFound
+import io.ktor.http.HttpStatusCode.Companion.OK
 import io.ktor.server.auth.authenticate
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
@@ -11,121 +15,72 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.route
 
-/** Installs routes for booking operations */
-fun Routing.installBookingRoutes(bookingService: BookingService) {
+fun Routing.installBookingRoutes(bookingRepository: BookingRepository) {
     authenticate {
         route("/api/bookings") {
             post {
-                try {
-                    val request = call.receive<CreateBooking>()
-                    val booking =
-                        bookingService.createBooking(
-                            customerId = request.customerId,
-                            amount = request.amount,
-                        )
-                    call.respond(HttpStatusCode.Created, booking)
-                } catch (e: Exception) {
-                    call.respond(
-                        HttpStatusCode.BadRequest,
-                        mapOf("error" to (e.message ?: "Unknown error")),
+                val request = call.receive<CreateBooking>()
+                val booking =
+                    bookingRepository.createBooking(
+                        customerId = request.customerId,
+                        amount = request.amount,
                     )
-                }
+                call.respond(Created, booking)
             }
 
             get("/{id}") {
-                try {
-                    val id =
-                        call.parameters["id"]?.toIntOrNull()
-                            ?: return@get call.respond(
-                                HttpStatusCode.BadRequest,
-                                mapOf("error" to "Invalid booking ID"),
-                            )
+                val id =
+                    call.parameters["id"]?.toIntOrNull()
+                        ?: return@get call.respond(BadRequest, "Invalid booking ID")
 
-                    val booking = bookingService.getBookingById(id)
-                    if (booking != null) {
-                        call.respond(HttpStatusCode.OK, booking)
-                    } else {
-                        call.respond(HttpStatusCode.NotFound, mapOf("error" to "Booking not found"))
-                    }
-                } catch (e: Exception) {
-                    call.respond(
-                        HttpStatusCode.InternalServerError,
-                        mapOf("error" to (e.message ?: "Unknown error")),
-                    )
+                val booking = bookingRepository.getBookingById(id)
+                if (booking != null) {
+                    call.respond(OK, booking)
+                } else {
+                    call.respond(NotFound, "Booking not found")
                 }
             }
 
             put("/{id}") {
-                try {
-                    val id =
-                        call.parameters["id"]?.toIntOrNull()
-                            ?: return@put call.respond(
-                                HttpStatusCode.BadRequest,
-                                mapOf("error" to "Invalid booking ID"),
-                            )
+                val id =
+                    call.parameters["id"]?.toIntOrNull()
+                        ?: return@put call.respond(BadRequest, "Invalid booking ID")
+                val request = call.receive<UpdateBooking>()
 
-                    val request = call.receive<UpdateBooking>()
-
-                    val updatedBooking =
-                        bookingService.updateBooking(
-                            id = id,
-                            bookingDate = request.bookingDate,
-                            amount = request.amount,
-                        )
-
-                    if (updatedBooking != null) {
-                        call.respond(HttpStatusCode.OK, updatedBooking)
-                    } else {
-                        call.respond(HttpStatusCode.NotFound, mapOf("error" to "Booking not found"))
-                    }
-                } catch (e: Exception) {
-                    call.respond(
-                        HttpStatusCode.BadRequest,
-                        mapOf("error" to (e.message ?: "Unknown error")),
+                val updatedBooking =
+                    bookingRepository.updateBooking(
+                        id = id,
+                        bookingDate = request.bookingDate,
+                        amount = request.amount,
                     )
+
+                if (updatedBooking != null) {
+                    call.respond(OK, updatedBooking)
+                } else {
+                    call.respond(NotFound, "Booking not found")
                 }
             }
 
             delete("/{id}") {
-                try {
-                    val id =
-                        call.parameters["id"]?.toIntOrNull()
-                            ?: return@delete call.respond(
-                                HttpStatusCode.BadRequest,
-                                mapOf("error" to "Invalid booking ID"),
-                            )
+                val id =
+                    call.parameters["id"]?.toIntOrNull()
+                        ?: return@delete call.respond(BadRequest, "Invalid booking ID")
 
-                    val deleted = bookingService.deleteBooking(id)
-                    if (deleted) {
-                        call.respond(HttpStatusCode.NoContent)
-                    } else {
-                        call.respond(HttpStatusCode.NotFound, mapOf("error" to "Booking not found"))
-                    }
-                } catch (e: Exception) {
-                    call.respond(
-                        HttpStatusCode.InternalServerError,
-                        mapOf("error" to (e.message ?: "Unknown error")),
-                    )
+                val deleted = bookingRepository.deleteBooking(id)
+                if (deleted) {
+                    call.respond(HttpStatusCode.NoContent)
+                } else {
+                    call.respond(NotFound, "Booking not found")
                 }
             }
 
             get("/customer/{customerId}") {
-                try {
-                    val customerId =
-                        call.parameters["customerId"]?.toIntOrNull()
-                            ?: return@get call.respond(
-                                HttpStatusCode.BadRequest,
-                                mapOf("error" to "Invalid customer ID"),
-                            )
+                val customerId =
+                    call.parameters["customerId"]?.toIntOrNull()
+                        ?: return@get call.respond(BadRequest, "Invalid customer ID")
 
-                    val bookings = bookingService.getBookingsForCustomer(customerId)
-                    call.respond(HttpStatusCode.OK, bookings)
-                } catch (e: Exception) {
-                    call.respond(
-                        HttpStatusCode.InternalServerError,
-                        mapOf("error" to (e.message ?: "Unknown error")),
-                    )
-                }
+                val bookings = bookingRepository.getBookingsForCustomer(customerId)
+                call.respond(OK, bookings)
             }
         }
     }

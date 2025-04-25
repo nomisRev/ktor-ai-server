@@ -14,6 +14,7 @@ import io.ktor.utils.io.copyTo
 import java.io.File
 import kotlin.io.path.createTempFile
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emptyFlow
@@ -33,6 +34,7 @@ fun Routing.installAdminRoutes(documents: Deferred<DocumentService>) {
         }
 
         // TODO: proper error handling
+        @OptIn(ExperimentalCoroutinesApi::class)
         post("/admin/documents/upload-pdf") {
             val pdfs = call.receiveMultipart().asFlow().flatMapConcat { part -> parseFiles(part) }
             documents.await().ingestPdfs(pdfs).collect()

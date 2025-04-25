@@ -14,5 +14,9 @@ fun withApp(test: suspend HttpClient.() -> Unit) = testApplication {
     }
     val client = createClient { install(ContentNegotiation) { json() } }
     startApplication()
-    test(client)
+    try {
+        test(client)
+    } finally {
+        client.close()
+    }
 }

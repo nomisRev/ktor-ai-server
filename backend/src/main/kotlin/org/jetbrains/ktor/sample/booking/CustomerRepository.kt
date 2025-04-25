@@ -2,11 +2,20 @@ package org.jetbrains.ktor.sample.booking
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.kotlin.datetime.CurrentTimestamp
+import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class CustomerService(private val database: Database) {
+object Customers : IntIdTable("customers", "customer_id") {
+    val name = varchar("name", 255)
+    val email = varchar("email", 255).uniqueIndex()
+    val createdAt = timestamp("created_at").defaultExpression(CurrentTimestamp)
+}
+
+class CustomerRepository(private val database: Database) {
     suspend fun createCustomer(name: String, email: String): Customer =
         withContext(Dispatchers.IO) {
             transaction(database) {
@@ -33,7 +42,7 @@ class CustomerService(private val database: Database) {
             transaction(database) {
                 Customers.updateReturning(where = { Customers.id eq id }) {
                         if (name != null) it[Customers.name] = name
-                        if (email != null) it[Customers.name] = email
+                        if (email != null) it[Customers.email] = email
                     }
                     .singleOrNull()
                     ?.toCustomer()
