@@ -25,13 +25,7 @@ class AiTest : DatabaseSpec() {
     private val module by lazy {
         AiModule(
             config,
-            memory,
-            OllamaStreamingChatModel.builder()
-                .baseUrl(config.baseUrl)
-                .modelName(config.model)
-                .temperature(0.7)
-                .timeout(Duration.ofMinutes(2))
-                .build(),
+            memory
         )
     }
     private val documents by lazy { DocumentService(module.ingestor, registry) }

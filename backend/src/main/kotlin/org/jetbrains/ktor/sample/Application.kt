@@ -21,6 +21,8 @@ import io.ktor.server.websocket.pingPeriod
 import io.ktor.util.hex
 import kotlin.time.Duration.Companion.minutes
 import org.jetbrains.ktor.sample.admin.installAdminRoutes
+import org.jetbrains.ktor.sample.booking.installBookingRoutes
+import org.jetbrains.ktor.sample.booking.installCustomerRoutes
 import org.jetbrains.ktor.sample.chat.UserSession
 import org.jetbrains.ktor.sample.chat.installChatRoutes
 import org.jetbrains.ktor.sample.config.AppConfig
@@ -38,6 +40,8 @@ fun Application.module() {
         installAuthRoutes()
         installAdminRoutes(module.documentService)
         installChatRoutes(module.ai)
+        installCustomerRoutes(module.customerService)
+        installBookingRoutes(module.bookingService)
     }
 }
 

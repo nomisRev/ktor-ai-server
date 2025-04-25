@@ -33,13 +33,7 @@ class DocumentServiceTest : DatabaseSpec() {
     private val module by lazy {
         AiModule(
             config,
-            memory,
-            OllamaStreamingChatModel.builder()
-                .baseUrl(config.baseUrl)
-                .modelName(config.model)
-                .temperature(0.7)
-                .timeout(Duration.ofMinutes(2))
-                .build(),
+            memory
         )
     }
     private val documentService by lazy { DocumentService(module.ingestor, registry) }
