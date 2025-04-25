@@ -1,9 +1,7 @@
 package org.jetbrains.ktor.sample.ai
 
-import dev.langchain4j.model.ollama.OllamaStreamingChatModel
 import io.micrometer.prometheus.PrometheusConfig
 import io.micrometer.prometheus.PrometheusMeterRegistry
-import java.time.Duration
 import kotlin.test.Test
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.ktor.sample.DatabaseSpec
@@ -22,12 +20,7 @@ class AiTest : DatabaseSpec() {
         )
     private val memory by lazy { ExposedChatMemoryStore(database) }
     private val registry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
-    private val module by lazy {
-        AiModule(
-            config,
-            memory
-        )
-    }
+    private val module by lazy { AiModule(config, memory) }
     private val documents by lazy { DocumentService(module.ingestor, registry) }
     private val ai by lazy { AiService(module, registry) }
 

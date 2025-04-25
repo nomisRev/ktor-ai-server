@@ -19,13 +19,11 @@ class CustomerRoutesTest {
     @Test
     fun `create customer returns 201 Created`() = withApp {
         // Create a customer
-        val createResponse = post("/api/customers") {
-            contentType(ContentType.Application.Json)
-            setBody(CreateCustomerRequest(
-                name = "Test Customer",
-                email = "test.customer@example.com"
-            ))
-        }
+        val createResponse =
+            post("/api/customers") {
+                contentType(ContentType.Application.Json)
+                setBody(CreateCustomer(name = "Test Customer", email = "test.customer@example.com"))
+            }
 
         // Verify response
         assertEquals(HttpStatusCode.Created, createResponse.status)
@@ -39,13 +37,16 @@ class CustomerRoutesTest {
     @Test
     fun `get customer returns 200 OK`() = withApp {
         // Create a customer first
-        val createResponse = post("/api/customers") {
-            contentType(ContentType.Application.Json)
-            setBody(CreateCustomerRequest(
-                name = "Get Test Customer",
-                email = "get.test.customer@example.com"
-            ))
-        }
+        val createResponse =
+            post("/api/customers") {
+                contentType(ContentType.Application.Json)
+                setBody(
+                    CreateCustomer(
+                        name = "Get Test Customer",
+                        email = "get.test.customer@example.com",
+                    )
+                )
+            }
         val createdCustomer = createResponse.body<CustomerResponse>()
 
         // Get the customer
@@ -62,23 +63,29 @@ class CustomerRoutesTest {
     @Test
     fun `update customer returns 200 OK`() = withApp {
         // Create a customer first
-        val createResponse = post("/api/customers") {
-            contentType(ContentType.Application.Json)
-            setBody(CreateCustomerRequest(
-                name = "Update Test Customer",
-                email = "update.test.customer@example.com"
-            ))
-        }
+        val createResponse =
+            post("/api/customers") {
+                contentType(ContentType.Application.Json)
+                setBody(
+                    CreateCustomer(
+                        name = "Update Test Customer",
+                        email = "update.test.customer@example.com",
+                    )
+                )
+            }
         val createdCustomer = createResponse.body<CustomerResponse>()
 
         // Update the customer
-        val updateResponse = put("/api/customers/${createdCustomer.id}") {
-            contentType(ContentType.Application.Json)
-            setBody(UpdateCustomerRequest(
-                name = "Updated Customer",
-                email = "updated.customer@example.com"
-            ))
-        }
+        val updateResponse =
+            put("/api/customers/${createdCustomer.id}") {
+                contentType(ContentType.Application.Json)
+                setBody(
+                    UpdateCustomer(
+                        name = "Updated Customer",
+                        email = "updated.customer@example.com",
+                    )
+                )
+            }
 
         // Verify response
         assertEquals(HttpStatusCode.OK, updateResponse.status)
@@ -91,13 +98,16 @@ class CustomerRoutesTest {
     @Test
     fun `delete customer returns 204 No Content`() = withApp {
         // Create a customer first
-        val createResponse = post("/api/customers") {
-            contentType(ContentType.Application.Json)
-            setBody(CreateCustomerRequest(
-                name = "Delete Test Customer",
-                email = "delete.test.customer@example.com"
-            ))
-        }
+        val createResponse =
+            post("/api/customers") {
+                contentType(ContentType.Application.Json)
+                setBody(
+                    CreateCustomer(
+                        name = "Delete Test Customer",
+                        email = "delete.test.customer@example.com",
+                    )
+                )
+            }
         val createdCustomer = createResponse.body<CustomerResponse>()
 
         // Delete the customer
@@ -119,10 +129,11 @@ class CustomerRoutesTest {
 
     @Test
     fun `update non-existent customer returns 404 Not Found`() = withApp {
-        val response = put("/api/customers/9999") {
-            contentType(ContentType.Application.Json)
-            setBody(UpdateCustomerRequest(name = "Non-existent"))
-        }
+        val response =
+            put("/api/customers/9999") {
+                contentType(ContentType.Application.Json)
+                setBody(UpdateCustomer(name = "Non-existent"))
+            }
         assertEquals(HttpStatusCode.NotFound, response.status)
     }
 

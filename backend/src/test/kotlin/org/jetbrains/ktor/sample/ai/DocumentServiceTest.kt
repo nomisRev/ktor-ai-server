@@ -1,10 +1,8 @@
 package org.jetbrains.ktor.sample.ai
 
-import dev.langchain4j.model.ollama.OllamaStreamingChatModel
 import io.micrometer.prometheus.PrometheusConfig
 import io.micrometer.prometheus.PrometheusMeterRegistry
 import java.io.File
-import java.time.Duration
 import kotlin.io.path.createTempFile
 import kotlin.test.Test
 import kotlinx.coroutines.flow.Flow
@@ -30,12 +28,7 @@ class DocumentServiceTest : DatabaseSpec() {
         )
     private val memory by lazy { ExposedChatMemoryStore(database) }
     private val registry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
-    private val module by lazy {
-        AiModule(
-            config,
-            memory
-        )
-    }
+    private val module by lazy { AiModule(config, memory) }
     private val documentService by lazy { DocumentService(module.ingestor, registry) }
 
     @Test

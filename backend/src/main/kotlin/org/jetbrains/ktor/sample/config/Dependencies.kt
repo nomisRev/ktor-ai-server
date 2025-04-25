@@ -11,10 +11,10 @@ import org.jetbrains.ktor.sample.booking.BookingService
 import org.jetbrains.ktor.sample.booking.CustomerService
 
 class Dependencies(
-    val ai: Deferred<AiService>, 
+    val ai: Deferred<AiService>,
     val documentService: Deferred<DocumentService>,
-    val customerService: Deferred<CustomerService>,
-    val bookingService: Deferred<BookingService>
+    val customerService: CustomerService,
+    val bookingService: BookingService,
 )
 
 fun Application.dependencies(config: AppConfig): Dependencies {
@@ -22,14 +22,11 @@ fun Application.dependencies(config: AppConfig): Dependencies {
     val registry = setupMetrics()
     val aiModule = async(Dispatchers.IO) { AiModule(config.ai, ExposedChatMemoryStore(database)) }
 
-    // Initialize booking services
-    val customerService = async(Dispatchers.IO) { CustomerService(database) }
-    val bookingService = async(Dispatchers.IO) { BookingService(database) }
-
     return Dependencies(
         ai = async(Dispatchers.IO) { AiService(aiModule.await(), registry) },
-        documentService = async(Dispatchers.IO) { DocumentService(aiModule.await().ingestor, registry) },
-        customerService = customerService,
-        bookingService = bookingService
+        documentService =
+            async(Dispatchers.IO) { DocumentService(aiModule.await().ingestor, registry) },
+        customerService = CustomerService(database),
+        bookingService = BookingService(database),
     )
 }
